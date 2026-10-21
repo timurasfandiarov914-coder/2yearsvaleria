@@ -3593,6 +3593,42 @@
       .secret-section::before { animation: none !important; }
     }
 
+
+    /* Optional exit: clearly available, never disguised as gameplay. */
+    .match3-brandline { display:flex; align-items:center; gap:10px; }
+    .match3-brandline > span:nth-child(2) { flex:1; text-align:left; }
+    .match3-exit-button {
+      display:inline-flex; flex:0 0 auto; align-items:center; justify-content:center; gap:5px;
+      min-height:32px; padding:4px 9px; border:1px solid rgba(255,231,166,.3); border-radius:999px;
+      color:rgba(240,245,255,.78); background:rgba(255,255,255,.045); font:inherit; font-size:8px;
+      font-weight:800; letter-spacing:.03em; cursor:pointer; touch-action:manipulation;
+      transition:color .2s ease,border-color .2s ease,background .2s ease;
+    }
+    .match3-exit-button[hidden] { display:none !important; }
+    .match3-exit-button > span:first-child { font-size:17px; line-height:1; }
+    .match3-exit-button:hover:not(:disabled) { color:#fff3c7; border-color:rgba(255,231,166,.65); background:rgba(255,255,255,.09); }
+    .match3-exit-button:disabled { opacity:.42; cursor:wait; }
+    .match3-skip-button {
+      display:flex; width:100%; min-height:43px; align-items:center; justify-content:center; gap:8px;
+      margin:16px auto 0; padding:9px 13px; border:1px solid rgba(220,231,255,.22); border-radius:13px;
+      color:rgba(235,241,255,.76); background:rgba(255,255,255,.025); font:inherit; font-size:10px; font-weight:750;
+      cursor:pointer; touch-action:manipulation; transition:color .2s ease,border-color .2s ease,background .2s ease,transform .2s ease;
+    }
+    .match3-skip-button span { color:#e9c77c; font-size:16px; }
+    .match3-skip-button:hover { color:#fff8e8; border-color:rgba(255,231,166,.5); background:rgba(255,255,255,.06); transform:translateY(-1px); }
+    .match3-skip-button:focus-visible,.match3-exit-button:focus-visible { outline:2px solid #fff0ad; outline-offset:3px; }
+    #match3-exit-confirm .match3-result-emblem { margin-bottom:16px; }
+    #match3-exit-confirm .match3-secondary { margin-top:10px; }
+    @media(max-width:390px) {
+      .match3-brandline { gap:7px; }
+      .match3-brandline > span:nth-child(2) { font-size:7px; letter-spacing:.12em; }
+      .match3-exit-button { min-height:31px; padding:4px 7px; font-size:7px; }
+      .match3-skip-button { font-size:9px; }
+    }
+    @media(prefers-reduced-motion:reduce) {
+      .match3-skip-button,.match3-exit-button { transition:none !important; }
+      .match3-skip-button:hover { transform:none; }
+    }
 </style>
 </head>
 <body class="game-gate-active">
@@ -3687,6 +3723,7 @@
         <div class="match3-brandline">
           <span class="match3-brandmark" aria-hidden="true">♡</span>
           <span>НЕБОЛЬШАЯ ГЛАВА ДЛЯ ДВОИХ</span>
+          <button class="match3-exit-button" id="match3-exit-button" type="button" aria-label="Выйти из игры" hidden><span aria-hidden="true">×</span><span>Выйти</span></button>
         </div>
 
         <section class="match3-screen" id="match3-intro" data-match3-screen="intro">
@@ -3704,7 +3741,17 @@
             <span><b>✧</b><small>сюрприз</small></span>
           </div>
           <button class="match3-primary" id="match3-start" type="button">Начать игру <span aria-hidden="true">↗</span></button>
-          <p class="match3-note">Прогресс сохраняется на этом устройстве.</p>
+          <button class="match3-skip-button" id="match3-skip-before-play" type="button">Пропустить игру и открыть открытку <span aria-hidden="true">↗</span></button>
+          <p class="match3-note">Можно сразу перейти к письму. Секретное признание останется закрытым.</p>
+        </section>
+
+        <section class="match3-screen" id="match3-exit-confirm" data-match3-screen="exit-confirm" hidden>
+          <div class="match3-result-emblem" aria-hidden="true">♡</div>
+          <p class="match3-kicker">ТВОЙ ВЫБОР</p>
+          <h2 class="match3-result-title" id="match3-exit-title" tabindex="-1">Перейти к открытке?</h2>
+          <p class="match3-copy">Можно не играть и сразу перейти к письму. Текущий уровень сохранится, а секретное признание не откроется само.</p>
+          <button class="match3-primary" id="match3-exit-confirm-button" type="button">Да, открыть открытку <span aria-hidden="true">↗</span></button>
+          <button class="match3-secondary" id="match3-exit-cancel-button" type="button">Вернуться к игре</button>
         </section>
 
         <section class="match3-screen" id="match3-play" data-match3-screen="play" hidden>
@@ -4324,6 +4371,11 @@
       const match3RewardTitle = document.getElementById("match3-reward-title");
       const match3Start = document.getElementById("match3-start");
       const match3Continue = document.getElementById("match3-continue");
+      const match3SkipBeforePlay = document.getElementById("match3-skip-before-play");
+      const match3ExitButton = document.getElementById("match3-exit-button");
+      const match3ExitTitle = document.getElementById("match3-exit-title");
+      const match3ExitConfirmButton = document.getElementById("match3-exit-confirm-button");
+      const match3ExitCancelButton = document.getElementById("match3-exit-cancel-button");
       const match3ParticleBurst = document.getElementById("match3-particle-burst");
       const match3HintButton = document.getElementById("match3-hint-button");
       const match3RocketButton = document.getElementById("match3-rocket-button");
@@ -4704,6 +4756,7 @@
       let match3ActiveBooster = null;
       let match3HintCells = [];
       let match3HintTimer = 0;
+      let match3ExitReturnScreen = "match3-play";
       let match3AnimateFalls = false;
       let match3SwapCells = [];
       let match3SwapAnimationTimer = 0;
@@ -4811,10 +4864,12 @@
           "match3-intro": "match3-title",
           "match3-play": "match3-play-title",
           "match3-result": "match3-result-title",
-          "match3-reward": "match3-reward-title"
+          "match3-reward": "match3-reward-title",
+          "match3-exit-confirm": "match3-exit-title"
         };
         const dialog = match3Gate.querySelector('[role="dialog"]');
         if (dialog && labels[activeId]) dialog.setAttribute("aria-labelledby", labels[activeId]);
+        match3ExitButton.hidden = activeId !== "match3-play" && activeId !== "match3-result";
       }
 
       function match3FocusHeading(node) {
@@ -4843,6 +4898,7 @@
           entry.button.setAttribute("aria-label", entry.label + ", осталось " + amount + (match3ActiveBooster === entry.key ? ", выбрано" : ""));
           entry.button.setAttribute("aria-pressed", match3ActiveBooster === entry.key ? "true" : "false");
         });
+        match3ExitButton.disabled = match3InputLocked;
       }
 
       function match3BuildCells() {
@@ -5412,10 +5468,15 @@
         }
       }
 
-      function match3ContinueToStory() {
-        if (match3Mode !== "reward" || match3InputLocked) return;
+      function match3ExitToStory() {
+        if (match3Mode === "done" || match3InputLocked) return;
         match3Mode = "done";
+        match3InputLocked = true;
+        match3ActiveBooster = null;
+        match3ClearHint();
         match3Continue.disabled = true;
+        match3ExitButton.disabled = true;
+        match3SkipBeforePlay.disabled = true;
         match3Save();
         match3ClearParticles();
         match3Gate.classList.add("is-leaving");
@@ -5431,6 +5492,34 @@
           const brandLink = siteShell.querySelector(".brand");
           if (brandLink) brandLink.focus({ preventScroll: true });
         }, match3ReduceMotion ? 0 : 500);
+      }
+
+      function match3ContinueToStory() {
+        if (match3Mode !== "reward" || match3InputLocked) return;
+        match3ExitToStory();
+      }
+
+      function match3SkipBeforePlayNow() {
+        if (match3Mode !== "intro" || match3InputLocked) return;
+        match3ExitToStory();
+      }
+
+      function match3RequestExit() {
+        if (match3InputLocked || (match3Mode !== "play" && match3Mode !== "loss" && match3Mode !== "stage-win")) return;
+        const currentScreen = match3Screens.find(function (screen) { return !screen.hidden; });
+        if (!currentScreen || (currentScreen.id !== "match3-play" && currentScreen.id !== "match3-result")) return;
+        match3ExitReturnScreen = currentScreen.id;
+        match3HideScreens("match3-exit-confirm");
+        match3FocusHeading(match3ExitTitle);
+      }
+
+      function match3CancelExit() {
+        const currentScreen = match3Screens.find(function (screen) { return !screen.hidden; });
+        if (!currentScreen || currentScreen.id !== "match3-exit-confirm") return;
+        const returnScreen = match3ExitReturnScreen === "match3-result" ? "match3-result" : "match3-play";
+        match3HideScreens(returnScreen);
+        if (returnScreen === "match3-result") match3FocusHeading(match3ResultTitle);
+        else match3FocusHeading(match3PlayTitle);
       }
 
       function match3ResumeSave(data) {
@@ -5511,11 +5600,27 @@
       });
 
       match3Continue.addEventListener("click", match3ContinueToStory);
+      match3SkipBeforePlay.addEventListener("click", match3SkipBeforePlayNow);
+      match3ExitButton.addEventListener("click", match3RequestExit);
+      match3ExitConfirmButton.addEventListener("click", function () {
+        if (match3Screens.some(function (screen) { return screen.id === "match3-exit-confirm" && !screen.hidden; })) {
+          match3ExitToStory();
+        }
+      });
+      match3ExitCancelButton.addEventListener("click", match3CancelExit);
       match3HintButton.addEventListener("click", function () { match3HandleBooster("hint"); });
       match3RocketButton.addEventListener("click", function () { match3HandleBooster("rocket"); });
       match3ShuffleButton.addEventListener("click", function () { match3HandleBooster("shuffle"); });
 
       match3Gate.addEventListener("keydown", function (event) {
+        if (event.key === "Escape") {
+          const activeScreen = match3Screens.find(function (screen) { return !screen.hidden; });
+          if (activeScreen && activeScreen.id === "match3-exit-confirm") {
+            event.preventDefault();
+            match3CancelExit();
+            return;
+          }
+        }
         if (event.key !== "Tab" || match3Mode === "done" || match3Gate.classList.contains("is-leaving")) return;
         const focusable = Array.from(match3Gate.querySelectorAll("button:not(:disabled), [href], input, select, textarea, [tabindex]:not([tabindex=\"-1\"])")).filter(function (node) {
           return node.tabIndex >= 0 && !node.closest("[hidden]") && node.getClientRects().length > 0;
