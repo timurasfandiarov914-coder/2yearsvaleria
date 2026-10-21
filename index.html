@@ -3749,7 +3749,7 @@
           <div class="match3-result-emblem" aria-hidden="true">♡</div>
           <p class="match3-kicker">ТВОЙ ВЫБОР</p>
           <h2 class="match3-result-title" id="match3-exit-title" tabindex="-1">Перейти к открытке?</h2>
-          <p class="match3-copy">Можно не играть и сразу перейти к письму. Текущий уровень сохранится, а секретное признание не откроется само.</p>
+          <p class="match3-copy">Можно не играть и сразу перейти к письму. Секретное признание останется закрытым до отдельного нажатия.</p>
           <button class="match3-primary" id="match3-exit-confirm-button" type="button">Да, открыть открытку <span aria-hidden="true">↗</span></button>
           <button class="match3-secondary" id="match3-exit-cancel-button" type="button">Вернуться к игре</button>
         </section>
@@ -5477,6 +5477,8 @@
         match3Continue.disabled = true;
         match3ExitButton.disabled = true;
         match3SkipBeforePlay.disabled = true;
+        match3ExitConfirmButton.disabled = true;
+        match3ExitCancelButton.disabled = true;
         match3Save();
         match3ClearParticles();
         match3Gate.classList.add("is-leaving");
@@ -5613,6 +5615,7 @@
       match3ShuffleButton.addEventListener("click", function () { match3HandleBooster("shuffle"); });
 
       match3Gate.addEventListener("keydown", function (event) {
+        if (match3Gate.classList.contains("is-leaving")) return;
         if (event.key === "Escape") {
           const activeScreen = match3Screens.find(function (screen) { return !screen.hidden; });
           if (activeScreen && activeScreen.id === "match3-exit-confirm") {
