@@ -3490,6 +3490,11 @@
     .m3-reward-flap { background:linear-gradient(135deg,#ffd2e7,#e88bb5); }
     .m3-reward-seal { border:2px solid #ffe9ac; color:#fff; background:linear-gradient(145deg,#eb73ad,#9c367d); box-shadow:0 2px 6px rgba(0,0,0,.25); }
     .match3-primary:focus-visible,.match3-secondary:focus-visible,.m3-cell:focus-visible,.m3-booster:focus-visible { outline:3px solid #fff3ae; outline-offset:3px; }
+    .match3-screen:not([hidden]) { animation:m3-screen-enter .34s cubic-bezier(.2,.75,.25,1) both; }
+    .match3-result-stars { display:flex; align-items:center; justify-content:center; gap:7px; margin:2px 0 8px; color:#ffe68d; font-size:25px; letter-spacing:.12em; line-height:1; text-shadow:0 2px 0 #82551c,0 0 15px rgba(255,220,112,.48); animation:m3-stars-pop .62s cubic-bezier(.16,1,.3,1) both; }
+    .match3-result-stars[hidden] { display:none !important; }
+    @keyframes m3-screen-enter { from { opacity:0; transform:translateY(9px) scale(.985); } to { opacity:1; transform:translateY(0) scale(1); } }
+    @keyframes m3-stars-pop { from { opacity:0; transform:translateY(9px) scale(.72); } 65% { transform:translateY(-2px) scale(1.08); } to { opacity:1; transform:translateY(0) scale(1); } }
     @keyframes m3-hint-bounce { from { transform:translateY(0) scale(1); } to { transform:translateY(-2px) scale(1.035); } }
     @keyframes m3-special-glow { from { filter:brightness(1); } to { filter:brightness(1.18); } }
     @keyframes m3-progress-glow { 0%,100% { filter:brightness(1); } 50% { filter:brightness(1.3); } }
@@ -3515,7 +3520,7 @@
       .m3-booster-icon { width:21px; height:21px; } .match3-status,.match3-hint { margin-top:3px; }
     }
     @media (prefers-reduced-motion:reduce) {
-      .match3-level-progress span.is-current,.m3-cell.is-hinted,.m3-cell.is-special { animation:none !important; }
+      .match3-level-progress span.is-current,.m3-cell.is-hinted,.m3-cell.is-special,.match3-result-stars,.match3-screen:not([hidden]) { animation:none !important; }
     }
 
 </style>
@@ -3670,6 +3675,7 @@
         <section class="match3-screen" id="match3-result" data-match3-screen="result" hidden>
           <div class="match3-result-emblem" id="match3-result-emblem" aria-hidden="true">✧</div>
           <p class="match3-kicker" id="match3-result-kicker">УРОВЕНЬ ЗАВЕРШЁН</p>
+          <div class="match3-result-stars" id="match3-result-stars" aria-label="3 звезды">★★★</div>
           <h2 class="match3-result-title" id="match3-result-title" tabindex="-1">Получилось!</h2>
           <p class="match3-copy" id="match3-result-copy">Все знаки на месте.</p>
           <div class="match3-result-score" id="match3-result-score"></div>
@@ -4241,6 +4247,7 @@
       const match3ResultCopy = document.getElementById("match3-result-copy");
       const match3ResultScore = document.getElementById("match3-result-score");
       const match3ResultEmblem = document.getElementById("match3-result-emblem");
+      const match3ResultStars = document.getElementById("match3-result-stars");
       const match3ResultPrimary = document.getElementById("match3-result-primary");
       const match3ResultRetry = document.getElementById("match3-result-retry");
       const match3Title = document.getElementById("match3-title");
@@ -4919,7 +4926,10 @@
         match3ClearHint();
         match3RenderBoard();
         match3HideScreens("match3-result");
+        if (kind === "stage-win") match3LaunchRewardParticles();
+        else match3ClearParticles();
         if (kind === "loss") {
+          match3ResultStars.hidden = true;
           match3ResultKicker.textContent = "ХОДЫ ЗАКОНЧИЛИСЬ";
           match3ResultTitle.textContent = "Ещё одна попытка?";
           match3ResultCopy.textContent = "Не все цели успели собраться. Ничего страшного: этот уровень можно пройти заново.";
@@ -4928,6 +4938,11 @@
           match3ResultRetry.hidden = true;
           match3ResultScore.textContent = "Счёт: " + match3Score.toLocaleString("ru-RU");
         } else {
+          match3ResultStars.hidden = false;
+          const starRating = match3MovesLeft >= Math.ceil(MATCH3_LEVELS[match3LevelIndex].moves * 0.45) ? 3
+            : match3MovesLeft >= Math.ceil(MATCH3_LEVELS[match3LevelIndex].moves * 0.2) ? 2 : 1;
+          match3ResultStars.textContent = "★".repeat(starRating) + "☆".repeat(3 - starRating);
+          match3ResultStars.setAttribute("aria-label", starRating + " из 3 звёзд");
           match3ResultKicker.textContent = "УРОВЕНЬ ПРОЙДЕН";
           match3ResultTitle.textContent = ["Первый шаг готов.", "Всё совпало.", "Путь открыт."][match3LevelIndex];
           match3ResultCopy.textContent = match3LevelIndex === 2
