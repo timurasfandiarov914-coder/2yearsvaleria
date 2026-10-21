@@ -4584,7 +4584,7 @@
           if (newSet.has(index)) cell.classList.add("is-new");
           if (sealed) cell.classList.add("has-seal");
           if (tile && tile.special) cell.classList.add("is-special");
-          cell.disabled = match3Mode !== "play";
+          cell.disabled = match3Mode !== "play" || match3InputLocked;
           cell.tabIndex = index === match3FocusedIndex ? 0 : -1;
           cell.setAttribute("aria-pressed", chosen ? "true" : "false");
           cell.setAttribute("aria-label", label);
@@ -4758,6 +4758,7 @@
           match3Grid.setAttribute("aria-busy", "false");
           match3Status.textContent = "Совпадения нет, ход не потрачен. Попробуй соседний символ.";
           match3RenderBoard();
+          if (match3Cells[to]) match3Cells[to].focus({ preventScroll: true });
           return;
         }
 
@@ -4815,6 +4816,7 @@
           match3Status.textContent = cascade > 1 ? "Каскад ×" + cascade + "! Хорошая комбинация." : "Красиво! Выбирай следующий ход.";
         }
         match3RenderBoard();
+        if (match3Cells[match3FocusedIndex]) match3Cells[match3FocusedIndex].focus({ preventScroll: true });
         match3SaveCurrentLevel();
       }
 
@@ -5023,7 +5025,7 @@
       match3Gate.addEventListener("keydown", function (event) {
         if (event.key !== "Tab" || match3Mode === "done" || match3Gate.classList.contains("is-leaving")) return;
         const focusable = Array.from(match3Gate.querySelectorAll("button:not(:disabled), [href], input, select, textarea, [tabindex]:not([tabindex=\"-1\"])")).filter(function (node) {
-          return !node.closest("[hidden]") && node.getClientRects().length > 0;
+          return node.tabIndex >= 0 && !node.closest("[hidden]") && node.getClientRects().length > 0;
         });
         if (!focusable.length) {
           event.preventDefault();
