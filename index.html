@@ -2771,6 +2771,59 @@
     }
 
 
+
+    /* Cinematic choreography · pass 05: let every reveal finish in its own frame. */
+    .letter-section.is-preparing {
+      display: block;
+    }
+
+    .letter-section.is-preparing .letter-inner {
+      visibility: hidden;
+    }
+
+    .secret-section.secret-is-open .secret-heart {
+      animation: cinema-secret-mark .76s cubic-bezier(.16,1,.3,1) both;
+    }
+
+    .secret-section.secret-is-open .secret-title {
+      animation: cinema-secret-title .82s cubic-bezier(.16,1,.3,1) .08s both;
+    }
+
+    @keyframes cinema-secret-mark {
+      from {
+        opacity: .45;
+        transform: translateY(9px) scale(.82);
+        filter: blur(2px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+        filter: blur(0);
+      }
+    }
+
+    @keyframes cinema-secret-title {
+      from {
+        opacity: .55;
+        transform: translateY(10px);
+        filter: blur(2px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+        filter: blur(0);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .secret-section.secret-is-open .secret-heart,
+      .secret-section.secret-is-open .secret-title {
+        animation: none !important;
+        filter: none !important;
+      }
+    }
+
+
 </style>
 </head>
 <body class="game-gate-active">
@@ -2950,7 +3003,7 @@
           <h2 class="secret-title" id="secret-title">И ещё кое-что.</h2>
           <p class="secret-description">Тут спрятано одно маленькое напоминание. На случай, если сегодня тебе захочется улыбнуться ещё раз.</p>
           <button class="secret-button" id="secret-button" type="button" aria-expanded="false" aria-controls="secret-message">Открыть секретное признание</button>
-          <p class="secret-message" id="secret-message" hidden>Среди всех случайностей, которые могли произойти в моей жизни, встреча с тобой одна из самых дорогих. Спасибо, что ты есть. Иди сюда, обниму. ♡</p>
+          <p class="secret-message" id="secret-message" hidden aria-live="polite" aria-atomic="true">Среди всех случайностей, которые могли произойти в моей жизни, встреча с тобой одна из самых дорогих. Спасибо, что ты есть. Иди сюда, обниму. ♡</p>
         </div>
       </section>
     </main>
@@ -2967,7 +3020,9 @@
       const openButton = document.getElementById("open-letter");
       const envelope = document.getElementById("envelope");
       const letter = document.getElementById("letter");
+      const letterTitle = document.getElementById("letter-title");
       const secretButton = document.getElementById("secret-button");
+      const secretSection = secretButton.closest(".secret-section");
       const secretMessage = document.getElementById("secret-message");
       const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       let opened = false;
@@ -2994,22 +3049,83 @@
         }
       }
 
+      let letterRevealFinished = false;
+
+      function finishLetterReveal() {
+        if (letterRevealFinished) return;
+        letterRevealFinished = true;
+        letter.classList.remove("is-preparing");
+        letter.classList.add("is-visible");
+        letter.setAttribute("aria-busy", "false");
+        openButton.querySelector("span:first-child").textContent = "Письмо открыто";
+        letterTitle.focus({ preventScroll: true });
+      }
+
+      function scrollToLetterAndReveal() {
+        if (reducedMotion) {
+          finishLetterReveal();
+          letter.scrollIntoView({ behavior: "auto", block: "start" });
+          return;
+        }
+
+        let scrollFinished = false;
+        let scrollFallbackTimer = 0;
+
+        function completeScroll() {
+          if (scrollFinished) return;
+          scrollFinished = true;
+          document.removeEventListener("scrollend", completeScroll);
+          if (scrollFallbackTimer) window.clearTimeout(scrollFallbackTimer);
+          finishLetterReveal();
+        }
+
+        document.addEventListener("scrollend", completeScroll);
+        scrollFallbackTimer = window.setTimeout(completeScroll, 1800);
+        letter.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      function beginLetterRevealSequence() {
+        const envelopePaper = envelope.querySelector(".envelope-paper");
+        if (reducedMotion || !envelopePaper) {
+          scrollToLetterAndReveal();
+          return;
+        }
+
+        let transitionFinished = false;
+        let transitionFallbackTimer = 0;
+
+        function completeEnvelopeOpening(event) {
+          if (event && (event.target !== envelopePaper || event.propertyName !== "transform")) return;
+          if (transitionFinished) return;
+          transitionFinished = true;
+          envelopePaper.removeEventListener("transitionend", completeEnvelopeOpening);
+          if (transitionFallbackTimer) window.clearTimeout(transitionFallbackTimer);
+          scrollToLetterAndReveal();
+        }
+
+        envelopePaper.addEventListener("transitionend", completeEnvelopeOpening);
+        transitionFallbackTimer = window.setTimeout(function () {
+          completeEnvelopeOpening();
+        }, 1500);
+      }
+
       openButton.addEventListener("click", function () {
         if (opened) {
-          letter.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth", block: "start" });
+          if (letterRevealFinished) {
+            letter.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth", block: "start" });
+          }
           return;
         }
         opened = true;
         envelope.classList.add("is-open");
-        openButton.querySelector("span:first-child").textContent = "Письмо открыто";
+        openButton.querySelector("span:first-child").textContent = "Открываем письмо…";
         openButton.querySelector(".button-heart").textContent = "♥";
-        letter.classList.add("is-visible");
+        letter.classList.add("is-preparing");
         letter.setAttribute("aria-hidden", "false");
+        letter.setAttribute("aria-busy", "true");
         openButton.setAttribute("aria-expanded", "true");
         heartRain();
-        window.setTimeout(function () {
-          letter.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth", block: "start" });
-        }, reducedMotion ? 0 : 980);
+        beginLetterRevealSequence();
       });
 
       secretButton.addEventListener("click", function () {
@@ -3017,6 +3133,7 @@
         secretMessage.hidden = isOpen;
         secretButton.setAttribute("aria-expanded", String(!isOpen));
         secretButton.textContent = isOpen ? "Открыть секретное признание" : "Спрятать секрет";
+        secretSection.classList.toggle("secret-is-open", !isOpen);
         if (!isOpen) heartRain();
       });
 
