@@ -1553,10 +1553,418 @@
       }
     }
 
+  
+    
+    /* Opening mini-game: a gentle gate before the main page is revealed. */
+    body.game-gate-active {
+      height: 100%;
+      overflow: hidden;
+      overscroll-behavior: none;
+    }
+
+    .game-gate {
+      position: fixed;
+      z-index: 1000;
+      inset: 0;
+      display: grid;
+      place-items: center;
+      overflow-y: auto;
+      padding: max(22px, env(safe-area-inset-top)) 18px max(22px, env(safe-area-inset-bottom));
+      color: #fffaf5;
+      background:
+        radial-gradient(ellipse at 50% 8%, rgba(223, 176, 189, .14), transparent 27rem),
+        radial-gradient(ellipse at 7% 83%, rgba(146, 82, 104, .17), transparent 24rem),
+        linear-gradient(145deg, #2b1823 0%, #321c29 54%, #27151f 100%);
+      isolation: isolate;
+      opacity: 1;
+      visibility: visible;
+      transition: opacity .52s ease, visibility .52s ease;
+    }
+
+    .game-gate::before {
+      position: fixed;
+      z-index: -1;
+      inset: 12px;
+      border: 1px solid rgba(203, 178, 126, .2);
+      content: "";
+      pointer-events: none;
+    }
+
+    .game-gate::after {
+      position: fixed;
+      z-index: -1;
+      inset: 19px;
+      border: 1px solid rgba(223, 176, 189, .06);
+      content: "";
+      pointer-events: none;
+    }
+
+    .game-gate.is-leaving {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .game-gate-card {
+      position: relative;
+      width: min(100%, 470px);
+      margin: auto;
+      padding: clamp(24px, 5.5vw, 42px) clamp(19px, 5vw, 38px) 24px;
+      border: 1px solid rgba(223, 176, 189, .16);
+      border-radius: 5px;
+      background: linear-gradient(145deg, rgba(255, 250, 245, .045), rgba(255, 250, 245, .012));
+      box-shadow: 0 26px 80px rgba(8, 2, 6, .16), inset 0 1px rgba(255, 255, 255, .035);
+      text-align: center;
+      animation: gate-arrive .8s cubic-bezier(.2,.75,.25,1) both;
+    }
+
+    .game-emblem {
+      display: grid;
+      width: 48px;
+      height: 48px;
+      place-items: center;
+      margin: 0 auto 19px;
+      border: 1px solid rgba(203, 178, 126, .3);
+      border-radius: 50%;
+      color: #d8c18f;
+      background: rgba(203, 178, 126, .035);
+      font-family: var(--serif);
+      font-size: 27px;
+      box-shadow: 0 0 0 6px rgba(203, 178, 126, .025);
+    }
+
+    .game-kicker {
+      margin: 0 0 15px;
+      color: #d8c18f;
+      font-size: 8px;
+      letter-spacing: .22em;
+      line-height: 1.7;
+      text-transform: uppercase;
+    }
+
+    .game-title {
+      max-width: 340px;
+      margin: 0 auto 14px;
+      color: #fff8f2;
+      font-family: var(--serif);
+      font-size: clamp(39px, 8.8vw, 55px);
+      font-weight: 400;
+      letter-spacing: -.035em;
+      line-height: .98;
+    }
+
+    .game-description {
+      max-width: 320px;
+      margin: 0 auto 22px;
+      color: rgba(255, 250, 245, .62);
+      font-size: 11px;
+      line-height: 1.9;
+    }
+
+    .game-counter-row {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      margin: 0 1px 8px;
+      color: rgba(255, 250, 245, .5);
+      font-size: 8px;
+      letter-spacing: .14em;
+      text-align: left;
+      text-transform: uppercase;
+    }
+
+    .game-counter {
+      color: #e2bac5;
+      font-family: var(--serif);
+      font-size: 21px;
+      letter-spacing: 0;
+      white-space: nowrap;
+    }
+
+    .game-counter > span {
+      color: rgba(255, 250, 245, .43);
+      font-size: 15px;
+    }
+
+    .game-progress-track {
+      height: 2px;
+      overflow: hidden;
+      background: rgba(255, 250, 245, .1);
+    }
+
+    .game-progress-fill {
+      display: block;
+      width: 0;
+      height: 100%;
+      background: linear-gradient(90deg, #b77b8e, #d8c18f);
+      box-shadow: 0 0 12px rgba(216, 193, 143, .28);
+      transition: width .45s cubic-bezier(.2,.75,.25,1);
+    }
+
+    .game-playfield {
+      position: relative;
+      height: clamp(205px, 30vh, 250px);
+      min-height: 205px;
+      margin: 15px 0 12px;
+      overflow: hidden;
+      border: 1px solid rgba(203, 178, 126, .14);
+      border-radius: 3px;
+      background:
+        radial-gradient(circle at 52% 49%, rgba(146, 82, 104, .13), transparent 48%),
+        linear-gradient(145deg, rgba(255, 250, 245, .022), rgba(255, 250, 245, .004));
+    }
+
+    .game-playfield::before {
+      position: absolute;
+      inset: 13px;
+      border: 1px solid rgba(223, 176, 189, .055);
+      content: "";
+      pointer-events: none;
+    }
+
+    .game-playfield::after {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 116px;
+      aspect-ratio: 1;
+      border: 1px solid rgba(203, 178, 126, .08);
+      border-radius: 50%;
+      content: "";
+      pointer-events: none;
+      transform: translate(-50%, -50%);
+    }
+
+    .game-orbit {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 165px;
+      aspect-ratio: 1;
+      border: 1px solid rgba(203, 178, 126, .07);
+      border-radius: 50%;
+      pointer-events: none;
+      transform: translate(-50%, -50%) rotate(-24deg) scaleY(.72);
+    }
+
+    .game-orbit-two {
+      width: 225px;
+      transform: translate(-50%, -50%) rotate(28deg) scaleY(.72);
+    }
+
+    .game-star {
+      position: absolute;
+      color: #cbb27e;
+      font-family: var(--serif);
+      font-size: 14px;
+      opacity: .75;
+      pointer-events: none;
+    }
+
+    .game-star-one { top: 20%; left: 48%; }
+    .game-star-two { right: 18%; bottom: 21%; font-size: 22px; color: #dfb0bd; }
+    .game-star-three { left: 18%; bottom: 17%; font-size: 10px; }
+
+    .game-target {
+      position: absolute;
+      z-index: 2;
+      display: grid;
+      width: 47px;
+      height: 47px;
+      place-items: center;
+      padding: 0;
+      border: 1px solid rgba(223, 176, 189, .48);
+      border-radius: 50%;
+      color: #e7bfca;
+      background: radial-gradient(circle at 40% 25%, rgba(223, 176, 189, .16), rgba(255, 250, 245, .025) 72%);
+      box-shadow: 0 0 0 5px rgba(223, 176, 189, .025), 0 0 25px rgba(223, 176, 189, .07);
+      font-family: var(--serif);
+      font-size: 30px;
+      line-height: 1;
+      cursor: pointer;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+      animation: target-glow 3.8s ease-in-out infinite;
+      transition: opacity .32s ease, transform .38s cubic-bezier(.2,.8,.2,1), background .2s ease;
+    }
+
+    .game-target:hover,
+    .game-target:focus-visible {
+      border-color: rgba(203, 178, 126, .75);
+      color: #fff4e9;
+      background: radial-gradient(circle, rgba(223, 176, 189, .23), rgba(255, 250, 245, .045));
+      outline: 2px solid rgba(203, 178, 126, .7);
+      outline-offset: 5px;
+    }
+
+    .target-one { top: 17%; left: 17%; }
+    .target-two { top: 43%; right: 16%; animation-delay: -1.25s; }
+    .target-three { bottom: 12%; left: 43%; animation-delay: -2.3s; }
+
+    .game-target.is-found {
+      opacity: 0;
+      transform: scale(.2) rotate(24deg);
+      pointer-events: none;
+      animation: none;
+    }
+
+    .game-feedback {
+      min-height: 18px;
+      margin: 0 auto 15px;
+      color: rgba(255, 250, 245, .53);
+      font-size: 9px;
+      letter-spacing: .025em;
+      line-height: 1.7;
+    }
+
+    .game-continue {
+      display: flex;
+      width: 100%;
+      min-height: 51px;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      padding: 0 19px;
+      border: 1px solid rgba(203, 178, 126, .6);
+      border-radius: 999px;
+      color: #fffaf5;
+      background: linear-gradient(135deg, rgba(203, 178, 126, .15), rgba(255, 250, 245, .035));
+      box-shadow: inset 0 1px rgba(255, 255, 255, .05);
+      font: inherit;
+      font-size: 10px;
+      letter-spacing: .05em;
+      cursor: pointer;
+      transition: background .25s ease, border-color .25s ease, transform .25s ease;
+      animation: continue-arrive .55s cubic-bezier(.2,.8,.2,1) both;
+      touch-action: manipulation;
+    }
+
+    .game-continue:hover {
+      transform: translateY(-2px);
+      border-color: #e4cfa5;
+      background: linear-gradient(135deg, rgba(203, 178, 126, .22), rgba(255, 250, 245, .055));
+    }
+
+    .game-continue[hidden] { display: none; }
+
+    .game-continue-arrow {
+      color: #d8c18f;
+      font-size: 18px;
+      transition: transform .25s ease;
+    }
+
+    .game-continue:hover .game-continue-arrow {
+      transform: translate(2px, -2px);
+    }
+
+    .game-footnote {
+      margin: 15px 0 0;
+      color: rgba(255, 250, 245, .31);
+      font-size: 8px;
+      letter-spacing: .15em;
+      text-transform: uppercase;
+    }
+
+    @keyframes gate-arrive {
+      from { opacity: 0; transform: translateY(12px) scale(.99); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @keyframes target-glow {
+      0%, 100% { box-shadow: 0 0 0 5px rgba(223, 176, 189, .025), 0 0 19px rgba(223, 176, 189, .05); }
+      50% { box-shadow: 0 0 0 7px rgba(223, 176, 189, .045), 0 0 28px rgba(223, 176, 189, .12); }
+    }
+
+    @keyframes continue-arrive {
+      from { opacity: 0; transform: translateY(7px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @media (max-width: 430px) {
+      .game-gate { padding-right: 13px; padding-left: 13px; }
+      .game-gate::before { inset: 8px; }
+      .game-gate::after { inset: 14px; }
+      .game-gate-card { padding: 22px 17px 19px; }
+      .game-emblem { width: 42px; height: 42px; margin-bottom: 15px; }
+      .game-kicker { margin-bottom: 11px; font-size: 7px; }
+      .game-title { font-size: clamp(36px, 10vw, 44px); }
+      .game-description { margin-bottom: 17px; font-size: 10px; }
+      .game-playfield { height: clamp(192px, 28vh, 225px); min-height: 192px; margin-top: 12px; }
+      .game-target { width: 45px; height: 45px; }
+      .target-one { top: 14%; left: 13%; }
+      .target-two { top: 43%; right: 12%; }
+      .target-three { bottom: 10%; left: 42%; }
+      .game-feedback { margin-bottom: 11px; }
+      .game-footnote { margin-top: 12px; }
+    }
+
+    @media (max-height: 680px) {
+      .game-gate-card { padding-top: 18px; padding-bottom: 17px; }
+      .game-emblem { width: 36px; height: 36px; margin-bottom: 10px; font-size: 21px; }
+      .game-kicker { margin-bottom: 8px; }
+      .game-title { font-size: 37px; }
+      .game-description { margin-bottom: 13px; }
+      .game-playfield { height: 180px; min-height: 180px; margin-top: 10px; }
+      .game-feedback { margin-bottom: 8px; }
+      .game-footnote { margin-top: 9px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .game-gate,
+      .game-gate-card,
+      .game-target,
+      .game-continue,
+      .game-continue-arrow,
+      .game-progress-fill {
+        animation: none !important;
+        transition: none !important;
+      }
+      .game-target:hover,
+      .game-continue:hover {
+        transform: none;
+      }
+    }
+
   </style>
 </head>
-<body>
-  <div class="site-shell">
+<body class="game-gate-active">
+
+  <div class="game-gate" id="game-gate" role="dialog" aria-modal="true" aria-labelledby="game-title" aria-describedby="game-description">
+    <div class="game-gate-card">
+      <div class="game-emblem" aria-hidden="true">✧</div>
+      <p class="game-kicker">только маленькая пауза</p>
+      <h1 class="game-title" id="game-title">Маленькая игра для тебя</h1>
+      <p class="game-description" id="game-description">Три сердечка спрятались где-то рядом. Найди их, и мы сможем идти дальше.</p>
+
+      <div class="game-counter-row">
+        <span class="game-counter-label">найдено сердечек</span>
+        <span class="game-counter" id="game-count">0 <span>/ 3</span></span>
+      </div>
+      <div class="game-progress-track" aria-hidden="true">
+        <span class="game-progress-fill" id="game-progress-fill"></span>
+      </div>
+
+      <div class="game-playfield" id="game-playfield" aria-label="Поле, на котором спрятаны три сердечка">
+        <span class="game-orbit game-orbit-one" aria-hidden="true"></span>
+        <span class="game-orbit game-orbit-two" aria-hidden="true"></span>
+        <span class="game-star game-star-one" aria-hidden="true">✧</span>
+        <span class="game-star game-star-two" aria-hidden="true">·</span>
+        <span class="game-star game-star-three" aria-hidden="true">✦</span>
+        <button class="game-target target-one" type="button" aria-label="Найти первое спрятанное сердечко">♡</button>
+        <button class="game-target target-two" type="button" aria-label="Найти второе спрятанное сердечко">♡</button>
+        <button class="game-target target-three" type="button" aria-label="Найти третье спрятанное сердечко">♡</button>
+      </div>
+
+      <p class="game-feedback" id="game-feedback" role="status" aria-live="polite">Подсказка: просто нажимай на сердечки ✧</p>
+      <button class="game-continue" id="game-continue" type="button" hidden>
+        <span>Продолжить</span><span class="game-continue-arrow" aria-hidden="true">↗</span>
+      </button>
+      <p class="game-footnote" id="game-footnote">без таймера · без проигрыша</p>
+    </div>
+  </div>
+
+  <div class="site-shell" id="site-shell" aria-hidden="true" inert>
     <header class="topbar">
       <a class="brand" href="#" aria-label="В начало">
         <span class="brand-mark">♡</span>
@@ -1735,6 +2143,66 @@
           revealObserver.observe(element);
         });
       }
+
+
+      
+      const gameGate = document.getElementById("game-gate");
+      const siteShell = document.getElementById("site-shell");
+      const gameTargets = Array.from(document.querySelectorAll(".game-target"));
+      const gameCount = document.getElementById("game-count");
+      const gameProgressFill = document.getElementById("game-progress-fill");
+      const gameFeedback = document.getElementById("game-feedback");
+      const gameDescription = document.getElementById("game-description");
+      const gameTitle = document.getElementById("game-title");
+      const gameContinue = document.getElementById("game-continue");
+      let foundHearts = 0;
+      let gameCompleted = false;
+
+      function findHeart(target, index) {
+        if (gameCompleted || target.disabled) return;
+        target.disabled = true;
+        target.classList.add("is-found");
+        target.setAttribute("aria-hidden", "true");
+        foundHearts += 1;
+        gameCount.innerHTML = foundHearts + ' <span>/ 3</span>';
+        gameProgressFill.style.width = ((foundHearts / 3) * 100) + "%";
+
+        if (foundHearts < 3) {
+          const remaining = 3 - foundHearts;
+          gameFeedback.textContent = foundHearts === 1
+            ? "Одно сердечко найдено. Осталось ещё два ✧"
+            : "Уже два! Осталось последнее сердечко ♡";
+          gameDescription.textContent = "Хорошо получается. Осмотрись вокруг и найди ещё " + (remaining === 1 ? "одно сердечко." : "два сердечка.");
+          return;
+        }
+
+        gameCompleted = true;
+        gameTitle.textContent = "Все три найдены.";
+        gameDescription.textContent = "Маленький путь пройден. Теперь можно двигаться дальше.";
+        gameFeedback.textContent = "Ты внимательная. Это пригодится ♡";
+        gameContinue.hidden = false;
+        gameContinue.focus({ preventScroll: true });
+      }
+
+      gameTargets.forEach(function (target, index) {
+        target.addEventListener("click", function () {
+          findHeart(target, index);
+        });
+      });
+
+      gameContinue.addEventListener("click", function () {
+        if (!gameCompleted) return;
+        gameGate.classList.add("is-leaving");
+        window.setTimeout(function () {
+          gameGate.remove();
+          siteShell.removeAttribute("inert");
+          siteShell.setAttribute("aria-hidden", "false");
+          document.body.classList.remove("game-gate-active");
+          window.scrollTo(0, 0);
+          const brandLink = siteShell.querySelector(".brand");
+          if (brandLink) brandLink.focus({ preventScroll: true });
+        }, reducedMotion ? 0 : 540);
+      });
 
     }());
   </script>
