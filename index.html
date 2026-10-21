@@ -4310,19 +4310,21 @@
 
           const newIndices = [];
           for (let col = 0; col < SIZE; col += 1) {
-            let writeRow = SIZE - 1;
+            const compacted = [];
+            for (let row = SIZE - 1; row >= 0; row -= 1) {
+              const value = board[row * SIZE + col];
+              if (value) compacted.push(value);
+            }
+            let source = 0;
             for (let row = SIZE - 1; row >= 0; row -= 1) {
               const index = row * SIZE + col;
-              if (board[index]) {
-                board[writeRow * SIZE + col] = board[index];
-                writeRow -= 1;
+              if (source < compacted.length) {
+                board[index] = compacted[source];
+                source += 1;
+              } else {
+                board[index] = randomTile();
+                newIndices.push(index);
               }
-            }
-            while (writeRow >= 0) {
-              const index = writeRow * SIZE + col;
-              board[index] = randomTile();
-              newIndices.push(index);
-              writeRow -= 1;
             }
           }
 
