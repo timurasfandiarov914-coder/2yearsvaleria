@@ -2557,6 +2557,101 @@
       }
     }
 
+
+    /* Mobile polish · pass 03: reliable scrolling and comfortable touch targets. */
+    .game-gate {
+      min-height: 100vh;
+      min-height: 100svh;
+      overscroll-behavior-y: contain;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .quest-object,
+    .quest-memory-button,
+    .quest-secondary-button,
+    .game-continue,
+    .quest-dial-arrow {
+      touch-action: manipulation;
+    }
+
+    .quest-dial-controls {
+      min-width: 0;
+    }
+
+    .quest-dial-arrow {
+      width: clamp(22px, 7vw, 28px);
+      height: 44px;
+      min-height: 44px;
+      flex: 0 0 auto;
+    }
+
+    .quest-dial-symbol {
+      width: clamp(26px, 7.5vw, 29px);
+      flex: 0 1 auto;
+    }
+
+    .quest-dial-label {
+      overflow-wrap: anywhere;
+      font-size: clamp(6px, 1.8vw, 7px);
+      letter-spacing: .045em;
+    }
+
+    @media (max-width: 360px) {
+      .game-gate {
+        padding-right: 12px;
+        padding-left: 12px;
+      }
+
+      .game-gate::before { inset: 7px; }
+      .game-gate::after { inset: 12px; }
+
+      .game-gate-card.quest-card {
+        padding: 16px 11px 14px;
+      }
+
+      .quest-card .game-kicker {
+        font-size: 7px;
+        letter-spacing: .15em;
+      }
+
+      .quest-card .game-description {
+        font-size: 11px;
+        line-height: 1.65;
+      }
+
+      .quest-lock {
+        gap: 2px;
+        padding: 8px 2px;
+      }
+
+      .quest-dial-arrow { width: 22px; }
+      .quest-dial-symbol { width: 26px; font-size: 25px; }
+      .quest-object { min-height: 50px; }
+      .quest-memory-button { min-height: 50px; }
+    }
+
+    /* Short displays can scroll from the top instead of clipping a centered card. */
+    @media (max-height: 700px) {
+      .game-gate {
+        place-items: start center;
+      }
+
+      .game-gate-card.quest-card {
+        margin-top: 0;
+        margin-bottom: 0;
+      }
+    }
+
+    @media (hover: none) and (pointer: coarse) {
+      .quest-object:hover,
+      .quest-memory-button:not(:disabled):hover,
+      .quest-secondary-button:hover,
+      .quest-dial-arrow:hover,
+      .game-continue:hover {
+        transform: none;
+      }
+    }
+
 </style>
 </head>
 <body class="game-gate-active">
@@ -2605,7 +2700,7 @@
       </section>
 
       <section class="quest-stage" data-quest-stage="2" aria-label="Третье испытание: открыть символический замок" hidden>
-        <p class="quest-instruction">Поверни три диска в порядке подсказки: ночное небо → далёкая искра → то, что мы бережём.</p>
+        <p class="quest-instruction">Поверни три диска в порядке подсказки: ночное небо → звезда → сердце.</p>
         <div class="quest-lock" id="quest-lock">
           <div class="quest-dial">
             <span class="quest-dial-label">первый знак</span>
