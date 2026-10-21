@@ -2366,7 +2366,7 @@
       </div>
 
       <section class="quest-stage" data-quest-stage="0" aria-label="Первое испытание: найти ключ">
-        <p class="quest-instruction">Выбери предмет, который откроет запертую шкатулку.</p>
+        <p class="quest-instruction">Когда-то всё началось на первом курсе. Среди этих знаков спрятан ключ к нашей истории. Найди его, чтобы открыть первую главу.</p>
         <div class="quest-key-grid" id="quest-key-grid" role="group" aria-label="Предметы из секретного архива">
           <button class="quest-object" type="button" data-label="Искра" aria-label="Искра">✧</button>
           <button class="quest-object" type="button" data-label="Луна" aria-label="Луна">☾</button>
@@ -2381,7 +2381,7 @@
       </section>
 
       <section class="quest-stage" data-quest-stage="1" aria-label="Второе испытание: повторить последовательность" hidden>
-        <p class="quest-instruction">Запомни пять знаков, которые вспыхнут по очереди. Затем повтори их в том же порядке.</p>
+        <p class="quest-instruction">Первый курс, третий курс, университет, наш дом и любимые вечера. Запомни пять знаков и повтори их по порядку, будто собираешь маленькие моменты нашей жизни.</p>
         <div class="quest-memory-display" id="quest-memory-display" aria-live="polite" aria-label="Знак последовательности">готова?</div>
         <div class="quest-memory-pad" id="quest-memory-pad" role="group" aria-label="Повтори последовательность знаков">
           <button class="quest-memory-button" type="button" data-symbol="0" aria-label="Луна" disabled>☾<span>луна</span></button>
@@ -2393,7 +2393,7 @@
       </section>
 
       <section class="quest-stage" data-quest-stage="2" aria-label="Третье испытание: открыть символический замок" hidden>
-        <p class="quest-instruction">Поверни три диска в порядке подсказки: ночное небо → далёкая искра → то, что мы бережём.</p>
+        <p class="quest-instruction">Последний код нашей маленькой истории: музыка, под которую хочется танцевать → сумеречное небо из любимых историй → то, что каждый день делает дом домом.</p>
         <div class="quest-lock" id="quest-lock">
           <div class="quest-dial">
             <span class="quest-dial-label">первый знак</span>
@@ -2637,9 +2637,9 @@
       const dialArrows = Array.from(document.querySelectorAll(".quest-dial-arrow"));
 
       const questData = [
-        { kicker: "СЕКРЕТНЫЙ АРХИВ · 01 / 03", title: "Найди ключ", description: "Шкатулка хранит сюрприз. Для начала найди среди знаков то, что умеет открывать замки." },
-        { kicker: "СЕКРЕТНЫЙ АРХИВ · 02 / 03", title: "Память звёзд", description: "Теперь нужно запомнить маленькую последовательность и вернуть её в точности." },
-        { kicker: "СЕКРЕТНЫЙ АРХИВ · 03 / 03", title: "Символический замок", description: "Последнее испытание. Расставь символы по подсказке, чтобы открыть путь к сюрпризу." }
+        { kicker: "ГЛАВА 01 · ПЕРВЫЙ КУРС", title: "С чего всё началось", description: "Вы встретились в университете, ещё не зная, что однажды будете возвращаться домой вместе. Найди ключ к первой главе вашей истории." },
+        { kicker: "ГЛАВА 02 · НАШ МИР", title: "Моменты рядом", description: "От пар в университете до вечеров дома в Инорсе: счастье часто прячется в обычных днях. Собери последовательность ваших маленьких радостей." },
+        { kicker: "ГЛАВА 03 · ТОЛЬКО НАШЕ", title: "Код сердца", description: "Музыка, любимые истории и чувство дома. Расставь символы по подсказке, чтобы открыть последнее письмо." }
       ];
 
       let currentQuestStage = 0;
@@ -2694,7 +2694,7 @@
             object.classList.add("is-correct");
             object.disabled = true;
             keyObjects.forEach(function (other) { other.disabled = true; });
-            gameFeedback.textContent = "Ключ найден. Первая защёлка открылась ✧";
+            gameFeedback.textContent = "Первая глава открыта. Так началась ваша история в университете ✧";
             setProgress(33);
             showContinue("Перейти к загадке памяти");
             gameContinue.focus({ preventScroll: true });
@@ -2703,7 +2703,7 @@
           object.classList.remove("is-wrong");
           void object.offsetWidth;
           object.classList.add("is-wrong");
-          gameFeedback.textContent = "Не этот знак. Посмотри на остальные предметы.";
+          gameFeedback.textContent = "Пока не он. Как и в жизни, иногда нужно присмотреться внимательнее.";
           window.setTimeout(function () { object.classList.remove("is-wrong"); }, 430);
         });
       });
@@ -2732,7 +2732,7 @@
             memoryButtons.forEach(function (button) { button.disabled = false; });
             memoryStart.disabled = false;
             memoryStart.textContent = "Показать ещё раз";
-            gameFeedback.textContent = "Теперь повтори пять знаков в том же порядке.";
+            gameFeedback.textContent = "Собери эти пять знаков в том же порядке. Маленькие моменты складываются в большую историю ♡";
             return;
           }
           memoryDisplay.textContent = memorySymbols[memoryPattern[step]];
@@ -2778,7 +2778,7 @@
             memoryButtons.forEach(function (entry) { entry.disabled = true; });
             memoryStart.hidden = true;
             memoryDisplay.textContent = "идеально";
-            gameFeedback.textContent = "Все знаки на месте. Память тебя не подвела ♡";
+            gameFeedback.textContent = "Все знаки на месте. Университет, дом и ваши вечера теперь в одной маленькой истории ♡";
             setProgress(66);
             showContinue("Перейти к символическому замку");
             gameContinue.focus({ preventScroll: true });
@@ -2787,7 +2787,7 @@
       });
 
       const dialSymbols = ["☾", "✦", "♡", "✧"];
-      const correctCode = [0, 1, 2];
+      const correctCode = [1, 0, 2];
 
       function updateDial(index) {
         dialDisplays[index].textContent = dialSymbols[dialIndexes[index]];
@@ -2815,7 +2815,7 @@
           void lock.offsetWidth;
           lock.classList.add("is-shaking");
           window.setTimeout(function () { lock.classList.remove("is-shaking"); }, 430);
-          gameFeedback.textContent = "Замок тихо щёлкнул, но не открылся. Вспомни порядок подсказки.";
+          gameFeedback.textContent = "Почти. Вспомни подсказку: любимая музыка, сумеречное небо, а затем сердце.";
           return;
         }
 
@@ -2823,7 +2823,7 @@
         dialArrows.forEach(function (arrow) { arrow.disabled = true; });
         lockCheck.disabled = true;
         document.getElementById("quest-lock").classList.add("is-unlocked");
-        gameFeedback.textContent = "Замок открылся. Сюрприз ждёт тебя по ту сторону ♡";
+        gameFeedback.textContent = "Замок открылся. От первого курса до нашего общего дома. А теперь самое главное, Лера ♡";
         gameTitle.textContent = "Путь открыт.";
         gameDescription.textContent = "Ты прошла все три испытания. Самое важное теперь совсем рядом.";
         gameKicker.textContent = "ДОСТУП РАЗРЕШЁН · 03 / 03";
