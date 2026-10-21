@@ -417,7 +417,7 @@
     }
     @keyframes fall {
       0% { transform: translate3d(0, -10px, 0) rotate(0deg); opacity: 0; }
-      12% { opacity: .95; }
+      12% { opacity: .78; }
       100% { transform: translate3d(var(--drift), 105vh, 0) rotate(var(--spin)); opacity: 0; }
     }
     @media (max-width: 800px) {
@@ -1340,6 +1340,219 @@
       }
     }
 
+  
+    
+    /* Motion design pass 03: restrained, layered motion with a calm rhythm. */
+    .hero-copy .eyebrow,
+    .hero-copy h1,
+    .hero-copy .hero-description,
+    .hero-copy .open-button,
+    .hero-copy .quiet-note {
+      animation: copy-arrive .82s cubic-bezier(.2,.75,.25,1) both;
+    }
+
+    .hero-copy h1 { animation-delay: .09s; }
+    .hero-copy .hero-description { animation-delay: .17s; }
+    .hero-copy .open-button { animation-delay: .25s; }
+    .hero-copy .quiet-note { animation-delay: .32s; }
+
+    .envelope-stage {
+      animation: stage-arrive 1.1s cubic-bezier(.2,.75,.25,1) .12s both;
+    }
+
+    .envelope-wrap {
+      animation: envelope-breathe 7.4s ease-in-out 1.1s infinite;
+      will-change: transform;
+    }
+
+    .orbit {
+      animation: orbit-turn 48s linear infinite;
+      transform-origin: center;
+      will-change: transform;
+    }
+
+    .orbit-dot {
+      animation: star-glow 4.8s ease-in-out infinite;
+    }
+
+    .orbit-dot.two {
+      animation-delay: -2.2s;
+    }
+
+    .heart-a { animation-duration: 6.4s; }
+    .heart-b { animation-duration: 8.2s; animation-delay: -3.4s; }
+    .heart-c { animation-duration: 5.7s; animation-delay: -1.7s; }
+
+    .envelope-flap {
+      transition: transform .78s cubic-bezier(.22,.75,.18,1), z-index 0s .39s;
+    }
+
+    .envelope-paper {
+      transition: transform .98s cubic-bezier(.16,1,.3,1) .17s;
+    }
+
+    .envelope-seal {
+      transition: opacity .28s ease .16s, transform .55s cubic-bezier(.2,.8,.2,1);
+    }
+
+    .envelope.is-open .envelope-seal {
+      transform: translate(-50%, -50%) scale(.5) rotate(-18deg);
+    }
+
+    .envelope-caption {
+      transition: color .5s ease, letter-spacing .5s ease;
+    }
+
+    .envelope-wrap:has(.envelope.is-open) .envelope-caption {
+      color: rgba(255, 250, 245, .68);
+      letter-spacing: .24em;
+    }
+
+    .scroll-cue {
+      animation: cue-breathe 3.2s ease-in-out infinite;
+    }
+
+    .letter-section.is-visible .section-label {
+      animation: copy-arrive .7s cubic-bezier(.2,.75,.25,1) .08s both;
+    }
+
+    .letter-section.is-visible .letter-title {
+      animation: copy-arrive .85s cubic-bezier(.2,.75,.25,1) .18s both;
+    }
+
+    .letter-section.is-visible .paper-card {
+      animation: paper-arrive .95s cubic-bezier(.16,1,.3,1) .22s both;
+    }
+
+    .letter-section.is-visible .letter-copy p {
+      animation: copy-arrive .75s cubic-bezier(.2,.75,.25,1) both;
+    }
+
+    .letter-section.is-visible .letter-copy p:nth-of-type(1) { animation-delay: .36s; }
+    .letter-section.is-visible .letter-copy p:nth-of-type(2) { animation-delay: .44s; }
+    .letter-section.is-visible .letter-copy p:nth-of-type(3) { animation-delay: .52s; }
+    .letter-section.is-visible .letter-copy p:nth-of-type(4) { animation-delay: .60s; }
+    .letter-section.is-visible .letter-copy p:nth-of-type(5) { animation-delay: .68s; }
+
+    .letter-section.is-visible .signature {
+      animation: copy-arrive .8s cubic-bezier(.2,.75,.25,1) .76s both;
+    }
+
+    .secret-message {
+      animation: secret-arrive .72s cubic-bezier(.16,1,.3,1) both;
+    }
+
+    @keyframes copy-arrive {
+      from { opacity: 0; transform: translateY(16px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes stage-arrive {
+      from { opacity: 0; transform: translateY(14px) scale(.985); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @keyframes envelope-breathe {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-6px); }
+    }
+
+    @keyframes orbit-turn {
+      from { transform: rotate(-18deg) scaleY(.83); }
+      to { transform: rotate(342deg) scaleY(.83); }
+    }
+
+    @keyframes star-glow {
+      0%, 100% { opacity: .6; }
+      50% { opacity: 1; }
+    }
+
+    @keyframes cue-breathe {
+      0%, 100% { opacity: .58; }
+      50% { opacity: 1; }
+    }
+
+    @keyframes paper-arrive {
+      from { opacity: 0; transform: translateY(20px) scale(.992); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    @keyframes secret-arrive {
+      from { opacity: 0; transform: translateY(12px) scale(.99); }
+      to { opacity: 1; transform: translateY(0) scale(1); }
+    }
+
+    /* Scroll reveals are progressive enhancement: without the observer, content stays visible. */
+    .reveal-on-scroll {
+      opacity: 1;
+      transform: none;
+    }
+
+    body.reveal-enabled .reveal-on-scroll {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity .78s cubic-bezier(.2,.75,.25,1), transform .78s cubic-bezier(.2,.75,.25,1);
+    }
+
+    body.reveal-enabled .reveal-on-scroll.is-in-view {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    body.reveal-enabled .reasons .reason:nth-child(2) { transition-delay: .09s; }
+    body.reveal-enabled .reasons .reason:nth-child(3) { transition-delay: .18s; }
+
+    body.reveal-enabled .reason.reveal-on-scroll.is-in-view:hover {
+      transform: translateY(-3px);
+    }
+
+    @media (max-width: 800px) {
+      .envelope-stage { min-height: 370px; }
+      .envelope-wrap { animation-duration: 8.2s; }
+    }
+
+    @media (max-width: 430px) {
+      .envelope-stage { min-height: 315px; }
+      .envelope-wrap { animation-duration: 8.5s; }
+      .orbit { width: min(100%, 330px); }
+      .scroll-cue { animation-duration: 3.8s; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .hero-copy .eyebrow,
+      .hero-copy h1,
+      .hero-copy .hero-description,
+      .hero-copy .open-button,
+      .hero-copy .quiet-note,
+      .envelope-stage,
+      .envelope-wrap,
+      .orbit,
+      .orbit-dot,
+      .floating-heart,
+      .scroll-cue,
+      .letter-section.is-visible .section-label,
+      .letter-section.is-visible .letter-title,
+      .letter-section.is-visible .paper-card,
+      .letter-section.is-visible .letter-copy p,
+      .letter-section.is-visible .signature,
+      .secret-message,
+      .confetti-heart {
+        animation: none !important;
+      }
+
+      body.reveal-enabled .reveal-on-scroll {
+        opacity: 1;
+        transform: none;
+        transition: none;
+      }
+
+      .envelope-flap,
+      .envelope-paper,
+      .envelope-seal {
+        transition: none !important;
+      }
+    }
+
   </style>
 </head>
 <body>
@@ -1405,12 +1618,12 @@
       </section>
 
       <section class="little-things" aria-labelledby="little-title">
-        <div class="little-inner">
+        <div class="little-inner reveal-on-scroll">
           <p class="section-label">вещи, которые иногда хочется повторять чаще</p>
           <h2 class="letter-title" id="little-title">Ты для меня — это…</h2>
           <p class="little-subtitle">Не огромные слова. Просто несколько маленьких истин, которые я хочу, чтобы ты знала.</p>
           <div class="reasons">
-            <article class="reason">
+            <article class="reason reveal-on-scroll">
               <span class="reason-icon" aria-hidden="true">✿</span>
               <h3>Уют</h3>
               <p>Когда можно просто быть собой. Без лишних слов и без необходимости казаться кем-то другим.</p>
@@ -1430,7 +1643,7 @@
       </section>
 
       <section class="secret-section" aria-labelledby="secret-title">
-        <div class="secret-inner">
+        <div class="secret-inner reveal-on-scroll">
           <div class="secret-heart" aria-hidden="true">♡</div>
           <p class="section-label">ps: это тоже для тебя</p>
           <h2 class="secret-title" id="secret-title">И ещё кое-что.</h2>
@@ -1441,7 +1654,7 @@
       </section>
     </main>
 
-    <footer class="footer">
+    <footer class="footer reveal-on-scroll">
       <span class="footer-heart" aria-hidden="true">♡</span>
       <span>сделано специально для Валерии</span>
       <span>два года — и это только наша первая глава</span>
@@ -1461,16 +1674,16 @@
       function heartRain() {
         if (reducedMotion) return;
         const symbols = ["♡", "♥", "✦", "✧"];
-        const colors = ["#e8a9b8", "#d7b777", "#f4d7d6", "#fff8f0"];
-        for (let i = 0; i < 25; i += 1) {
+        const colors = ["#dfb0bd", "#cbb27e", "#f2dce1", "#fffaf5"];
+        for (let i = 0; i < 16; i += 1) {
           const heart = document.createElement("span");
           heart.className = "confetti-heart";
           heart.textContent = symbols[Math.floor(Math.random() * symbols.length)];
           heart.style.setProperty("--left", (Math.random() * 100) + "vw");
-          heart.style.setProperty("--drift", ((Math.random() - 0.5) * 180) + "px");
-          heart.style.setProperty("--spin", ((Math.random() - 0.5) * 300) + "deg");
-          heart.style.setProperty("--duration", (3.2 + Math.random() * 2.4) + "s");
-          heart.style.setProperty("--size", (12 + Math.random() * 15) + "px");
+          heart.style.setProperty("--drift", ((Math.random() - 0.5) * 120) + "px");
+          heart.style.setProperty("--spin", ((Math.random() - 0.5) * 200) + "deg");
+          heart.style.setProperty("--duration", (4.2 + Math.random() * 2.4) + "s");
+          heart.style.setProperty("--size", (10 + Math.random() * 12) + "px");
           heart.style.setProperty("--heart-color", colors[Math.floor(Math.random() * colors.length)]);
           document.body.appendChild(heart);
           window.setTimeout(function () { heart.remove(); }, 6000);
@@ -1492,7 +1705,7 @@
         heartRain();
         window.setTimeout(function () {
           letter.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth", block: "start" });
-        }, reducedMotion ? 0 : 500);
+        }, reducedMotion ? 0 : 820);
       });
 
       secretButton.addEventListener("click", function () {
@@ -1502,6 +1715,27 @@
         secretButton.textContent = isOpen ? "Открыть секретное признание" : "Спрятать секрет";
         if (!isOpen) heartRain();
       });
+
+      
+      if ("IntersectionObserver" in window && !reducedMotion) {
+        document.body.classList.add("reveal-enabled");
+        const revealObserver = new IntersectionObserver(function (entries, observer) {
+          entries.forEach(function (entry) {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("is-in-view");
+              observer.unobserve(entry.target);
+            }
+          });
+        }, {
+          threshold: 0.12,
+          rootMargin: "0px 0px -36px 0px"
+        });
+
+        document.querySelectorAll(".reveal-on-scroll").forEach(function (element) {
+          revealObserver.observe(element);
+        });
+      }
+
     }());
   </script>
 </body>
