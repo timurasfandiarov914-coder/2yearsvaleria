@@ -2345,6 +2345,36 @@
       }
     }
 
+  
+    /* A visible story marker stays with Valeria's quest on every stage. */
+    .quest-storyline {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+      max-width: 390px;
+      margin: 0 auto 17px;
+    }
+    .quest-story-chip {
+      display: inline-flex;
+      align-items: center;
+      min-height: 27px;
+      padding: 6px 9px;
+      border: 1px solid rgba(215, 183, 119, .27);
+      border-radius: 999px;
+      background: rgba(255, 248, 240, .035);
+      color: rgba(255, 248, 240, .73);
+      font-size: 9px;
+      letter-spacing: .035em;
+      line-height: 1.25;
+    }
+    .quest-story-chip-accent {
+      border-color: rgba(215, 183, 119, .48);
+      color: #efd9a6;
+      background: rgba(215, 183, 119, .07);
+    }
+
   </style>
 </head>
 <body class="game-gate-active">
@@ -2353,9 +2383,15 @@
   <div class="game-gate" id="game-gate" role="dialog" aria-modal="true" aria-labelledby="game-title" aria-describedby="game-description">
     <div class="game-gate-card quest-card">
       <div class="game-emblem" aria-hidden="true">✧</div>
-      <p class="game-kicker" id="game-kicker">СЕКРЕТНЫЙ АРХИВ · 01 / 03</p>
+      <p class="game-kicker" id="game-kicker">ВАША ИСТОРИЯ · 01 / 03</p>
       <h1 class="game-title" id="game-title">Найди ключ</h1>
-      <p class="game-description" id="game-description">Шкатулка хранит сюрприз. Для начала найди среди знаков то, что умеет открывать замки.</p>
+      <p class="game-description" id="game-description">Всё началось на первом курсе университета. Найди ключ, чтобы по кусочкам открыть нашу историю.</p>
+
+      <div class="quest-storyline" aria-label="Личные детали вашей истории">
+        <span class="quest-story-chip">первый курс</span>
+        <span class="quest-story-chip">дом в Инорсе</span>
+        <span class="quest-story-chip quest-story-chip-accent">K-pop · «Сумерки» · «Голодные игры»</span>
+      </div>
 
       <div class="game-counter-row">
         <span class="game-counter-label" id="game-stage-label">испытание 01 из 03</span>
@@ -2637,7 +2673,7 @@
       const dialArrows = Array.from(document.querySelectorAll(".quest-dial-arrow"));
 
       const questData = [
-        { kicker: "ГЛАВА 01 · ПЕРВЫЙ КУРС", title: "С чего всё началось", description: "Вы встретились в университете, ещё не зная, что однажды будете возвращаться домой вместе. Найди ключ к первой главе вашей истории." },
+        { kicker: "ВАША ИСТОРИЯ · ГЛАВА 01 / 03", title: "С чего всё началось", description: "Всё началось на первом курсе университета. Теперь у вас общий дом в Инорсе, любимые вечера и целая история, которую можно открыть по частям." },
         { kicker: "ГЛАВА 02 · НАШ МИР", title: "Моменты рядом", description: "От пар в университете до вечеров дома в Инорсе, K-pop, «Сумерек» и «Голодных игр»: счастье прячется и в общих увлечениях, и в самых обычных днях." },
         { kicker: "ГЛАВА 03 · ТОЛЬКО НАШЕ", title: "Код сердца", description: "K-pop, «Сумерки», «Голодные игры» и чувство дома. Расставь три символа по подсказке, чтобы открыть последнее письмо." }
       ];
