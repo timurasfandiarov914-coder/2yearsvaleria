@@ -3318,6 +3318,43 @@
     }
 
 
+
+    .match3-particle-burst {
+      position: fixed;
+      z-index: 2;
+      inset: 0;
+      overflow: hidden;
+      pointer-events: none;
+    }
+
+    .m3-burst-particle {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      color: var(--particle-color);
+      font-family: var(--serif);
+      font-size: var(--particle-size);
+      opacity: 0;
+      text-shadow: 0 0 14px currentColor;
+      will-change: transform, opacity;
+      animation: m3-particle-fly 1.15s cubic-bezier(.16,1,.3,1) var(--delay) both;
+    }
+
+    @keyframes m3-particle-fly {
+      0% { opacity: 0; transform: translate(-50%,-50%) scale(.35) rotate(0); }
+      16% { opacity: .92; }
+      100% {
+        opacity: 0;
+        transform: translate(calc(-50% + var(--dx)),calc(-50% + var(--dy))) scale(.15) rotate(var(--spin));
+        filter: blur(1px);
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .m3-burst-particle { animation: none !important; display: none; }
+      .match3-particle-burst { display: none; }
+    }
+
 </style>
 </head>
 <body class="game-gate-active">
@@ -3406,6 +3443,7 @@
 
 
   <div class="match3-gate" id="match3-gate" aria-hidden="true" inert>
+    <div class="match3-particle-burst" id="match3-particle-burst" aria-hidden="true"></div>
     <div class="match3-shell">
       <section class="match3-panel" role="dialog" aria-modal="true" aria-labelledby="match3-title">
         <div class="match3-brandline">
@@ -4034,7 +4072,9 @@
       const match3RewardTitle = document.getElementById("match3-reward-title");
       const match3Start = document.getElementById("match3-start");
       const match3Continue = document.getElementById("match3-continue");
+      const match3ParticleBurst = document.getElementById("match3-particle-burst");
       const match3ReduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      let match3ParticleTimer = 0;
       const match3Glyphs = ["♥", "✦", "❀", "☾", "✉", "✧"];
       const match3TypeNames = ["сердце", "звезда", "цветок", "луна", "конверт", "искра"];
       const match3TypeColors = ["#e6a4ba", "#e5ca8e", "#f0c5d2", "#b6cadf", "#f2d7bd", "#d9c6ed"];
@@ -4402,6 +4442,37 @@
         return new Promise(function (resolve) { window.setTimeout(resolve, ms); });
       }
 
+      function match3ClearParticles() {
+        if (match3ParticleTimer) {
+          window.clearTimeout(match3ParticleTimer);
+          match3ParticleTimer = 0;
+        }
+        match3ParticleBurst.textContent = "";
+      }
+
+      function match3LaunchRewardParticles() {
+        match3ClearParticles();
+        if (match3ReduceMotion) return;
+        const fragment = document.createDocumentFragment();
+        const glyphs = ["♡", "✦", "❀", "☾", "✧", "✉"];
+        const colors = ["#e6a4ba", "#e5ca8e", "#f0c5d2", "#b6cadf", "#f2d7bd", "#d9c6ed"];
+        for (let index = 0; index < 28; index += 1) {
+          const particle = document.createElement("span");
+          particle.className = "m3-burst-particle";
+          particle.setAttribute("aria-hidden", "true");
+          particle.textContent = glyphs[index % glyphs.length];
+          particle.style.setProperty("--particle-color", colors[index % colors.length]);
+          particle.style.setProperty("--dx", (Math.round((Math.random() - 0.5) * 82) * 3) + "px");
+          particle.style.setProperty("--dy", (Math.round((Math.random() - 0.5) * 70) * 3) + "px");
+          particle.style.setProperty("--spin", Math.round((Math.random() - 0.5) * 240) + "deg");
+          particle.style.setProperty("--delay", (Math.random() * 0.18).toFixed(2) + "s");
+          particle.style.setProperty("--particle-size", (12 + Math.round(Math.random() * 12)) + "px");
+          fragment.appendChild(particle);
+        }
+        match3ParticleBurst.appendChild(fragment);
+        match3ParticleTimer = window.setTimeout(match3ClearParticles, 1800);
+      }
+
       function match3Save() {
         try {
           const data = {
@@ -4644,6 +4715,7 @@
         match3Mode = "reward";
         match3InputLocked = false;
         match3HideScreens("match3-reward");
+        match3LaunchRewardParticles();
         match3FocusHeading(match3RewardTitle);
         if (shouldSave !== false) match3Save();
       }
@@ -4863,6 +4935,7 @@
         match3Mode = "done";
         match3Continue.disabled = true;
         match3Save();
+        match3ClearParticles();
         match3Gate.classList.add("is-leaving");
         window.setTimeout(function () {
           match3Gate.classList.remove("is-active", "is-leaving");
