@@ -3355,6 +3355,169 @@
       .match3-particle-burst { display: none; }
     }
 
+
+    /* Polished storybook arcade skin: original art direction, no external assets. */
+    .match3-gate {
+      padding: max(12px,env(safe-area-inset-top)) 12px max(12px,env(safe-area-inset-bottom));
+      background:
+        radial-gradient(ellipse at 50% 1%,rgba(121,164,255,.3),transparent 24rem),
+        radial-gradient(ellipse at 8% 72%,rgba(220,65,135,.2),transparent 22rem),
+        radial-gradient(ellipse at 95% 68%,rgba(71,115,241,.22),transparent 23rem),
+        linear-gradient(145deg,#101943,#17275d 48%,#0d1538);
+    }
+    .match3-gate::before { inset:7px; border:2px solid rgba(255,216,126,.34); border-radius:23px; box-shadow:inset 0 0 0 3px rgba(255,255,255,.035),0 0 36px rgba(90,129,255,.08); }
+    .match3-gate::after { inset:13px; border:1px solid rgba(255,255,255,.07); border-radius:17px; }
+    .match3-shell { width:min(100%,474px); }
+    .match3-panel {
+      padding:clamp(14px,3.6vw,22px); border:1px solid rgba(255,220,139,.64); border-radius:23px;
+      background:radial-gradient(ellipse at 50% -7%,rgba(119,163,255,.23),transparent 48%),radial-gradient(ellipse at 100% 85%,rgba(184,78,155,.13),transparent 42%),linear-gradient(150deg,rgba(35,61,131,.98),rgba(20,36,86,.99) 55%,rgba(13,26,65,.99));
+      box-shadow:0 26px 70px rgba(2,7,28,.52),inset 0 1px rgba(255,255,255,.17),inset 0 -2px rgba(2,8,34,.45),0 0 0 4px rgba(255,216,126,.075);
+      backdrop-filter:blur(18px); -webkit-backdrop-filter:blur(18px);
+    }
+    .match3-brandline { margin-bottom:14px; padding-bottom:12px; border-bottom:1px solid rgba(255,255,255,.1); color:#d9e4ff; font-size:8px; font-weight:800; letter-spacing:.17em; }
+    .match3-brandmark {
+      display:grid; width:27px; height:27px; place-items:center; border:1px solid rgba(255,225,148,.65); border-radius:9px;
+      color:#fff5ce; background:linear-gradient(145deg,#ffb6d4,#d74c91 60%,#8d2c70); box-shadow:inset 0 1px rgba(255,255,255,.55),0 3px 10px rgba(3,8,35,.3); font-size:17px;
+    }
+    .match3-title,.match3-result-title { color:#fffaf1; text-shadow:0 3px 0 rgba(4,13,46,.24),0 0 24px rgba(155,183,255,.16); }
+    .match3-play-title { color:#fff9e9; font-family:var(--sans); font-size:clamp(20px,5.1vw,25px); font-weight:850; letter-spacing:-.045em; line-height:1.15; text-shadow:0 2px rgba(6,17,52,.3); }
+    .match3-kicker {
+      display:inline-flex; min-height:21px; align-items:center; justify-content:center; margin-bottom:9px; padding:4px 10px;
+      border:1px solid rgba(255,231,166,.53); border-radius:999px; color:#55401a; background:linear-gradient(180deg,#fff0b5,#e8bd5d);
+      box-shadow:inset 0 1px rgba(255,255,255,.72),0 2px 0 rgba(113,78,23,.22); font-size:7px; font-weight:900; letter-spacing:.15em; line-height:1.3;
+    }
+    .match3-copy { color:rgba(243,247,255,.78); font-size:11px; line-height:1.8; }
+    .match3-intro-orbit {
+      width:106px; height:106px; margin-bottom:17px; border:2px solid rgba(255,221,131,.75); border-radius:32px;
+      background:radial-gradient(circle at 30% 20%,rgba(255,255,255,.48),transparent 24%),linear-gradient(145deg,#ffabc9,#db528f 46%,#812c79);
+      box-shadow:inset 0 2px rgba(255,255,255,.38),inset 0 -8px 17px rgba(74,16,78,.32),0 0 0 5px rgba(255,221,131,.1),0 12px 30px rgba(3,8,35,.3),0 0 30px rgba(233,91,156,.23);
+    }
+    .m3-orbit-heart { color:#fff8e5; font-size:45px; text-shadow:0 3px rgba(116,30,83,.36),0 0 18px rgba(255,255,255,.35); }
+    .m3-orbit-star { color:#fff2ad; text-shadow:0 0 10px rgba(255,255,255,.65); }
+    .m3-orbit-flower { color:#fff1fb; text-shadow:0 0 10px rgba(255,255,255,.4); }
+    .match3-intro-details { gap:clamp(16px,7vw,39px); margin:20px 0 23px; }
+    .match3-intro-details span { min-width:65px; padding:9px 10px 8px; border:1px solid rgba(255,255,255,.12); border-radius:13px; background:linear-gradient(145deg,rgba(255,255,255,.105),rgba(255,255,255,.025)); box-shadow:inset 0 1px rgba(255,255,255,.08); }
+    .match3-intro-details b { color:#ffe6a0; font-family:var(--sans); font-size:22px; font-weight:900; }
+    .match3-intro-details small { color:#d7e1ff; font-size:7px; font-weight:800; }
+    .match3-primary {
+      min-height:52px; border:1px solid #fff0b6; border-radius:15px; color:#4c3412;
+      background:linear-gradient(180deg,#fff0a9 0%,#f6cc62 52%,#dca33d 100%);
+      box-shadow:inset 0 2px rgba(255,255,255,.72),inset 0 -3px rgba(135,85,16,.16),0 5px 0 #8e6429,0 10px 17px rgba(3,8,35,.25);
+      font-size:11px; font-weight:900; letter-spacing:.025em;
+    }
+    .match3-primary span { color:#87571d; font-size:19px; }
+    .match3-primary:hover { border-color:#fff8d7; background:linear-gradient(180deg,#fff5c6,#f8d578 55%,#e6b34e); transform:translateY(-1px); }
+    .match3-primary:active { transform:translateY(3px); box-shadow:inset 0 1px rgba(255,255,255,.6),0 2px 0 #8e6429; }
+    .match3-secondary { min-height:45px; border:1px solid rgba(181,204,255,.32); border-radius:13px; color:#e9efff; background:rgba(255,255,255,.055); font-weight:750; }
+    .match3-secondary:hover { border-color:rgba(220,231,255,.65); background:rgba(255,255,255,.1); }
+    .match3-note { color:rgba(221,231,255,.53); font-size:8px; }
+    .match3-level-heading { align-items:center; margin-bottom:12px; }
+    .match3-level-heading .match3-kicker { margin-bottom:5px; }
+    .match3-moves { min-width:66px; padding:6px 9px 7px; border:2px solid #fff0af; border-radius:14px; background:linear-gradient(155deg,#fff0a6,#e7ad39 78%); box-shadow:inset 0 2px rgba(255,255,255,.76),0 4px 0 #97652a,0 6px 12px rgba(0,0,0,.2); }
+    .match3-moves span { color:#70501e; font-size:7px; font-weight:900; letter-spacing:.15em; }
+    .match3-moves strong { color:#49310f; font-family:var(--sans); font-size:27px; font-weight:950; text-shadow:0 1px rgba(255,255,255,.3); }
+    .match3-level-progress { display:grid; grid-template-columns:repeat(3,1fr); gap:5px; margin:0 0 12px; }
+    .match3-level-progress span { height:5px; border:1px solid rgba(255,255,255,.13); border-radius:99px; background:rgba(3,11,43,.42); box-shadow:inset 0 1px 2px rgba(0,0,0,.22); }
+    .match3-level-progress span.is-complete,.match3-level-progress span.is-current { border-color:#fff0ad; background:linear-gradient(90deg,#fff4ba,#e7b247); box-shadow:0 0 11px rgba(255,216,111,.25); }
+    .match3-level-progress span.is-current { animation:m3-progress-glow 1.8s ease-in-out infinite; }
+    .match3-goals { gap:7px; margin-bottom:11px; }
+    .m3-goal { min-height:57px; padding:7px 9px; border:1px solid rgba(201,218,255,.24); border-radius:13px; background:linear-gradient(145deg,rgba(255,255,255,.12),rgba(255,255,255,.035)); box-shadow:inset 0 1px rgba(255,255,255,.09),0 3px 8px rgba(2,8,32,.12); }
+    .m3-goal-glyph {
+      display:grid; width:34px; height:34px; place-items:center; border:1px solid rgba(255,255,255,.34); border-radius:11px; color:#fff!important;
+      background:linear-gradient(145deg,#ffb5d2,#cf498c 66%,#8b286f); box-shadow:inset 0 1px rgba(255,255,255,.45),0 3px 7px rgba(0,0,0,.2);
+      font-family:var(--sans); font-size:19px; text-shadow:0 2px rgba(94,24,74,.32);
+    }
+    .m3-goal-label { color:rgba(234,241,255,.74); font-size:8px; font-weight:750; }
+    .m3-goal-count { margin-top:2px; color:#fff3c7; font-family:var(--sans); font-size:13px; font-weight:900; }
+    .m3-goal-meter { height:5px; margin-top:4px; background:rgba(4,12,43,.55); }
+    .m3-goal-meter>span { border-radius:inherit; background:linear-gradient(90deg,#ff8eb9,#ffe18a); box-shadow:0 0 8px rgba(255,181,204,.35); }
+    .match3-score-row { margin:0 2px 8px; color:rgba(230,238,255,.78); font-size:8px; font-weight:800; letter-spacing:.07em; }
+    .match3-score-row b { color:#fff0a9; font-family:var(--sans); font-size:16px; font-weight:950; }
+    #match3-score-goal { color:#dce6ff; font-size:8px; }
+    .match3-board-frame {
+      width:min(100%,420px); padding:7px; border:2px solid #f6d47d; border-radius:18px;
+      background:linear-gradient(145deg,#91b8ff,#4777dc 16%,#254ba5 54%,#18336f);
+      box-shadow:inset 0 2px rgba(255,255,255,.45),inset 0 -4px rgba(7,22,71,.45),0 6px 0 #0c1e51,0 13px 25px rgba(0,0,0,.28),0 0 0 3px rgba(255,224,137,.1);
+    }
+    .match3-board { gap:4px; }
+    .m3-cell {
+      border:1px solid rgba(255,255,255,.44); border-radius:9px; color:#fff; background:linear-gradient(145deg,#294b9a,#1b3471);
+      box-shadow:inset 0 1px rgba(255,255,255,.15),inset 0 -2px rgba(5,13,48,.36),0 2px 1px rgba(0,0,0,.14);
+      font-family:var(--sans); font-size:clamp(18px,5vw,27px);
+      transition:border-color .13s ease,background .13s ease,transform .13s ease,opacity .18s ease,filter .13s ease;
+    }
+    .m3-cell::before { position:absolute; z-index:0; inset:2px; content:""; border-radius:6px; background:linear-gradient(180deg,rgba(255,255,255,.37),rgba(255,255,255,.07) 31%,transparent 55%,rgba(6,12,48,.11)); box-shadow:inset 0 1px rgba(255,255,255,.22); pointer-events:none; }
+    .m3-glyph { position:relative; z-index:1; display:block; transform:translateY(-1px); color:#fff!important; font-family:ui-rounded,"Arial Rounded MT Bold",var(--sans); font-size:clamp(18px,4.7vw,27px); font-weight:900; line-height:1; text-shadow:0 2px rgba(0,0,0,.24),0 0 9px rgba(255,255,255,.35); filter:drop-shadow(0 2px 1px rgba(0,0,0,.19)); }
+    .m3-type-0 { border-color:#ffd3e5; background:linear-gradient(145deg,#ffbad6,#ed5798 46%,#ab2a75); box-shadow:inset 0 1px rgba(255,255,255,.65),inset 0 -3px rgba(111,19,76,.28),0 2px 1px rgba(0,0,0,.17); }
+    .m3-type-1 { border-color:#fff1b7; background:linear-gradient(145deg,#fff1a8,#f8c747 48%,#c7821e); box-shadow:inset 0 1px rgba(255,255,255,.75),inset 0 -3px rgba(124,73,8,.26),0 2px 1px rgba(0,0,0,.17); }
+    .m3-type-2 { border-color:#c5ffe1; background:linear-gradient(145deg,#b9f9d9,#31cda1 48%,#117c88); box-shadow:inset 0 1px rgba(255,255,255,.68),inset 0 -3px rgba(5,83,78,.3),0 2px 1px rgba(0,0,0,.17); }
+    .m3-type-3 { border-color:#d5e7ff; background:linear-gradient(145deg,#c0ddff,#619bf2 47%,#3156b9); box-shadow:inset 0 1px rgba(255,255,255,.68),inset 0 -3px rgba(18,38,115,.31),0 2px 1px rgba(0,0,0,.17); }
+    .m3-type-4 { border-color:#d2f9ff; background:linear-gradient(145deg,#b9f6f2,#4bc4dd 48%,#2473b4); box-shadow:inset 0 1px rgba(255,255,255,.68),inset 0 -3px rgba(15,65,113,.27),0 2px 1px rgba(0,0,0,.17); }
+    .m3-type-5 { border-color:#edd7ff; background:linear-gradient(145deg,#e5c8ff,#ae73ec 48%,#633fb1); box-shadow:inset 0 1px rgba(255,255,255,.7),inset 0 -3px rgba(48,22,106,.31),0 2px 1px rgba(0,0,0,.17); }
+    .m3-cell.is-selected { z-index:3; border-color:#fff7bd; outline:2px solid #fff3a7; outline-offset:1px; box-shadow:0 0 0 4px rgba(255,225,119,.35),0 0 20px rgba(255,238,139,.55),inset 0 0 0 2px rgba(255,255,255,.72); transform:scale(.91); }
+    .m3-cell.is-selected .m3-glyph { transform:scale(1.13); filter:brightness(1.12) drop-shadow(0 3px 2px rgba(0,0,0,.25)); }
+    .m3-cell.is-hinted { z-index:2; border-color:#fff8b4; box-shadow:0 0 0 2px rgba(255,236,134,.66),0 0 18px rgba(255,239,139,.72),inset 0 0 0 2px rgba(255,255,255,.4); animation:m3-hint-bounce .52s ease-in-out infinite alternate; }
+    .m3-cell.is-matched { opacity:0; transform:scale(.38) rotate(16deg); filter:brightness(1.75); }
+    .m3-cell.is-new .m3-glyph { animation:m3-tile-arrive .3s cubic-bezier(.16,1,.3,1) both; }
+    .m3-cell.has-seal { border-color:#ffdbf2; box-shadow:inset 0 0 0 2px rgba(255,180,220,.6),0 0 8px rgba(255,102,176,.25); }
+    .m3-cell.has-seal::after { z-index:3; top:1px; right:1px; display:grid; width:14px; height:14px; place-items:center; border:1px solid rgba(255,255,255,.7); border-radius:50%; color:#8b285f; background:linear-gradient(145deg,#ffe0ef,#f68fbd); font-family:var(--sans); font-size:8px; font-weight:900; text-shadow:none; box-shadow:0 1px 4px rgba(0,0,0,.28); }
+    .m3-cell.is-special { border-color:#fff3ab; box-shadow:0 0 0 2px rgba(255,223,113,.32),0 0 13px rgba(255,224,115,.35),inset 0 1px rgba(255,255,255,.5); animation:m3-special-glow 1.35s ease-in-out infinite alternate; }
+    .m3-special { z-index:4; right:0; bottom:0; width:16px; height:16px; border:1px solid rgba(255,255,255,.9); border-radius:6px 0 5px 0; color:#57360d; background:linear-gradient(145deg,#fff4b2,#efb747); font-size:9px; font-weight:950; box-shadow:0 1px 5px rgba(0,0,0,.25); }
+    .m3-special-bomb { color:#71194e; background:linear-gradient(145deg,#ffd4e9,#ed76b1); }
+    .m3-special-rainbow { color:#fff; background:linear-gradient(135deg,#ff87c4,#ffcf67,#65dbe9,#a68aff); }
+    .match3-boosters { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:8px; margin:12px 0 8px; }
+    .m3-booster {
+      position:relative; display:flex; min-width:0; min-height:61px; flex-direction:column; align-items:center; justify-content:center; gap:3px; padding:7px 4px 6px;
+      border:1px solid rgba(194,216,255,.36); border-radius:13px; color:#eef4ff;
+      background:linear-gradient(145deg,rgba(107,145,231,.4),rgba(33,60,133,.62) 60%,rgba(20,39,92,.85));
+      box-shadow:inset 0 1px rgba(255,255,255,.17),0 3px 0 #0b1a4b,0 6px 10px rgba(3,8,35,.17);
+      font:inherit; cursor:pointer; touch-action:manipulation; -webkit-tap-highlight-color:transparent; transition:transform .15s ease,border-color .15s ease,filter .15s ease,opacity .15s ease;
+    }
+    .m3-booster:active:not(:disabled) { transform:translateY(2px); }
+    .m3-booster:disabled { cursor:default; opacity:.45; filter:saturate(.55); }
+    .m3-booster.is-active { border-color:#fff0a8; color:#50340d; background:linear-gradient(145deg,#ffe9a0,#df9e36); box-shadow:inset 0 1px rgba(255,255,255,.78),0 0 0 2px rgba(255,224,126,.24),0 4px 12px rgba(0,0,0,.24); opacity:1; filter:none; }
+    .m3-booster-icon { display:grid; width:25px; height:25px; place-items:center; border:1px solid rgba(255,255,255,.37); border-radius:8px; color:#fff6ca; background:linear-gradient(145deg,#f8c4e2,#bb5da9 65%,#6249aa); box-shadow:inset 0 1px rgba(255,255,255,.5),0 2px 4px rgba(0,0,0,.18); font-size:15px; font-weight:900; }
+    .m3-booster[data-booster="rocket"] .m3-booster-icon { background:linear-gradient(145deg,#fff0ad,#f7af40 65%,#d56c37); color:#694019; }
+    .m3-booster[data-booster="shuffle"] .m3-booster-icon { background:linear-gradient(145deg,#b9f9e4,#42c6cf 65%,#3581c4); color:#114d78; }
+    .m3-booster-label { font-size:8px; font-weight:850; line-height:1.2; }
+    .m3-booster-count { position:absolute; top:-6px; right:-4px; display:grid; min-width:20px; height:20px; place-items:center; padding:0 5px; border:1px solid #fff1bb; border-radius:99px; color:#56360d; background:linear-gradient(180deg,#fff5bf,#efbf4c); box-shadow:0 2px 4px rgba(0,0,0,.25); font-size:9px; font-weight:950; }
+    .match3-status { min-height:20px; margin:7px 0 0; color:#fff1bd; font-size:9px; font-weight:750; line-height:1.55; text-shadow:0 1px 3px rgba(0,0,0,.32); }
+    .match3-hint { margin-top:3px; color:rgba(215,228,255,.55); font-size:8px; }
+    .match3-result-emblem { width:78px; height:78px; border:2px solid #fff0ad; border-radius:25px; color:#fff0b7; background:linear-gradient(145deg,#ffbfda,#d94d97 52%,#7a3289); box-shadow:inset 0 2px rgba(255,255,255,.42),inset 0 -7px rgba(91,24,90,.2),0 0 0 5px rgba(255,221,124,.11),0 10px 20px rgba(0,0,0,.24); font-family:var(--sans); font-weight:900; text-shadow:0 3px rgba(91,24,90,.28); }
+    .match3-result-score { color:#fff0a9; font-family:var(--sans); font-size:14px; font-weight:850; }
+    .match3-reward-envelope { border:2px solid #fff0c0; border-radius:12px; background:linear-gradient(145deg,#ffb3d4,#e45f9a 60%,#a4357b); box-shadow:inset 0 2px rgba(255,255,255,.4),0 12px 38px rgba(0,0,0,.3),0 0 26px rgba(255,153,207,.25); }
+    .m3-reward-paper { border-radius:5px; box-shadow:0 2px 8px rgba(67,23,65,.15); }
+    .m3-reward-flap { background:linear-gradient(135deg,#ffd2e7,#e88bb5); }
+    .m3-reward-seal { border:2px solid #ffe9ac; color:#fff; background:linear-gradient(145deg,#eb73ad,#9c367d); box-shadow:0 2px 6px rgba(0,0,0,.25); }
+    .match3-primary:focus-visible,.match3-secondary:focus-visible,.m3-cell:focus-visible,.m3-booster:focus-visible { outline:3px solid #fff3ae; outline-offset:3px; }
+    @keyframes m3-hint-bounce { from { transform:translateY(0) scale(1); } to { transform:translateY(-2px) scale(1.035); } }
+    @keyframes m3-special-glow { from { filter:brightness(1); } to { filter:brightness(1.18); } }
+    @keyframes m3-progress-glow { 0%,100% { filter:brightness(1); } 50% { filter:brightness(1.3); } }
+    @media (max-width:390px) {
+      .match3-gate { padding-right:8px; padding-left:8px; }
+      .match3-gate::before { inset:5px; } .match3-gate::after { inset:10px; }
+      .match3-panel { padding:13px 10px; border-radius:19px; }
+      .match3-brandline { margin-bottom:11px; padding-bottom:9px; }
+      .match3-level-heading { gap:8px; } .match3-play-title { font-size:20px; }
+      .match3-board-frame { padding:5px; border-radius:14px; } .match3-board { gap:3px; }
+      .m3-cell { border-radius:7px; font-size:clamp(16px,5.4vw,22px); } .m3-cell::before { inset:1px; border-radius:5px; }
+      .m3-glyph { font-size:clamp(16px,5vw,23px); }
+      .m3-goal { padding:6px; gap:5px; } .m3-goal-glyph { width:29px; height:29px; font-size:17px; }
+      .m3-booster { min-height:56px; } .m3-booster-label { font-size:7px; }
+    }
+    @media (max-height:740px) and (orientation:landscape) {
+      .match3-gate { place-items:start center; } .match3-shell { margin:0 auto; }
+      .match3-panel { padding-top:10px; padding-bottom:10px; }
+      .match3-brandline { margin-bottom:8px; padding-bottom:7px; }
+      .match3-level-heading { margin-bottom:7px; } .match3-level-progress { margin-bottom:7px; }
+      .match3-goals { margin-bottom:7px; } .match3-board-frame { width:min(100%,340px); }
+      .match3-boosters { margin-top:8px; } .m3-booster { min-height:47px; flex-direction:row; gap:6px; }
+      .m3-booster-icon { width:21px; height:21px; } .match3-status,.match3-hint { margin-top:3px; }
+    }
+    @media (prefers-reduced-motion:reduce) {
+      .match3-level-progress span.is-current,.m3-cell.is-hinted,.m3-cell.is-special { animation:none !important; }
+    }
+
 </style>
 </head>
 <body class="game-gate-active">
@@ -3480,6 +3643,7 @@
               <strong id="match3-moves">20</strong>
             </div>
           </div>
+          <div class="match3-level-progress" id="match3-level-progress" aria-hidden="true"><span class="is-current"></span><span></span><span></span></div>
           <div class="match3-goals" id="match3-goals" aria-label="Цели уровня"></div>
           <div class="match3-score-row">
             <span>Счёт <b id="match3-score">0</b></span>
@@ -3488,7 +3652,18 @@
           <div class="match3-board-frame">
             <div class="match3-board" id="match3-board" role="grid" aria-label="Игровое поле, семь на семь" aria-describedby="match3-status"></div>
           </div>
-          <p class="match3-status" id="match3-status" role="status" aria-live="polite" aria-atomic="true">Выбери символ, затем соседний, или сделай свайп.</p>
+          <div class="match3-boosters" role="group" aria-label="Бустеры уровня">
+            <button class="m3-booster" id="match3-hint-button" data-booster="hint" type="button">
+              <span class="m3-booster-icon" aria-hidden="true">✦</span><span class="m3-booster-label">Подсказка</span><b class="m3-booster-count" id="match3-hint-count">3</b>
+            </button>
+            <button class="m3-booster" id="match3-rocket-button" data-booster="rocket" type="button">
+              <span class="m3-booster-icon" aria-hidden="true">➤</span><span class="m3-booster-label">Ракета</span><b class="m3-booster-count" id="match3-rocket-count">2</b>
+            </button>
+            <button class="m3-booster" id="match3-shuffle-button" data-booster="shuffle" type="button">
+              <span class="m3-booster-icon" aria-hidden="true">⟳</span><span class="m3-booster-label">Перемешать</span><b class="m3-booster-count" id="match3-shuffle-count">1</b>
+            </button>
+          </div>
+          <p class="match3-status" id="match3-status" role="status" aria-live="polite" aria-atomic="true">Соедини три одинаковых символа. За четыре в ряд появится ракета!</p>
           <p class="match3-hint">Свайпни к соседнему символу или коснись двух клеток подряд.</p>
         </section>
 
@@ -4073,6 +4248,12 @@
       const match3Start = document.getElementById("match3-start");
       const match3Continue = document.getElementById("match3-continue");
       const match3ParticleBurst = document.getElementById("match3-particle-burst");
+      const match3HintButton = document.getElementById("match3-hint-button");
+      const match3RocketButton = document.getElementById("match3-rocket-button");
+      const match3ShuffleButton = document.getElementById("match3-shuffle-button");
+      const match3HintCountNode = document.getElementById("match3-hint-count");
+      const match3RocketCountNode = document.getElementById("match3-rocket-count");
+      const match3ShuffleCountNode = document.getElementById("match3-shuffle-count");
       const match3ReduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
       let match3ParticleTimer = 0;
       const match3Glyphs = ["♥", "✦", "❀", "☾", "✉", "✧"];
@@ -4164,7 +4345,7 @@
           return { groups: groups, indices: Array.from(indexes).sort(function (a, b) { return a - b; }) };
         }
 
-        function hasLegalMove(board) {
+        function findHint(board) {
           for (let i = 0; i < board.length; i += 1) {
             const neighbors = [];
             if (i % SIZE < SIZE - 1) neighbors.push(i + 1);
@@ -4175,10 +4356,14 @@
               swap(board, i, j);
               const match = findMatches(board).indices.length > 0;
               swap(board, i, j);
-              if (match || specialMove) return true;
+              if (match || specialMove) return [i, j];
             }
           }
-          return false;
+          return null;
+        }
+
+        function hasLegalMove(board) {
+          return Boolean(findHint(board));
         }
 
         function createBoard() {
@@ -4385,6 +4570,7 @@
           adjacent: adjacent,
           findMatches: findMatches,
           hasLegalMove: hasLegalMove,
+          findHint: findHint,
           createBoard: createBoard,
           resolveCascade: resolveCascade
         };
@@ -4437,6 +4623,10 @@
       let match3PointerStart = null;
       let match3IgnoreClick = false;
       let match3Cells = [];
+      let match3Boosters = { hint: 3, rocket: 2, shuffle: 1 };
+      let match3ActiveBooster = null;
+      let match3HintCells = [];
+      let match3HintTimer = 0;
 
       function match3Delay(ms) {
         return new Promise(function (resolve) { window.setTimeout(resolve, ms); });
@@ -4476,8 +4666,9 @@
       function match3Save() {
         try {
           const data = {
-            version: 1,
+            version: 2,
             mode: match3Mode,
+            boosters: Object.assign({}, match3Boosters),
             level: match3LevelIndex,
             board: match3BoardState,
             blockers: match3Blockers,
@@ -4497,8 +4688,12 @@
           if (!raw) return null;
           const data = JSON.parse(raw);
           const validModes = ["intro", "play", "loss", "stage-win", "reward", "done"];
-          if (!data || data.version !== 1 || validModes.indexOf(data.mode) < 0) throw new Error("bad save");
+          if (!data || ![1, 2].includes(data.version) || validModes.indexOf(data.mode) < 0) throw new Error("bad save");
           if (!Number.isInteger(data.level) || data.level < 0 || data.level >= MATCH3_LEVELS.length) throw new Error("bad level");
+          if (data.version === 1 || !data.boosters) data.boosters = { hint: 3, rocket: 2, shuffle: 1 };
+          if (!data.boosters || !Number.isInteger(data.boosters.hint) || data.boosters.hint < 0 || data.boosters.hint > 3 ||
+              !Number.isInteger(data.boosters.rocket) || data.boosters.rocket < 0 || data.boosters.rocket > 2 ||
+              !Number.isInteger(data.boosters.shuffle) || data.boosters.shuffle < 0 || data.boosters.shuffle > 1) throw new Error("bad boosters");
           if (data.mode === "intro" || data.mode === "done") return data;
           if (!Array.isArray(data.board) || data.board.length !== 49) throw new Error("bad board");
           if (!data.board.every(function (tile) {
@@ -4546,6 +4741,22 @@
         if (shouldSave !== false) match3Save();
       }
 
+      function match3RenderBoosters() {
+        const entries = [
+          { key: "hint", button: match3HintButton, count: match3HintCountNode, label: "Подсказка" },
+          { key: "rocket", button: match3RocketButton, count: match3RocketCountNode, label: "Ракета" },
+          { key: "shuffle", button: match3ShuffleButton, count: match3ShuffleCountNode, label: "Перемешать" }
+        ];
+        entries.forEach(function (entry) {
+          const amount = match3Boosters[entry.key] || 0;
+          entry.count.textContent = String(amount);
+          entry.button.disabled = match3Mode !== "play" || match3InputLocked || amount <= 0;
+          entry.button.classList.toggle("is-active", match3ActiveBooster === entry.key);
+          entry.button.setAttribute("aria-label", entry.label + ", осталось " + amount + (match3ActiveBooster === entry.key ? ", выбрано" : ""));
+          entry.button.setAttribute("aria-pressed", match3ActiveBooster === entry.key ? "true" : "false");
+        });
+      }
+
       function match3BuildCells() {
         if (match3Cells.length) return;
         const fragment = document.createDocumentFragment();
@@ -4567,6 +4778,7 @@
         match3BuildCells();
         const matchedSet = matched || new Set();
         const newSet = newIndexes || new Set();
+        const hintedSet = new Set(match3HintCells);
         match3Cells.forEach(function (cell, index) {
           const tile = match3BoardState[index];
           const sealed = Boolean(match3Blockers[index]);
@@ -4577,9 +4789,11 @@
           if (tile && tile.special === "bomb") label += ", вспышка сердечек";
           if (tile && tile.special === "rainbow") label += ", радужное сердце";
           if (sealed) label += ", розовая печать";
+          if (match3ActiveBooster === "rocket") label += ", нажми, чтобы установить ракету";
           cell.className = "m3-cell";
           if (tile) cell.classList.add("m3-type-" + tile.type);
           if (chosen) cell.classList.add("is-selected");
+          if (hintedSet.has(index)) cell.classList.add("is-hinted");
           if (matchedSet.has(index)) cell.classList.add("is-matched");
           if (newSet.has(index)) cell.classList.add("is-new");
           if (sealed) cell.classList.add("has-seal");
@@ -4599,6 +4813,7 @@
           cell.innerHTML = '<span class="m3-glyph">' + match3Glyphs[tile.type] + '</span>' + specialMark;
         });
         match3Grid.setAttribute("aria-busy", match3InputLocked ? "true" : "false");
+        match3RenderBoosters();
       }
 
       function match3RenderGoals() {
@@ -4643,7 +4858,12 @@
         match3LevelKicker.textContent = level.kicker;
         match3PlayTitle.textContent = level.title;
         match3ScoreGoal.textContent = level.scoreGoal ? "Набери " + level.scoreGoal.toLocaleString("ru-RU") + " очков" : "Собери цели уровня";
+        document.querySelectorAll("#match3-level-progress span").forEach(function (step, index) {
+          step.classList.toggle("is-complete", index < match3LevelIndex);
+          step.classList.toggle("is-current", index === match3LevelIndex);
+        });
         match3RenderGoals();
+        match3RenderBoosters();
       }
 
       function match3SaveCurrentLevel() {
@@ -4663,6 +4883,9 @@
         match3SelectedIndex = -1;
         match3FocusedIndex = 24;
         match3InputLocked = false;
+        match3Boosters = { hint: 3, rocket: 2, shuffle: 1 };
+        match3ActiveBooster = null;
+        match3ClearHint();
         match3Mode = "play";
         match3HideScreens("match3-play");
         match3RenderStats();
@@ -4684,6 +4907,8 @@
         match3Mode = kind;
         match3InputLocked = false;
         match3SelectedIndex = -1;
+        match3ActiveBooster = null;
+        match3ClearHint();
         match3RenderBoard();
         match3HideScreens("match3-result");
         if (kind === "loss") {
@@ -4714,6 +4939,8 @@
       function match3ShowReward(shouldSave) {
         match3Mode = "reward";
         match3InputLocked = false;
+        match3ActiveBooster = null;
+        match3ClearHint();
         match3HideScreens("match3-reward");
         match3LaunchRewardParticles();
         match3FocusHeading(match3RewardTitle);
@@ -4735,9 +4962,15 @@
       }
 
       async function match3AttemptMove(from, to) {
+        if (match3ActiveBooster === "rocket") {
+          match3Status.textContent = "Нажми на клетку, куда поставить ракету, или ещё раз отключи бустер.";
+          return;
+        }
         if (match3InputLocked || match3Mode !== "play" || from === to || !match3Engine.adjacent(from, to)) return;
         if (!match3BoardState[from] || !match3BoardState[to]) return;
         match3InputLocked = true;
+        match3ClearHint();
+        match3ActiveBooster = null;
         match3Grid.setAttribute("aria-busy", "true");
         match3SelectedIndex = -1;
         match3FocusedIndex = to;
@@ -4820,11 +5053,122 @@
         match3SaveCurrentLevel();
       }
 
+      function match3ClearHint() {
+        if (match3HintTimer) {
+          window.clearTimeout(match3HintTimer);
+          match3HintTimer = 0;
+        }
+        match3HintCells = [];
+      }
+
+      function match3UseHint() {
+        if (match3Mode !== "play" || match3InputLocked || match3Boosters.hint <= 0) return;
+        const pair = match3Engine.findHint(match3BoardState);
+        if (!pair) {
+          match3Status.textContent = "Сейчас нет доступного хода. Перемешай поле.";
+          return;
+        }
+        match3ActiveBooster = null;
+        match3ClearHint();
+        match3Boosters.hint -= 1;
+        match3HintCells = pair;
+        match3FocusedIndex = pair[0];
+        match3RenderBoard();
+        match3Status.textContent = "Вот хороший ход! Соедини две подсвеченные клетки.";
+        match3SaveCurrentLevel();
+        match3HintTimer = window.setTimeout(function () {
+          match3HintTimer = 0;
+          match3HintCells = [];
+          if (match3Mode === "play") match3RenderBoard();
+        }, 2200);
+      }
+
+      function match3PlaceRocket(index) {
+        if (match3Mode !== "play" || match3InputLocked || match3ActiveBooster !== "rocket") return;
+        const tile = match3BoardState[index];
+        if (!tile) return;
+        if (tile.special) {
+          match3Status.textContent = "Здесь уже есть особая плитка. Выбери обычный символ.";
+          return;
+        }
+        if (match3Boosters.rocket <= 0) {
+          match3ActiveBooster = null;
+          match3RenderBoosters();
+          return;
+        }
+        match3Boosters.rocket -= 1;
+        tile.special = "rocket";
+        tile.axis = "h";
+        match3ActiveBooster = null;
+        match3SelectedIndex = -1;
+        match3FocusedIndex = index;
+        match3RenderBoard();
+        match3RenderStats();
+        match3Status.textContent = "Ракета заряжена! Поменяй её местами с соседней плиткой, чтобы очистить ряд.";
+        match3SaveCurrentLevel();
+        if (match3Cells[index]) match3Cells[index].focus({ preventScroll: true });
+      }
+
+      function match3ShuffleField() {
+        if (match3Mode !== "play" || match3InputLocked || match3Boosters.shuffle <= 0) return;
+        match3ActiveBooster = null;
+        match3SelectedIndex = -1;
+        match3ClearHint();
+        const original = match3BoardState.slice();
+        let shuffled = null;
+        for (let attempt = 0; attempt < 600; attempt += 1) {
+          const candidate = original.slice();
+          for (let i = candidate.length - 1; i > 0; i -= 1) {
+            const j = Math.floor(Math.random() * (i + 1));
+            const hold = candidate[i];
+            candidate[i] = candidate[j];
+            candidate[j] = hold;
+          }
+          if (match3Engine.findMatches(candidate).indices.length === 0 && match3Engine.hasLegalMove(candidate)) {
+            shuffled = candidate;
+            break;
+          }
+        }
+        if (!shuffled) shuffled = match3Engine.createBoard();
+        match3BoardState = shuffled;
+        match3Boosters.shuffle -= 1;
+        match3FocusedIndex = 24;
+        match3RenderBoard();
+        match3RenderStats();
+        match3Status.textContent = "Поле перемешано. Цели и количество ходов сохранены.";
+        match3SaveCurrentLevel();
+      }
+
+      function match3HandleBooster(key) {
+        if (match3Mode !== "play" || match3InputLocked || match3Boosters[key] <= 0) return;
+        if (key === "hint") {
+          match3UseHint();
+          return;
+        }
+        if (key === "shuffle") {
+          match3ShuffleField();
+          return;
+        }
+        if (key === "rocket") {
+          match3ClearHint();
+          match3ActiveBooster = match3ActiveBooster === "rocket" ? null : "rocket";
+          match3SelectedIndex = -1;
+          match3RenderBoard();
+          match3Status.textContent = match3ActiveBooster === "rocket"
+            ? "Выбери обычную плитку: на ней появится ракета. Ход не потратится."
+            : "Ракета отменена. Продолжай собирать комбинации.";
+        }
+      }
+
       function match3HandleCellClick(event) {
         if (match3IgnoreClick) { match3IgnoreClick = false; return; }
         const cell = event.target.closest("[data-m3-index]");
         if (!cell || match3Mode !== "play" || match3InputLocked) return;
         const index = Number(cell.dataset.m3Index);
+        if (match3ActiveBooster === "rocket") {
+          match3PlaceRocket(index);
+          return;
+        }
         match3FocusedIndex = index;
         if (match3SelectedIndex < 0) {
           match3SelectedIndex = index;
@@ -4971,6 +5315,9 @@
         match3MovesLeft = data.moves || 0;
         match3Score = data.score || 0;
         match3GoalProgress = data.progress || [];
+        match3Boosters = Object.assign({ hint: 3, rocket: 2, shuffle: 1 }, data.boosters || {});
+        match3ActiveBooster = null;
+        match3ClearHint();
         match3SelectedIndex = -1;
         match3FocusedIndex = 24;
         match3InputLocked = false;
@@ -5021,6 +5368,9 @@
       });
 
       match3Continue.addEventListener("click", match3ContinueToStory);
+      match3HintButton.addEventListener("click", function () { match3HandleBooster("hint"); });
+      match3RocketButton.addEventListener("click", function () { match3HandleBooster("rocket"); });
+      match3ShuffleButton.addEventListener("click", function () { match3HandleBooster("shuffle"); });
 
       match3Gate.addEventListener("keydown", function (event) {
         if (event.key !== "Tab" || match3Mode === "done" || match3Gate.classList.contains("is-leaving")) return;
