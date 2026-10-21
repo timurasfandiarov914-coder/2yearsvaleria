@@ -4365,10 +4365,10 @@
           kicker: "УРОВЕНЬ 02 · 03",
           title: "Тёплые совпадения",
           intro: "Собери звёзды и цветы, чтобы открыть следующий этап.",
-          moves: 24,
+          moves: 20,
           goals: [
-            { kind: "collect", type: 1, need: 10, label: "Собери звёзды" },
-            { kind: "collect", type: 2, need: 10, label: "Собери цветы" }
+            { kind: "collect", type: 1, need: 12, label: "Собери звёзды" },
+            { kind: "collect", type: 2, need: 12, label: "Собери цветы" }
           ],
           scoreGoal: 0,
           sealCells: []
@@ -4376,10 +4376,10 @@
         {
           kicker: "УРОВЕНЬ 03 · 03",
           title: "Путь к сюрпризу",
-          intro: "Сними розовые печати и набери 2 400 очков.",
-          moves: 25,
-          goals: [{ kind: "seals", need: 6, label: "Убери розовые печати" }],
-          scoreGoal: 2400,
+          intro: "Сними все розовые печати и набери 6 000 очков.",
+          moves: 18,
+          goals: [{ kind: "seals", need: 8, label: "Убери розовые печати" }],
+          scoreGoal: 6000,
           sealCells: [3, 10, 17, 24, 31, 38, 45, 12]
         }
       ];
@@ -4425,10 +4425,10 @@
           const raw = window.localStorage.getItem(MATCH3_STORAGE_KEY);
           if (!raw) return null;
           const data = JSON.parse(raw);
-          const validModes = ["intro", "play", "loss", "stage-win", "reward"];
+          const validModes = ["intro", "play", "loss", "stage-win", "reward", "done"];
           if (!data || data.version !== 1 || validModes.indexOf(data.mode) < 0) throw new Error("bad save");
           if (!Number.isInteger(data.level) || data.level < 0 || data.level >= MATCH3_LEVELS.length) throw new Error("bad level");
-          if (data.mode === "intro") return data;
+          if (data.mode === "intro" || data.mode === "done") return data;
           if (!Array.isArray(data.board) || data.board.length !== 49) throw new Error("bad board");
           if (!data.board.every(function (tile) {
             return tile === null || (
@@ -4862,7 +4862,7 @@
         if (match3Mode !== "reward" || match3InputLocked) return;
         match3Mode = "done";
         match3Continue.disabled = true;
-        try { window.localStorage.removeItem(MATCH3_STORAGE_KEY); } catch (_) {}
+        match3Save();
         match3Gate.classList.add("is-leaving");
         window.setTimeout(function () {
           match3Gate.classList.remove("is-active", "is-leaving");
@@ -4879,6 +4879,16 @@
       }
 
       function match3ResumeSave(data) {
+        if (data.mode === "done") {
+          pageTransitionStarted = true;
+          siteShell.removeAttribute("inert");
+          siteShell.setAttribute("aria-hidden", "false");
+          document.body.classList.remove("game-gate-active");
+          window.scrollTo(0, 0);
+          const completedBrand = siteShell.querySelector(".brand");
+          if (completedBrand) completedBrand.focus({ preventScroll: true });
+          return;
+        }
         match3LevelIndex = data.level;
         match3Mode = data.mode;
         match3BoardState = data.board || [];
