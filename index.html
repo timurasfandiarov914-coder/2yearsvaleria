@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#2b1823">
   <meta name="description" content="Маленькое письмо Валерии в честь наших двух лет.">
   <title>Для Леры ♡</title>
@@ -2652,6 +2652,125 @@
       }
     }
 
+
+    /* Final polish · pass 04: a quiet, accessible finish on small screens. */
+    html {
+      scroll-padding-top: env(safe-area-inset-top);
+      -webkit-text-size-adjust: 100%;
+      text-size-adjust: 100%;
+    }
+
+    .letter-section,
+    .little-things,
+    .secret-section {
+      scroll-margin-block-start: env(safe-area-inset-top);
+    }
+
+    .paper-card,
+    .letter-copy,
+    .secret-message,
+    .game-feedback {
+      overflow-wrap: break-word;
+    }
+
+    .paper-card::before,
+    .paper-card::after {
+      pointer-events: none;
+    }
+
+    .confetti-heart {
+      will-change: transform, opacity;
+    }
+
+    .game-gate-card {
+      overflow-wrap: break-word;
+    }
+
+    @media (max-width: 600px) {
+      .letter-section {
+        padding: clamp(58px, 12vw, 78px) clamp(16px, 5vw, 24px) clamp(68px, 13vw, 88px);
+      }
+
+      .paper-card {
+        padding: 39px clamp(21px, 6vw, 29px);
+      }
+
+      .paper-card::before,
+      .paper-card::after {
+        width: 30px;
+        height: 30px;
+        font-size: 15px;
+      }
+
+      .letter-title {
+        margin-bottom: 29px;
+        line-height: 1.08;
+      }
+
+      .letter-copy p {
+        margin-bottom: 17px;
+        font-size: clamp(17px, 4.5vw, 19px);
+        line-height: 1.8;
+      }
+
+      .signature {
+        font-size: 24px;
+        line-height: 1.35;
+      }
+
+      .signature span {
+        line-height: 1.8;
+        letter-spacing: .12em;
+      }
+
+      .little-things,
+      .secret-section {
+        padding: 72px 18px 78px;
+      }
+
+      .little-subtitle {
+        margin-bottom: 34px;
+      }
+
+      .secret-description {
+        font-size: 13px;
+      }
+
+      .secret-message {
+        padding: 20px 13px;
+        font-size: clamp(20px, 5.4vw, 24px);
+        line-height: 1.6;
+      }
+    }
+
+    @media (max-height: 560px) and (orientation: landscape) and (max-width: 900px) {
+      .hero {
+        min-height: auto;
+        padding-top: 24px;
+        padding-bottom: 48px;
+      }
+
+      .envelope-stage {
+        min-height: 235px;
+      }
+
+      .envelope-wrap {
+        width: min(55vw, 270px);
+      }
+
+      .scroll-cue {
+        display: none;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .confetti-heart {
+        display: none !important;
+        animation: none !important;
+      }
+    }
+
+
 </style>
 </head>
 <body class="game-gate-active">
@@ -2753,7 +2872,7 @@
           <p class="eyebrow">маленький подарок для тебя</p>
           <h1 id="hero-title">Есть кое-что, что я хочу <span>тебе сказать.</span></h1>
           <p class="hero-description">Я собрал это место из нежности, нескольких слов и одного очень важного человека. Кажется, ты его знаешь.</p>
-          <button class="open-button" id="open-letter" type="button">
+          <button class="open-button" id="open-letter" type="button" aria-expanded="false" aria-controls="letter">
             <span>Открыть моё письмо</span><span class="button-heart" aria-hidden="true">♡</span>
           </button>
           <p class="quiet-note">лучше читать не спеша</p>
@@ -2857,9 +2976,12 @@
         if (reducedMotion) return;
         const symbols = ["♡", "♥", "✦", "✧"];
         const colors = ["#dfb0bd", "#cbb27e", "#f2dce1", "#fffaf5"];
-        for (let i = 0; i < 16; i += 1) {
+        const activeCount = document.querySelectorAll(".confetti-heart").length;
+        const particleCount = Math.min(16, Math.max(0, 32 - activeCount));
+        for (let i = 0; i < particleCount; i += 1) {
           const heart = document.createElement("span");
           heart.className = "confetti-heart";
+          heart.setAttribute("aria-hidden", "true");
           heart.textContent = symbols[Math.floor(Math.random() * symbols.length)];
           heart.style.setProperty("--left", (Math.random() * 100) + "vw");
           heart.style.setProperty("--drift", ((Math.random() - 0.5) * 120) + "px");
@@ -2868,7 +2990,7 @@
           heart.style.setProperty("--size", (10 + Math.random() * 12) + "px");
           heart.style.setProperty("--heart-color", colors[Math.floor(Math.random() * colors.length)]);
           document.body.appendChild(heart);
-          window.setTimeout(function () { heart.remove(); }, 6000);
+          window.setTimeout(function () { heart.remove(); }, 7000);
         }
       }
 
@@ -2883,7 +3005,7 @@
         openButton.querySelector(".button-heart").textContent = "♥";
         letter.classList.add("is-visible");
         letter.setAttribute("aria-hidden", "false");
-        openButton.setAttribute("aria-controls", "letter");
+        openButton.setAttribute("aria-expanded", "true");
         heartRain();
         window.setTimeout(function () {
           letter.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth", block: "start" });
@@ -2950,6 +3072,7 @@
       ];
 
       let currentQuestStage = 0;
+      let pageTransitionStarted = false;
       let gameCompleted = false;
       let keySolved = false;
       let memorySolved = false;
@@ -2991,6 +3114,7 @@
           "Смотри внимательно. Порядок имеет значение.",
           "Подсказки уже перед тобой. Не спеши."
         ][index];
+        gameTitle.focus({ preventScroll: true });
       }
 
       keyObjects.forEach(function (object) {
@@ -3141,6 +3265,7 @@
       });
 
       function openMainPage() {
+        if (pageTransitionStarted) return;
         if (currentQuestStage === 0 && !keySolved) return;
         if (currentQuestStage === 1 && !memorySolved) return;
         if (currentQuestStage === 2 && !gameCompleted) return;
@@ -3157,6 +3282,8 @@
           return;
         }
 
+        pageTransitionStarted = true;
+        gameContinue.disabled = true;
         gameGate.classList.add("is-leaving");
         window.setTimeout(function () {
           gameGate.remove();
@@ -3168,6 +3295,36 @@
           if (brandLink) brandLink.focus({ preventScroll: true });
         }, reducedMotion ? 0 : 660);
       }
+
+      gameTitle.setAttribute("tabindex", "-1");
+      gameTitle.focus({ preventScroll: true });
+
+      gameGate.addEventListener("keydown", function (event) {
+        if (event.key !== "Tab" || gameGate.classList.contains("is-leaving")) return;
+
+        const focusable = Array.from(gameGate.querySelectorAll(
+          'button:not(:disabled):not([hidden]), a[href], [tabindex]:not([tabindex="-1"])'
+        )).filter(function (element) {
+          return !element.closest("[hidden]") && element.getClientRects().length > 0;
+        });
+
+        if (!focusable.length) {
+          event.preventDefault();
+          return;
+        }
+
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        const activeIndex = focusable.indexOf(document.activeElement);
+
+        if (event.shiftKey && activeIndex <= 0) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && (activeIndex === focusable.length - 1 || activeIndex < 0)) {
+          event.preventDefault();
+          first.focus();
+        }
+      });
 
       gameContinue.addEventListener("click", openMainPage);
 
