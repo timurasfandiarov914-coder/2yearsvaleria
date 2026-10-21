@@ -4727,6 +4727,14 @@
         match3Screens.forEach(function (screen) {
           screen.hidden = screen.id !== activeId;
         });
+        const labels = {
+          "match3-intro": "match3-title",
+          "match3-play": "match3-play-title",
+          "match3-result": "match3-result-title",
+          "match3-reward": "match3-reward-title"
+        };
+        const dialog = match3Gate.querySelector('[role="dialog"]');
+        if (dialog && labels[activeId]) dialog.setAttribute("aria-labelledby", labels[activeId]);
       }
 
       function match3FocusHeading(node) {
