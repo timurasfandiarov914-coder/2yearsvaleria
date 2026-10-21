@@ -3520,9 +3520,24 @@
       .m3-booster-icon { width:21px; height:21px; } .match3-status,.match3-hint { margin-top:3px; }
     }
     @media (prefers-reduced-motion:reduce) {
-      .match3-level-progress span.is-current,.m3-cell.is-hinted,.m3-cell.is-special,.match3-result-stars,.match3-screen:not([hidden]) { animation:none !important; }
+      .match3-level-progress span.is-current,.m3-cell.is-hinted,.m3-cell.is-special,.m3-cell.is-falling,.m3-cell.is-swapping,.match3-result-stars,.match3-screen:not([hidden]) { animation:none !important; }
     }
 
+
+    /* Board motion: little slide-in exchanges and gravity on cascade fills. */
+    .m3-cell.is-swapping .m3-glyph { animation:m3-gem-swap .18s cubic-bezier(.2,.8,.2,1) both; }
+    .m3-cell.is-falling .m3-glyph { animation:m3-gem-fall .22s cubic-bezier(.16,1,.3,1) both; }
+    .m3-cell.is-new .m3-glyph { animation:m3-tile-arrive .24s cubic-bezier(.16,1,.3,1) both; }
+    @keyframes m3-gem-swap {
+      from { transform:translate(var(--m3-swap-x,0px),var(--m3-swap-y,0px)) scale(.72); opacity:.3; filter:brightness(1.35); }
+      72% { transform:scale(1.1); opacity:1; }
+      to { transform:translate(0,0) scale(1); opacity:1; filter:none; }
+    }
+    @keyframes m3-gem-fall {
+      from { transform:translateY(-26%) scale(.82); opacity:.25; }
+      72% { transform:translateY(2%) scale(1.025); opacity:1; }
+      to { transform:translateY(0) scale(1); opacity:1; }
+    }
 </style>
 </head>
 <body class="game-gate-active">
@@ -4634,6 +4649,9 @@
       let match3ActiveBooster = null;
       let match3HintCells = [];
       let match3HintTimer = 0;
+      let match3AnimateFalls = false;
+      let match3SwapCells = [];
+      let match3SwapAnimationTimer = 0;
 
       function match3Delay(ms) {
         return new Promise(function (resolve) { window.setTimeout(resolve, ms); });
@@ -4794,7 +4812,10 @@
         const matchedSet = matched || new Set();
         const newSet = newIndexes || new Set();
         const hintedSet = new Set(match3HintCells);
+        const swappingSet = new Set(match3SwapCells);
         match3Cells.forEach(function (cell, index) {
+          const previousGlyphNode = cell.querySelector(".m3-glyph");
+          const previousGlyph = previousGlyphNode ? previousGlyphNode.textContent : "";
           const tile = match3BoardState[index];
           const sealed = Boolean(match3Blockers[index]);
           const chosen = index === match3SelectedIndex;
@@ -4809,6 +4830,7 @@
           if (tile) cell.classList.add("m3-type-" + tile.type);
           if (chosen) cell.classList.add("is-selected");
           if (hintedSet.has(index)) cell.classList.add("is-hinted");
+          if (match3AnimateFalls && tile && previousGlyph && previousGlyph !== match3Glyphs[tile.type] && !newSet.has(index) && !swappingSet.has(index)) cell.classList.add("is-falling");
           if (matchedSet.has(index)) cell.classList.add("is-matched");
           if (newSet.has(index)) cell.classList.add("is-new");
           if (sealed) cell.classList.add("has-seal");
@@ -4984,6 +5006,32 @@
         });
       }
 
+      function match3AnimateSwap(from, to) {
+        if (match3ReduceMotion || !match3Cells[from] || !match3Cells[to]) return;
+        if (match3SwapAnimationTimer) {
+          window.clearTimeout(match3SwapAnimationTimer);
+          match3SwapAnimationTimer = 0;
+        }
+        const first = match3Cells[from];
+        const second = match3Cells[to];
+        const firstRect = first.getBoundingClientRect();
+        const secondRect = second.getBoundingClientRect();
+        first.style.setProperty("--m3-swap-x", (secondRect.left - firstRect.left) + "px");
+        first.style.setProperty("--m3-swap-y", (secondRect.top - firstRect.top) + "px");
+        second.style.setProperty("--m3-swap-x", (firstRect.left - secondRect.left) + "px");
+        second.style.setProperty("--m3-swap-y", (firstRect.top - secondRect.top) + "px");
+        first.classList.add("is-swapping");
+        second.classList.add("is-swapping");
+        match3SwapAnimationTimer = window.setTimeout(function () {
+          [first, second].forEach(function (cell) {
+            cell.classList.remove("is-swapping");
+            cell.style.removeProperty("--m3-swap-x");
+            cell.style.removeProperty("--m3-swap-y");
+          });
+          match3SwapAnimationTimer = 0;
+        }, 205);
+      }
+
       async function match3AttemptMove(from, to) {
         if (match3ActiveBooster === "rocket") {
           match3Status.textContent = "Нажми на клетку, куда поставить ракету, или ещё раз отключи бустер.";
@@ -4997,19 +5045,25 @@
         match3Grid.setAttribute("aria-busy", "true");
         match3SelectedIndex = -1;
         match3FocusedIndex = to;
+        match3SwapCells = [from, to];
         match3Engine.swap(match3BoardState, from, to);
         match3RenderBoard();
+        match3SwapCells = [];
+        match3AnimateSwap(from, to);
 
-        if (!match3ReduceMotion) await match3Delay(105);
+        if (!match3ReduceMotion) await match3Delay(185);
         let matches = match3Engine.findMatches(match3BoardState);
         const specialMove = Boolean(match3BoardState[from].special || match3BoardState[to].special);
         let forced = specialMove ? [from, to] : [];
 
         if (!matches.indices.length && !forced.length) {
+          match3SwapCells = [from, to];
           match3Engine.swap(match3BoardState, from, to);
           match3SelectedIndex = -1;
           match3RenderBoard();
-          if (!match3ReduceMotion) await match3Delay(80);
+          match3SwapCells = [];
+          match3AnimateSwap(from, to);
+          if (!match3ReduceMotion) await match3Delay(185);
           match3InputLocked = false;
           match3Grid.setAttribute("aria-busy", "false");
           match3Status.textContent = "Совпадения нет, ход не потрачен. Попробуй соседний символ.";
@@ -5025,7 +5079,7 @@
         while ((matches.indices.length > 0 || forced.length > 0) && cascade < 20) {
           const preview = new Set(matches.indices.concat(forced));
           match3RenderBoard(preview);
-          if (!match3ReduceMotion) await match3Delay(135);
+          if (!match3ReduceMotion) await match3Delay(175);
 
           const resolved = match3Engine.resolveCascade(
             match3BoardState,
@@ -5039,8 +5093,10 @@
           match3Score += resolved.clearedTiles.length * (60 + cascade * 20);
           match3UpdateGoalProgress(resolved.clearedTiles, resolved.clearedBlockers);
           match3RenderStats();
+          match3AnimateFalls = true;
           match3RenderBoard(new Set(), new Set(resolved.newIndices));
-          if (!match3ReduceMotion) await match3Delay(125);
+          match3AnimateFalls = false;
+          if (!match3ReduceMotion) await match3Delay(190);
 
           matches = match3Engine.findMatches(match3BoardState);
           forced = [];
@@ -5156,7 +5212,9 @@
         match3BoardState = shuffled;
         match3Boosters.shuffle -= 1;
         match3FocusedIndex = 24;
+        match3AnimateFalls = true;
         match3RenderBoard();
+        match3AnimateFalls = false;
         match3RenderStats();
         match3Status.textContent = "Поле перемешано. Цели и количество ходов сохранены.";
         match3SaveCurrentLevel();
