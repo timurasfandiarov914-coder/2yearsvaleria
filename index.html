@@ -3538,6 +3538,61 @@
       72% { transform:translateY(2%) scale(1.025); opacity:1; }
       to { transform:translateY(0) scale(1); opacity:1; }
     }
+
+    /* Cinematic choreography · pass 06: each chapter gets its own arrival. */
+    .little-inner > .section-label.reveal-on-scroll { transition-delay: .04s; }
+    .little-inner > .letter-title.reveal-on-scroll { transition-delay: .13s; }
+    .little-inner > .little-subtitle.reveal-on-scroll { transition-delay: .2s; }
+    .reasons .reason:nth-child(1).reveal-on-scroll { transition-delay: .1s; }
+    .reasons .reason:nth-child(2).reveal-on-scroll { transition-delay: .2s; }
+    .reasons .reason:nth-child(3).reveal-on-scroll { transition-delay: .3s; }
+
+    .secret-section {
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+    }
+    .secret-section::before {
+      position: absolute;
+      z-index: -1;
+      inset: -25% -12%;
+      content: "";
+      pointer-events: none;
+      background:
+        radial-gradient(ellipse at 50% 42%, rgba(255,255,255,.48), transparent 35%),
+        radial-gradient(ellipse at 18% 78%, rgba(223,176,189,.18), transparent 42%),
+        radial-gradient(ellipse at 87% 15%, rgba(203,178,126,.12), transparent 38%);
+      animation: cinema-finale-aura 12s ease-in-out infinite alternate;
+    }
+    .secret-section.secret-is-open::before {
+      background:
+        radial-gradient(ellipse at 50% 42%, rgba(255,255,255,.65), transparent 38%),
+        radial-gradient(ellipse at 18% 78%, rgba(223,176,189,.25), transparent 42%),
+        radial-gradient(ellipse at 87% 15%, rgba(203,178,126,.17), transparent 38%);
+    }
+    .secret-section.secret-is-open .secret-message {
+      border-top-color: rgba(152,98,116,.32);
+      text-shadow: 0 5px 24px rgba(103,37,63,.07);
+    }
+    .secret-button {
+      transition: color .28s ease, background .28s ease, border-color .28s ease, box-shadow .28s ease, transform .28s ease;
+    }
+    @keyframes cinema-finale-aura {
+      from { opacity: .68; transform: translate3d(-1%,0,0) scale(.98); }
+      to { opacity: 1; transform: translate3d(1%,-1%,0) scale(1.035); }
+    }
+    @media (max-width:600px) {
+      .little-inner > .section-label.reveal-on-scroll { transition-delay: .02s; }
+      .little-inner > .letter-title.reveal-on-scroll { transition-delay: .08s; }
+      .little-inner > .little-subtitle.reveal-on-scroll { transition-delay: .12s; }
+      .reasons .reason:nth-child(1).reveal-on-scroll { transition-delay: .08s; }
+      .reasons .reason:nth-child(2).reveal-on-scroll { transition-delay: .16s; }
+      .reasons .reason:nth-child(3).reveal-on-scroll { transition-delay: .24s; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      .secret-section::before { animation: none !important; }
+    }
+
 </style>
 </head>
 <body class="game-gate-active">
@@ -3778,22 +3833,22 @@
       </section>
 
       <section class="little-things" aria-labelledby="little-title">
-        <div class="little-inner reveal-on-scroll">
-          <p class="section-label">вещи, которые иногда хочется повторять чаще</p>
-          <h2 class="letter-title" id="little-title">Ты для меня — это…</h2>
-          <p class="little-subtitle">Не огромные слова. Просто несколько маленьких истин, которые я хочу, чтобы ты знала.</p>
+        <div class="little-inner">
+          <p class="section-label reveal-on-scroll">вещи, которые иногда хочется повторять чаще</p>
+          <h2 class="letter-title reveal-on-scroll" id="little-title">Ты для меня — это…</h2>
+          <p class="little-subtitle reveal-on-scroll">Не огромные слова. Просто несколько маленьких истин, которые я хочу, чтобы ты знала.</p>
           <div class="reasons">
             <article class="reason reveal-on-scroll">
               <span class="reason-icon" aria-hidden="true">✿</span>
               <h3>Уют</h3>
               <p>Когда можно просто быть собой. Без лишних слов и без необходимости казаться кем-то другим.</p>
             </article>
-            <article class="reason">
+            <article class="reason reveal-on-scroll">
               <span class="reason-icon" aria-hidden="true">♡</span>
               <h3>Моё «люблю»</h3>
               <p>В объятиях, в заботе, в сообщении посреди дня и в желании поделиться с тобой чем-то первым.</p>
             </article>
-            <article class="reason">
+            <article class="reason reveal-on-scroll">
               <span class="reason-icon" aria-hidden="true">✧</span>
               <h3>Наше дальше</h3>
               <p>У нас впереди столько всего. И мысль, что мы можем проживать это вместе, очень мне дорога.</p>
