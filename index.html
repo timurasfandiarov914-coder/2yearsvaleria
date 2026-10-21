@@ -1926,41 +1926,508 @@
       }
     }
 
+  
+    
+    /* Quest redesign pass 04: three distinct, phone-friendly challenges. */
+    .game-gate-card.quest-card {
+      width: min(100%, 490px);
+      padding: clamp(20px, 4.8vw, 34px) clamp(17px, 4.5vw, 32px) 22px;
+    }
+
+    .quest-card .game-emblem {
+      width: 42px;
+      height: 42px;
+      margin-bottom: 15px;
+      font-size: 23px;
+    }
+
+    .quest-card .game-kicker {
+      margin-bottom: 10px;
+      font-size: 8px;
+    }
+
+    .quest-card .game-title {
+      font-size: clamp(39px, 8vw, 51px);
+    }
+
+    .quest-card .game-description {
+      margin-bottom: 19px;
+      min-height: 36px;
+      font-size: 10px;
+    }
+
+    .quest-card .game-counter-row {
+      margin-bottom: 7px;
+    }
+
+    .quest-card .game-counter-label {
+      letter-spacing: .12em;
+    }
+
+    .quest-stage {
+      margin-top: 14px;
+      animation: quest-panel-in .42s cubic-bezier(.2,.75,.25,1) both;
+    }
+
+    .quest-stage[hidden] {
+      display: none !important;
+    }
+
+    .quest-instruction {
+      max-width: 360px;
+      min-height: 34px;
+      margin: 0 auto 12px;
+      color: rgba(255, 250, 245, .65);
+      font-size: 10px;
+      line-height: 1.8;
+    }
+
+    .quest-key-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+      width: min(100%, 315px);
+      margin: 0 auto;
+    }
+
+    .quest-object {
+      display: grid;
+      min-width: 0;
+      min-height: 61px;
+      place-items: center;
+      border: 1px solid rgba(223, 176, 189, .16);
+      border-radius: 4px;
+      color: rgba(231, 191, 202, .88);
+      background: linear-gradient(145deg, rgba(255, 250, 245, .04), rgba(255, 250, 245, .008));
+      font-family: var(--serif);
+      font-size: 29px;
+      cursor: pointer;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+      transition: color .2s ease, background .2s ease, border-color .2s ease, transform .2s ease, opacity .3s ease;
+    }
+
+    .quest-object:hover,
+    .quest-object:focus-visible {
+      border-color: rgba(203, 178, 126, .66);
+      color: #fff4e9;
+      background: rgba(203, 178, 126, .08);
+      outline: 2px solid rgba(203, 178, 126, .55);
+      outline-offset: 2px;
+    }
+
+    .quest-object:disabled {
+      cursor: default;
+    }
+
+    .quest-object.is-wrong {
+      animation: quest-wiggle .32s ease;
+      border-color: rgba(180, 104, 123, .48);
+      color: #b88192;
+    }
+
+    .quest-object.is-correct {
+      border-color: rgba(203, 178, 126, .65);
+      color: #e8d09d;
+      background: rgba(203, 178, 126, .1);
+      opacity: .8;
+      transform: scale(.94);
+    }
+
+    .quest-hidden-key {
+      color: rgba(203, 178, 126, .64);
+      font-size: 27px;
+    }
+
+    .quest-memory-display {
+      display: grid;
+      width: 100%;
+      height: 63px;
+      place-items: center;
+      margin: 0 auto 12px;
+      border: 1px solid rgba(203, 178, 126, .14);
+      border-radius: 4px;
+      color: #e7bfca;
+      background: radial-gradient(circle, rgba(146, 82, 104, .12), rgba(255, 250, 245, .012) 72%);
+      font-family: var(--serif);
+      font-size: 36px;
+      letter-spacing: .08em;
+      transition: background .18s ease, color .18s ease, transform .18s ease;
+    }
+
+    .quest-memory-display.is-flashing {
+      color: #fff5e9;
+      background: radial-gradient(circle, rgba(203, 178, 126, .19), rgba(223, 176, 189, .07) 62%, transparent);
+      transform: scale(1.015);
+      text-shadow: 0 0 22px rgba(223, 176, 189, .22);
+    }
+
+    .quest-memory-pad {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      width: min(100%, 315px);
+      margin: 0 auto 10px;
+    }
+
+    .quest-memory-button {
+      display: flex;
+      min-height: 56px;
+      align-items: center;
+      justify-content: center;
+      gap: 11px;
+      border: 1px solid rgba(223, 176, 189, .2);
+      border-radius: 4px;
+      color: #e6bdc8;
+      background: linear-gradient(145deg, rgba(255, 250, 245, .04), rgba(255, 250, 245, .008));
+      font-family: var(--serif);
+      font-size: 25px;
+      cursor: pointer;
+      touch-action: manipulation;
+      transition: transform .18s ease, background .18s ease, border-color .18s ease, opacity .18s ease;
+    }
+
+    .quest-memory-button span {
+      color: rgba(255, 250, 245, .51);
+      font-family: var(--sans);
+      font-size: 8px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+    }
+
+    .quest-memory-button:disabled {
+      opacity: .45;
+      cursor: default;
+    }
+
+    .quest-memory-button:not(:disabled):hover,
+    .quest-memory-button.is-pressed {
+      border-color: rgba(203, 178, 126, .62);
+      color: #fff7e8;
+      background: rgba(203, 178, 126, .1);
+      transform: translateY(-1px);
+    }
+
+    .quest-memory-button.is-error {
+      border-color: rgba(194, 113, 133, .8);
+      background: rgba(194, 113, 133, .12);
+    }
+
+    .quest-secondary-button {
+      display: flex;
+      width: min(100%, 315px);
+      min-height: 45px;
+      align-items: center;
+      justify-content: center;
+      margin: 10px auto 0;
+      padding: 0 15px;
+      border: 1px solid rgba(203, 178, 126, .42);
+      border-radius: 999px;
+      color: #fffaf5;
+      background: rgba(203, 178, 126, .065);
+      font: inherit;
+      font-size: 9px;
+      letter-spacing: .04em;
+      cursor: pointer;
+      touch-action: manipulation;
+      transition: background .2s ease, border-color .2s ease, transform .2s ease;
+    }
+
+    .quest-secondary-button:hover {
+      border-color: rgba(203, 178, 126, .78);
+      background: rgba(203, 178, 126, .13);
+    }
+
+    .quest-secondary-button:disabled {
+      opacity: .45;
+      cursor: default;
+    }
+
+    .quest-lock {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 7px;
+      width: min(100%, 350px);
+      margin: 19px auto 17px;
+      padding: 13px 8px;
+      border: 1px solid rgba(203, 178, 126, .17);
+      border-radius: 4px;
+      background: linear-gradient(145deg, rgba(255, 250, 245, .035), rgba(255, 250, 245, .008));
+    }
+
+    .quest-dial {
+      min-width: 0;
+      padding: 7px 2px 9px;
+      border-right: 1px solid rgba(203, 178, 126, .1);
+    }
+
+    .quest-dial:last-child {
+      border-right: 0;
+    }
+
+    .quest-dial-label {
+      display: block;
+      min-height: 20px;
+      color: rgba(255, 250, 245, .43);
+      font-size: 7px;
+      letter-spacing: .08em;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    .quest-dial-controls {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+    }
+
+    .quest-dial-arrow {
+      display: grid;
+      width: 27px;
+      height: 36px;
+      place-items: center;
+      padding: 0;
+      border: 0;
+      color: rgba(203, 178, 126, .76);
+      background: transparent;
+      font-family: var(--serif);
+      font-size: 26px;
+      cursor: pointer;
+      touch-action: manipulation;
+      transition: color .18s ease, transform .18s ease;
+    }
+
+    .quest-dial-arrow:hover {
+      color: #fff5e8;
+      transform: scale(1.12);
+    }
+
+    .quest-dial-arrow:disabled {
+      opacity: .35;
+      cursor: default;
+      transform: none;
+    }
+
+    .quest-dial-symbol {
+      display: grid;
+      width: 35px;
+      height: 43px;
+      place-items: center;
+      color: #e7bfca;
+      font-family: var(--serif);
+      font-size: 30px;
+      text-shadow: 0 0 20px rgba(223, 176, 189, .12);
+    }
+
+    .quest-lock-check {
+      margin-top: 0;
+    }
+
+    .quest-lock.is-shaking {
+      animation: quest-wiggle .34s ease;
+      border-color: rgba(194, 113, 133, .4);
+    }
+
+    .quest-lock.is-unlocked {
+      border-color: rgba(203, 178, 126, .42);
+      background: radial-gradient(circle, rgba(203, 178, 126, .08), transparent 80%);
+    }
+
+    .quest-card .game-feedback {
+      margin-top: 12px;
+      margin-bottom: 12px;
+      font-size: 9px;
+    }
+
+    .quest-card .game-continue {
+      min-height: 48px;
+    }
+
+    @keyframes quest-panel-in {
+      from { opacity: 0; transform: translateY(7px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes quest-wiggle {
+      0%, 100% { transform: translateX(0); }
+      28% { transform: translateX(-3px); }
+      72% { transform: translateX(3px); }
+    }
+
+    @media (max-width: 430px) {
+      .game-gate-card.quest-card {
+        padding: 18px 14px 16px;
+      }
+
+      .quest-card .game-emblem {
+        width: 37px;
+        height: 37px;
+        margin-bottom: 11px;
+      }
+
+      .quest-card .game-title {
+        font-size: clamp(36px, 10vw, 43px);
+      }
+
+      .quest-card .game-description {
+        min-height: 30px;
+        margin-bottom: 14px;
+      }
+
+      .quest-stage {
+        margin-top: 11px;
+      }
+
+      .quest-instruction {
+        margin-bottom: 9px;
+        font-size: 9px;
+      }
+
+      .quest-key-grid {
+        width: min(100%, 300px);
+        gap: 6px;
+      }
+
+      .quest-object {
+        min-height: 52px;
+        font-size: 25px;
+      }
+
+      .quest-memory-display {
+        height: 54px;
+        margin-bottom: 9px;
+      }
+
+      .quest-memory-pad {
+        gap: 6px;
+        margin-bottom: 8px;
+      }
+
+      .quest-memory-button {
+        min-height: 49px;
+        font-size: 23px;
+      }
+
+      .quest-lock {
+        gap: 3px;
+        margin-top: 12px;
+        margin-bottom: 12px;
+        padding: 9px 3px;
+      }
+
+      .quest-dial-arrow {
+        width: 22px;
+        font-size: 23px;
+      }
+
+      .quest-dial-symbol {
+        width: 29px;
+        font-size: 26px;
+      }
+
+      .quest-card .game-feedback {
+        margin-top: 9px;
+        margin-bottom: 9px;
+      }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .quest-stage,
+      .quest-target,
+      .quest-object,
+      .quest-memory-button,
+      .quest-memory-display,
+      .quest-lock,
+      .quest-dial-arrow {
+        animation: none !important;
+        transition: none !important;
+      }
+    }
+
   </style>
 </head>
 <body class="game-gate-active">
 
+
   <div class="game-gate" id="game-gate" role="dialog" aria-modal="true" aria-labelledby="game-title" aria-describedby="game-description">
-    <div class="game-gate-card">
+    <div class="game-gate-card quest-card">
       <div class="game-emblem" aria-hidden="true">✧</div>
-      <p class="game-kicker">только маленькая пауза</p>
-      <h1 class="game-title" id="game-title">Маленькая игра для тебя</h1>
-      <p class="game-description" id="game-description">Три сердечка спрятались где-то рядом. Найди их, и мы сможем идти дальше.</p>
+      <p class="game-kicker" id="game-kicker">СЕКРЕТНЫЙ АРХИВ · 01 / 03</p>
+      <h1 class="game-title" id="game-title">Найди ключ</h1>
+      <p class="game-description" id="game-description">Шкатулка хранит сюрприз. Для начала найди среди знаков то, что умеет открывать замки.</p>
 
       <div class="game-counter-row">
-        <span class="game-counter-label">найдено сердечек</span>
-        <span class="game-counter" id="game-count">0 <span>/ 3</span></span>
+        <span class="game-counter-label" id="game-stage-label">испытание 01 из 03</span>
+        <span class="game-counter" id="game-count">01 <span>/ 03</span></span>
       </div>
       <div class="game-progress-track" aria-hidden="true">
         <span class="game-progress-fill" id="game-progress-fill"></span>
       </div>
 
-      <div class="game-playfield" id="game-playfield" aria-label="Поле, на котором спрятаны три сердечка">
-        <span class="game-orbit game-orbit-one" aria-hidden="true"></span>
-        <span class="game-orbit game-orbit-two" aria-hidden="true"></span>
-        <span class="game-star game-star-one" aria-hidden="true">✧</span>
-        <span class="game-star game-star-two" aria-hidden="true">·</span>
-        <span class="game-star game-star-three" aria-hidden="true">✦</span>
-        <button class="game-target target-one" type="button" aria-label="Найти первое спрятанное сердечко">♡</button>
-        <button class="game-target target-two" type="button" aria-label="Найти второе спрятанное сердечко">♡</button>
-        <button class="game-target target-three" type="button" aria-label="Найти третье спрятанное сердечко">♡</button>
-      </div>
+      <section class="quest-stage" data-quest-stage="0" aria-label="Первое испытание: найти ключ">
+        <p class="quest-instruction">Выбери предмет, который откроет запертую шкатулку.</p>
+        <div class="quest-key-grid" id="quest-key-grid" role="group" aria-label="Предметы из секретного архива">
+          <button class="quest-object" type="button" data-label="Искра" aria-label="Искра">✧</button>
+          <button class="quest-object" type="button" data-label="Луна" aria-label="Луна">☾</button>
+          <button class="quest-object" type="button" data-label="Сердце" aria-label="Сердце">♡</button>
+          <button class="quest-object" type="button" data-label="Цветок" aria-label="Цветок">❀</button>
+          <button class="quest-object" type="button" data-label="Кристалл" aria-label="Кристалл">◇</button>
+          <button class="quest-object" type="button" data-label="Звезда" aria-label="Звезда">✦</button>
+          <button class="quest-object quest-hidden-key" type="button" data-label="Ключ" data-key="true" aria-label="Ключ">🗝️</button>
+          <button class="quest-object" type="button" data-label="Осколок" aria-label="Осколок">♢</button>
+          <button class="quest-object" type="button" data-label="Цветок звезды" aria-label="Цветок звезды">✿</button>
+        </div>
+      </section>
 
-      <p class="game-feedback" id="game-feedback" role="status" aria-live="polite">Подсказка: просто нажимай на сердечки ✧</p>
+      <section class="quest-stage" data-quest-stage="1" aria-label="Второе испытание: повторить последовательность" hidden>
+        <p class="quest-instruction">Запомни пять знаков, которые вспыхнут по очереди. Затем повтори их в том же порядке.</p>
+        <div class="quest-memory-display" id="quest-memory-display" aria-live="polite" aria-label="Знак последовательности">готова?</div>
+        <div class="quest-memory-pad" id="quest-memory-pad" role="group" aria-label="Повтори последовательность знаков">
+          <button class="quest-memory-button" type="button" data-symbol="0" aria-label="Луна" disabled>☾<span>луна</span></button>
+          <button class="quest-memory-button" type="button" data-symbol="1" aria-label="Звезда" disabled>✦<span>звезда</span></button>
+          <button class="quest-memory-button" type="button" data-symbol="2" aria-label="Сердце" disabled>♡<span>сердце</span></button>
+          <button class="quest-memory-button" type="button" data-symbol="3" aria-label="Искра" disabled>✧<span>искра</span></button>
+        </div>
+        <button class="quest-secondary-button" id="quest-memory-start" type="button">Показать последовательность</button>
+      </section>
+
+      <section class="quest-stage" data-quest-stage="2" aria-label="Третье испытание: открыть символический замок" hidden>
+        <p class="quest-instruction">Поверни три диска в порядке подсказки: ночное небо → далёкая искра → то, что мы бережём.</p>
+        <div class="quest-lock" id="quest-lock">
+          <div class="quest-dial">
+            <span class="quest-dial-label">первый знак</span>
+            <div class="quest-dial-controls">
+              <button class="quest-dial-arrow" type="button" data-dial="0" data-step="-1" aria-label="Повернуть первый диск назад">‹</button>
+              <span class="quest-dial-symbol" id="quest-dial-display-0" aria-label="Текущий знак: сердце">♡</span>
+              <button class="quest-dial-arrow" type="button" data-dial="0" data-step="1" aria-label="Повернуть первый диск вперёд">›</button>
+            </div>
+          </div>
+          <div class="quest-dial">
+            <span class="quest-dial-label">второй знак</span>
+            <div class="quest-dial-controls">
+              <button class="quest-dial-arrow" type="button" data-dial="1" data-step="-1" aria-label="Повернуть второй диск назад">‹</button>
+              <span class="quest-dial-symbol" id="quest-dial-display-1" aria-label="Текущий знак: искра">✧</span>
+              <button class="quest-dial-arrow" type="button" data-dial="1" data-step="1" aria-label="Повернуть второй диск вперёд">›</button>
+            </div>
+          </div>
+          <div class="quest-dial">
+            <span class="quest-dial-label">третий знак</span>
+            <div class="quest-dial-controls">
+              <button class="quest-dial-arrow" type="button" data-dial="2" data-step="-1" aria-label="Повернуть третий диск назад">‹</button>
+              <span class="quest-dial-symbol" id="quest-dial-display-2" aria-label="Текущий знак: луна">☾</span>
+              <button class="quest-dial-arrow" type="button" data-dial="2" data-step="1" aria-label="Повернуть третий диск вперёд">›</button>
+            </div>
+          </div>
+        </div>
+        <button class="quest-secondary-button quest-lock-check" id="quest-lock-check" type="button">Проверить комбинацию</button>
+      </section>
+
+      <p class="game-feedback" id="game-feedback" role="status" aria-live="polite">Некоторые знаки любят прятаться на виду.</p>
       <button class="game-continue" id="game-continue" type="button" hidden>
-        <span>Продолжить</span><span class="game-continue-arrow" aria-hidden="true">↗</span>
+        <span class="quest-continue-label">Перейти к следующему испытанию</span><span class="game-continue-arrow" aria-hidden="true">↗</span>
       </button>
-      <p class="game-footnote" id="game-footnote">без таймера · без проигрыша</p>
+      <p class="game-footnote" id="game-footnote">3 испытания · без таймера · без проигрыша</p>
     </div>
   </div>
 
@@ -2146,52 +2613,243 @@
 
 
       
+
       const gameGate = document.getElementById("game-gate");
       const siteShell = document.getElementById("site-shell");
-      const gameTargets = Array.from(document.querySelectorAll(".game-target"));
+      const gameTitle = document.getElementById("game-title");
+      const gameKicker = document.getElementById("game-kicker");
+      const gameDescription = document.getElementById("game-description");
+      const gameStageLabel = document.getElementById("game-stage-label");
       const gameCount = document.getElementById("game-count");
       const gameProgressFill = document.getElementById("game-progress-fill");
       const gameFeedback = document.getElementById("game-feedback");
-      const gameDescription = document.getElementById("game-description");
-      const gameTitle = document.getElementById("game-title");
       const gameContinue = document.getElementById("game-continue");
-      let foundHearts = 0;
+      const continueLabel = gameContinue.querySelector(".quest-continue-label");
+      const questPanels = Array.from(document.querySelectorAll("[data-quest-stage]"));
+      const keyObjects = Array.from(document.querySelectorAll(".quest-object"));
+      const memoryDisplay = document.getElementById("quest-memory-display");
+      const memoryButtons = Array.from(document.querySelectorAll(".quest-memory-button"));
+      const memoryStart = document.getElementById("quest-memory-start");
+      const lockCheck = document.getElementById("quest-lock-check");
+      const dialDisplays = [0, 1, 2].map(function (index) {
+        return document.getElementById("quest-dial-display-" + index);
+      });
+      const dialArrows = Array.from(document.querySelectorAll(".quest-dial-arrow"));
+
+      const questData = [
+        { kicker: "СЕКРЕТНЫЙ АРХИВ · 01 / 03", title: "Найди ключ", description: "Шкатулка хранит сюрприз. Для начала найди среди знаков то, что умеет открывать замки." },
+        { kicker: "СЕКРЕТНЫЙ АРХИВ · 02 / 03", title: "Память звёзд", description: "Теперь нужно запомнить маленькую последовательность и вернуть её в точности." },
+        { kicker: "СЕКРЕТНЫЙ АРХИВ · 03 / 03", title: "Символический замок", description: "Последнее испытание. Расставь символы по подсказке, чтобы открыть путь к сюрпризу." }
+      ];
+
+      let currentQuestStage = 0;
       let gameCompleted = false;
+      let keySolved = false;
+      let memorySolved = false;
+      let memoryPlaying = false;
+      let memoryReady = false;
+      let memoryInputStep = 0;
+      const memoryPattern = [2, 0, 1, 3, 0];
+      const memorySymbols = ["☾", "✦", "♡", "✧"];
+      let dialIndexes = [2, 3, 0];
+      let lockSolved = false;
 
-      function findHeart(target, index) {
-        if (gameCompleted || target.disabled) return;
-        target.disabled = true;
-        target.classList.add("is-found");
-        target.setAttribute("aria-hidden", "true");
-        foundHearts += 1;
-        gameCount.innerHTML = foundHearts + ' <span>/ 3</span>';
-        gameProgressFill.style.width = ((foundHearts / 3) * 100) + "%";
-
-        if (foundHearts < 3) {
-          const remaining = 3 - foundHearts;
-          gameFeedback.textContent = foundHearts === 1
-            ? "Одно сердечко найдено. Осталось ещё два ✧"
-            : "Уже два! Осталось последнее сердечко ♡";
-          gameDescription.textContent = "Хорошо получается. Осмотрись вокруг и найди ещё " + (remaining === 1 ? "одно сердечко." : "два сердечка.");
-          return;
-        }
-
-        gameCompleted = true;
-        gameTitle.textContent = "Все три найдены.";
-        gameDescription.textContent = "Маленький путь пройден. Теперь можно двигаться дальше.";
-        gameFeedback.textContent = "Ты внимательная. Это пригодится ♡";
-        gameContinue.hidden = false;
-        gameContinue.focus({ preventScroll: true });
+      function setProgress(percent) {
+        gameProgressFill.style.width = percent + "%";
       }
 
-      gameTargets.forEach(function (target, index) {
-        target.addEventListener("click", function () {
-          findHeart(target, index);
+      function showContinue(label) {
+        continueLabel.textContent = label;
+        gameContinue.hidden = false;
+      }
+
+      function hideContinue() {
+        gameContinue.hidden = true;
+      }
+
+      function setQuestStage(index) {
+        currentQuestStage = index;
+        questPanels.forEach(function (panel, panelIndex) {
+          panel.hidden = panelIndex !== index;
+        });
+        gameKicker.textContent = questData[index].kicker;
+        gameTitle.textContent = questData[index].title;
+        gameDescription.textContent = questData[index].description;
+        gameStageLabel.textContent = "испытание " + String(index + 1).padStart(2, "0") + " из 03";
+        gameCount.innerHTML = String(index + 1).padStart(2, "0") + ' <span>/ 03</span>';
+        setProgress((index / 3) * 100);
+        hideContinue();
+        gameFeedback.textContent = [
+          "Некоторые знаки любят прятаться на виду.",
+          "Смотри внимательно. Порядок имеет значение.",
+          "Подсказки уже перед тобой. Не спеши."
+        ][index];
+      }
+
+      keyObjects.forEach(function (object) {
+        object.addEventListener("click", function () {
+          if (keySolved || object.disabled) return;
+          if (object.dataset.key === "true") {
+            keySolved = true;
+            object.classList.add("is-correct");
+            object.disabled = true;
+            keyObjects.forEach(function (other) { other.disabled = true; });
+            gameFeedback.textContent = "Ключ найден. Первая защёлка открылась ✧";
+            setProgress(33);
+            showContinue("Перейти к загадке памяти");
+            gameContinue.focus({ preventScroll: true });
+            return;
+          }
+          object.classList.remove("is-wrong");
+          void object.offsetWidth;
+          object.classList.add("is-wrong");
+          gameFeedback.textContent = "Не этот знак. Посмотри на остальные предметы.";
+          window.setTimeout(function () { object.classList.remove("is-wrong"); }, 430);
         });
       });
 
-      gameContinue.addEventListener("click", function () {
-        if (!gameCompleted) return;
+      function playMemoryPattern() {
+        if (memorySolved || memoryPlaying) return;
+        memoryPlaying = true;
+        memoryReady = false;
+        memoryInputStep = 0;
+        memoryButtons.forEach(function (button) {
+          button.disabled = true;
+          button.classList.remove("is-pressed", "is-error");
+        });
+        memoryStart.disabled = true;
+        memoryStart.textContent = "Запоминай последовательность…";
+        memoryDisplay.classList.remove("is-flashing");
+        memoryDisplay.textContent = "посмотри";
+
+        let step = 0;
+        function showNextSymbol() {
+          if (step >= memoryPattern.length) {
+            memoryDisplay.textContent = "твоя очередь";
+            memoryDisplay.classList.remove("is-flashing");
+            memoryPlaying = false;
+            memoryReady = true;
+            memoryButtons.forEach(function (button) { button.disabled = false; });
+            memoryStart.disabled = false;
+            memoryStart.textContent = "Показать ещё раз";
+            gameFeedback.textContent = "Теперь повтори пять знаков в том же порядке.";
+            return;
+          }
+          memoryDisplay.textContent = memorySymbols[memoryPattern[step]];
+          memoryDisplay.classList.add("is-flashing");
+          window.setTimeout(function () {
+            memoryDisplay.classList.remove("is-flashing");
+            memoryDisplay.textContent = "·";
+            step += 1;
+            window.setTimeout(showNextSymbol, reducedMotion ? 140 : 230);
+          }, reducedMotion ? 320 : 510);
+        }
+        window.setTimeout(showNextSymbol, reducedMotion ? 120 : 280);
+      }
+
+      memoryStart.addEventListener("click", playMemoryPattern);
+
+      memoryButtons.forEach(function (button) {
+        button.addEventListener("click", function () {
+          if (!memoryReady || memorySolved || memoryPlaying || button.disabled) return;
+          const picked = Number(button.dataset.symbol);
+          const expected = memoryPattern[memoryInputStep];
+
+          if (picked !== expected) {
+            memoryReady = false;
+            memoryInputStep = 0;
+            button.classList.add("is-error");
+            window.setTimeout(function () { button.classList.remove("is-error"); }, 450);
+            memoryButtons.forEach(function (entry) { entry.disabled = true; });
+            memoryStart.disabled = false;
+            memoryStart.textContent = "Попробовать ещё раз";
+            memoryDisplay.textContent = "почти";
+            gameFeedback.textContent = "Порядок немного сбился. Ничего страшного, посмотри ещё раз.";
+            return;
+          }
+
+          button.classList.add("is-pressed");
+          window.setTimeout(function () { button.classList.remove("is-pressed"); }, 260);
+          memoryInputStep += 1;
+
+          if (memoryInputStep === memoryPattern.length) {
+            memorySolved = true;
+            memoryReady = false;
+            memoryButtons.forEach(function (entry) { entry.disabled = true; });
+            memoryStart.hidden = true;
+            memoryDisplay.textContent = "идеально";
+            gameFeedback.textContent = "Все знаки на месте. Память тебя не подвела ♡";
+            setProgress(66);
+            showContinue("Перейти к символическому замку");
+            gameContinue.focus({ preventScroll: true });
+          }
+        });
+      });
+
+      const dialSymbols = ["☾", "✦", "♡", "✧"];
+      const correctCode = [0, 1, 2];
+
+      function updateDial(index) {
+        dialDisplays[index].textContent = dialSymbols[dialIndexes[index]];
+        dialDisplays[index].setAttribute("aria-label", "Текущий знак: " + dialSymbols[dialIndexes[index]]);
+      }
+
+      dialArrows.forEach(function (arrow) {
+        arrow.addEventListener("click", function () {
+          if (lockSolved) return;
+          const index = Number(arrow.dataset.dial);
+          const direction = Number(arrow.dataset.step);
+          dialIndexes[index] = (dialIndexes[index] + direction + dialSymbols.length) % dialSymbols.length;
+          updateDial(index);
+        });
+      });
+
+      lockCheck.addEventListener("click", function () {
+        if (lockSolved) return;
+        const isCorrect = dialIndexes.every(function (value, index) {
+          return value === correctCode[index];
+        });
+        if (!isCorrect) {
+          const lock = document.getElementById("quest-lock");
+          lock.classList.remove("is-shaking");
+          void lock.offsetWidth;
+          lock.classList.add("is-shaking");
+          window.setTimeout(function () { lock.classList.remove("is-shaking"); }, 430);
+          gameFeedback.textContent = "Замок тихо щёлкнул, но не открылся. Вспомни порядок подсказки.";
+          return;
+        }
+
+        lockSolved = true;
+        dialArrows.forEach(function (arrow) { arrow.disabled = true; });
+        lockCheck.disabled = true;
+        document.getElementById("quest-lock").classList.add("is-unlocked");
+        gameFeedback.textContent = "Замок открылся. Сюрприз ждёт тебя по ту сторону ♡";
+        gameTitle.textContent = "Путь открыт.";
+        gameDescription.textContent = "Ты прошла все три испытания. Самое важное теперь совсем рядом.";
+        gameKicker.textContent = "ДОСТУП РАЗРЕШЁН · 03 / 03";
+        setProgress(100);
+        showContinue("Открыть открытку");
+        gameCompleted = true;
+        gameContinue.focus({ preventScroll: true });
+      });
+
+      function openMainPage() {
+        if (currentQuestStage === 0 && !keySolved) return;
+        if (currentQuestStage === 1 && !memorySolved) return;
+        if (currentQuestStage === 2 && !gameCompleted) return;
+
+        if (currentQuestStage < 2) {
+          setQuestStage(currentQuestStage + 1);
+          if (currentQuestStage === 1) {
+            memoryButtons.forEach(function (button) { button.disabled = true; });
+            memoryStart.hidden = false;
+            memoryStart.disabled = false;
+            memoryStart.textContent = "Показать последовательность";
+            memoryDisplay.textContent = "готова?";
+          }
+          return;
+        }
+
         gameGate.classList.add("is-leaving");
         window.setTimeout(function () {
           gameGate.remove();
@@ -2202,9 +2860,11 @@
           const brandLink = siteShell.querySelector(".brand");
           if (brandLink) brandLink.focus({ preventScroll: true });
         }, reducedMotion ? 0 : 540);
-      });
+      }
+
+      gameContinue.addEventListener("click", openMainPage);
 
     }());
-  </script>
+</script>
 </body>
 </html>
