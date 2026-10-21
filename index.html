@@ -2824,6 +2824,500 @@
     }
 
 
+
+    /* Romantic Match-3 chapter · self-contained, no external assets or libraries. */
+    .match3-gate {
+      position: fixed;
+      z-index: 1100;
+      inset: 0;
+      display: none;
+      place-items: center;
+      overflow-x: hidden;
+      overflow-y: auto;
+      padding: max(14px, env(safe-area-inset-top)) 13px max(14px, env(safe-area-inset-bottom));
+      color: #fffaf5;
+      background:
+        radial-gradient(ellipse at 50% 4%, rgba(203, 178, 126, .13), transparent 27rem),
+        radial-gradient(ellipse at 8% 76%, rgba(146, 55, 86, .2), transparent 27rem),
+        linear-gradient(150deg, #21131d 0%, #351827 54%, #24131e 100%);
+      overscroll-behavior: contain;
+      -webkit-overflow-scrolling: touch;
+      isolation: isolate;
+    }
+
+    .match3-gate::before,
+    .match3-gate::after {
+      position: fixed;
+      inset: 9px;
+      content: "";
+      border: 1px solid rgba(203, 178, 126, .15);
+      pointer-events: none;
+    }
+
+    .match3-gate::after {
+      inset: 15px;
+      border-color: rgba(223, 176, 189, .045);
+    }
+
+    .match3-gate.is-active {
+      display: grid;
+      animation: m3-gate-in .48s cubic-bezier(.2,.75,.25,1) both;
+    }
+
+    .match3-gate.is-leaving {
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity .48s ease;
+    }
+
+    .match3-shell {
+      position: relative;
+      z-index: 1;
+      width: min(100%, 500px);
+      margin: auto;
+    }
+
+    .match3-panel {
+      width: 100%;
+      padding: clamp(17px, 4vw, 27px);
+      border: 1px solid rgba(223, 176, 189, .17);
+      border-radius: 7px;
+      background:
+        linear-gradient(145deg, rgba(255, 250, 245, .055), rgba(255, 250, 245, .012)),
+        rgba(40, 20, 31, .94);
+      box-shadow: 0 28px 88px rgba(7, 2, 6, .34), inset 0 1px rgba(255,255,255,.035);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      text-align: center;
+    }
+
+    .match3-brandline {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      margin: 0 0 21px;
+      color: rgba(255, 250, 245, .46);
+      font-size: 8px;
+      letter-spacing: .2em;
+    }
+
+    .match3-brandmark {
+      color: #d9ad82;
+      font-family: var(--serif);
+      font-size: 20px;
+    }
+
+    .match3-screen[hidden] {
+      display: none !important;
+    }
+
+    .match3-title,
+    .match3-play-title,
+    .match3-result-title {
+      margin: 0;
+      color: #fff8f1;
+      font-family: var(--serif);
+      font-size: clamp(35px, 8vw, 48px);
+      font-weight: 400;
+      letter-spacing: -.035em;
+      line-height: 1.04;
+      text-wrap: balance;
+    }
+
+    .match3-kicker {
+      margin: 0 0 10px;
+      color: #d8c18f;
+      font-size: 8px;
+      letter-spacing: .22em;
+      line-height: 1.7;
+      text-transform: uppercase;
+    }
+
+    .match3-copy {
+      max-width: 370px;
+      margin: 16px auto 0;
+      color: rgba(255, 250, 245, .66);
+      font-size: 11px;
+      line-height: 1.9;
+    }
+
+    .match3-intro-orbit {
+      position: relative;
+      display: grid;
+      width: 94px;
+      height: 94px;
+      place-items: center;
+      margin: 0 auto 20px;
+      border: 1px solid rgba(203, 178, 126, .26);
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(146,82,104,.17), transparent 72%);
+      box-shadow: 0 0 0 8px rgba(203,178,126,.018), 0 0 37px rgba(203,178,126,.06);
+      animation: m3-orbit-breathe 4.8s ease-in-out infinite;
+    }
+
+    .m3-orbit-heart { color: #e7b2c2; font-size: 39px; text-shadow: 0 0 20px rgba(223,176,189,.3); }
+    .m3-orbit-star { position: absolute; top: 8px; right: 8px; color: #d8c18f; font-size: 18px; }
+    .m3-orbit-flower { position: absolute; left: 7px; bottom: 10px; color: #d99bab; font-size: 18px; }
+
+    .match3-intro-details {
+      display: flex;
+      justify-content: center;
+      gap: clamp(23px, 9vw, 48px);
+      margin: 23px 0 25px;
+    }
+
+    .match3-intro-details span { display: flex; min-width: 35px; flex-direction: column; gap: 3px; align-items: center; }
+    .match3-intro-details b { color: #f1d7dc; font-family: var(--serif); font-size: 24px; font-weight: 400; }
+    .match3-intro-details small { color: rgba(255,250,245,.43); font-size: 8px; letter-spacing: .12em; text-transform: uppercase; }
+
+    .match3-primary,
+    .match3-secondary {
+      display: flex;
+      width: 100%;
+      min-height: 49px;
+      align-items: center;
+      justify-content: center;
+      gap: 14px;
+      padding: 10px 16px;
+      border: 1px solid rgba(203,178,126,.58);
+      border-radius: 999px;
+      color: #fffaf5;
+      background: linear-gradient(135deg, rgba(203,178,126,.17), rgba(255,250,245,.025));
+      font: inherit;
+      font-size: 10px;
+      letter-spacing: .04em;
+      cursor: pointer;
+      touch-action: manipulation;
+      -webkit-tap-highlight-color: transparent;
+      transition: background .22s ease, border-color .22s ease, transform .22s ease;
+    }
+
+    .match3-primary span { color: #e2c991; font-size: 17px; }
+    .match3-primary:hover { border-color: #e7d3a6; background: rgba(203,178,126,.2); transform: translateY(-1px); }
+    .match3-primary:active { transform: translateY(0) scale(.99); }
+    .match3-secondary { margin-top: 9px; border-color: rgba(223,176,189,.24); color: rgba(255,250,245,.76); background: transparent; }
+    .match3-secondary:hover { border-color: rgba(223,176,189,.6); background: rgba(223,176,189,.07); }
+    .match3-primary:focus-visible,
+    .match3-secondary:focus-visible,
+    .m3-cell:focus-visible {
+      outline: 2px solid #e5cc98;
+      outline-offset: 3px;
+    }
+
+    .match3-note {
+      margin: 12px 0 0;
+      color: rgba(255,250,245,.32);
+      font-size: 8px;
+      letter-spacing: .06em;
+    }
+
+    .match3-level-heading {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 15px;
+      text-align: left;
+    }
+
+    .match3-level-heading .match3-kicker { margin-bottom: 6px; }
+    .match3-play-title { font-size: clamp(29px, 7vw, 37px); }
+
+    .match3-moves {
+      display: flex;
+      min-width: 61px;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1px;
+      padding: 7px 9px;
+      border: 1px solid rgba(203,178,126,.24);
+      border-radius: 6px;
+      background: rgba(255,250,245,.025);
+    }
+
+    .match3-moves span { color: rgba(255,250,245,.42); font-size: 7px; letter-spacing: .13em; }
+    .match3-moves strong { color: #f4dbe1; font-family: var(--serif); font-size: 27px; font-weight: 400; line-height: 1.05; }
+
+    .match3-goals {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-start;
+      gap: 7px;
+      margin: 0 0 12px;
+    }
+
+    .m3-goal {
+      display: flex;
+      flex: 1 1 44%;
+      min-width: 0;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 9px;
+      border: 1px solid rgba(223,176,189,.1);
+      border-radius: 5px;
+      background: rgba(255,250,245,.025);
+      text-align: left;
+    }
+
+    .m3-goal-glyph { flex: 0 0 auto; font-family: var(--serif); font-size: 20px; }
+    .m3-goal-copy { min-width: 0; flex: 1; }
+    .m3-goal-label { display: block; overflow-wrap: anywhere; color: rgba(255,250,245,.54); font-size: 8px; line-height: 1.5; }
+    .m3-goal-count { display: block; margin-top: 1px; color: #fff5ee; font-family: var(--serif); font-size: 17px; line-height: 1.1; }
+    .m3-goal-meter { height: 2px; margin-top: 5px; overflow: hidden; border-radius: 5px; background: rgba(255,250,245,.1); }
+    .m3-goal-meter > span { display: block; width: 0; height: 100%; background: linear-gradient(90deg,#c27c96,#d8c18f); transition: width .22s ease; }
+
+    .match3-score-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+      margin: 0 2px 8px;
+      color: rgba(255,250,245,.52);
+      font-size: 8px;
+      letter-spacing: .06em;
+      text-align: left;
+    }
+
+    .match3-score-row b { color: #e8c5cf; font-family: var(--serif); font-size: 18px; font-weight: 400; letter-spacing: 0; }
+    #match3-score-goal { max-width: 60%; overflow-wrap: anywhere; text-align: right; }
+
+    .match3-board-frame {
+      width: min(100%, 420px);
+      margin: 0 auto;
+      padding: 5px;
+      border: 1px solid rgba(203,178,126,.2);
+      border-radius: 7px;
+      background:
+        radial-gradient(circle at 50% 0%, rgba(146,82,104,.13), transparent 60%),
+        rgba(14,7,12,.32);
+      box-shadow: inset 0 1px rgba(255,255,255,.025), 0 12px 32px rgba(0,0,0,.11);
+    }
+
+    .match3-board {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(0, 1fr));
+      gap: 3px;
+      width: 100%;
+      aspect-ratio: 1;
+      touch-action: none;
+      user-select: none;
+      -webkit-user-select: none;
+    }
+
+    .m3-cell {
+      position: relative;
+      display: grid;
+      min-width: 0;
+      min-height: 0;
+      place-items: center;
+      overflow: hidden;
+      padding: 0;
+      border: 1px solid rgba(223,176,189,.095);
+      border-radius: 5px;
+      color: #f5dce1;
+      background: linear-gradient(145deg,rgba(255,250,245,.055),rgba(255,250,245,.014));
+      font-family: var(--serif);
+      font-size: clamp(18px, 4.8vw, 26px);
+      line-height: 1;
+      cursor: pointer;
+      transition: border-color .12s ease, background .12s ease, transform .12s ease, opacity .15s ease;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    .m3-glyph { display: block; transform: translateY(-.5px); transition: transform .12s ease, filter .12s ease; }
+    .m3-type-0 { color: #e6a4ba; text-shadow: 0 0 9px rgba(223,126,162,.13); }
+    .m3-type-1 { color: #e5ca8e; text-shadow: 0 0 9px rgba(215,183,119,.13); }
+    .m3-type-2 { color: #f0c5d2; text-shadow: 0 0 8px rgba(223,176,189,.1); }
+    .m3-type-3 { color: #b6cadf; text-shadow: 0 0 9px rgba(182,202,223,.12); }
+    .m3-type-4 { color: #f2d7bd; text-shadow: 0 0 9px rgba(242,215,189,.12); }
+    .m3-type-5 { color: #d9c6ed; text-shadow: 0 0 9px rgba(217,198,237,.13); }
+
+    .m3-cell.is-selected {
+      z-index: 2;
+      border-color: rgba(238,210,151,.95);
+      background: rgba(203,178,126,.13);
+      box-shadow: 0 0 0 2px rgba(203,178,126,.17), inset 0 0 14px rgba(203,178,126,.1);
+      transform: scale(.94);
+    }
+
+    .m3-cell.is-selected .m3-glyph { transform: scale(1.08); filter: brightness(1.15); }
+    .m3-cell.is-matched { opacity: .16; transform: scale(.56) rotate(10deg); background: rgba(215,183,119,.17); }
+    .m3-cell.is-new .m3-glyph { animation: m3-tile-arrive .24s cubic-bezier(.16,1,.3,1) both; }
+    .m3-cell.has-seal { border-color: rgba(203,178,126,.28); background-color: rgba(146,82,104,.16); }
+    .m3-cell.has-seal::after {
+      position: absolute;
+      top: 1px;
+      right: 2px;
+      content: "✿";
+      color: rgba(230,181,195,.7);
+      font-family: var(--serif);
+      font-size: clamp(7px, 1.8vw, 10px);
+      line-height: 1;
+      pointer-events: none;
+      text-shadow: 0 0 6px rgba(223,176,189,.23);
+    }
+
+    .m3-cell.is-special { border-color: rgba(231,205,151,.48); background: linear-gradient(145deg,rgba(203,178,126,.16),rgba(255,250,245,.035)); }
+    .m3-special {
+      position: absolute;
+      right: 1px;
+      bottom: 1px;
+      display: grid;
+      width: 13px;
+      height: 13px;
+      place-items: center;
+      border: 1px solid rgba(255,250,245,.5);
+      border-radius: 50%;
+      color: #39212b;
+      background: #dfc28c;
+      font-family: var(--sans);
+      font-size: 8px;
+      line-height: 1;
+      box-shadow: 0 1px 5px rgba(0,0,0,.2);
+    }
+
+    .m3-special-bomb { background: #e4a6b8; }
+    .m3-special-rainbow { color: #fff; background: linear-gradient(135deg,#df8eae,#d7b777,#b9a6df); }
+    .match3-status { min-height: 18px; margin: 10px 0 0; color: rgba(255,250,245,.72); font-size: 9px; line-height: 1.6; }
+    .match3-hint { margin: 6px 0 0; color: rgba(255,250,245,.32); font-size: 8px; line-height: 1.6; }
+
+    .match3-result-emblem {
+      display: grid;
+      width: 69px;
+      height: 69px;
+      place-items: center;
+      margin: 8px auto 20px;
+      border: 1px solid rgba(203,178,126,.38);
+      border-radius: 50%;
+      color: #e6c98d;
+      background: radial-gradient(circle,rgba(203,178,126,.13),transparent 70%);
+      box-shadow: 0 0 0 7px rgba(203,178,126,.02),0 0 38px rgba(203,178,126,.06);
+      font-family: var(--serif);
+      font-size: 36px;
+    }
+
+    .match3-result-title { font-size: clamp(34px,8vw,45px); }
+    .match3-result-score { min-height: 23px; margin: 15px 0 21px; color: #e3c895; font-family: var(--serif); font-size: 19px; }
+
+    .match3-reward-sky { position: relative; display: flex; height: 30px; align-items: center; justify-content: space-around; margin: 0 0 4px; color: #dfb4c3; }
+    .match3-reward-sky span { animation: m3-reward-float 2.8s ease-in-out infinite; font-family: var(--serif); font-size: 15px; }
+    .match3-reward-sky span:nth-child(2n) { animation-delay: -.9s; color: #d8c18f; font-size: 19px; }
+    .match3-reward-sky span:nth-child(3n) { animation-delay: -1.6s; color: #c4b5df; }
+    .match3-reward-envelope {
+      position: relative;
+      width: 124px;
+      height: 88px;
+      margin: 6px auto 28px;
+      border: 1px solid rgba(239,205,199,.45);
+      border-radius: 5px;
+      background: linear-gradient(145deg,#d995a7,#ad637d);
+      box-shadow: 0 12px 38px rgba(0,0,0,.24),0 0 30px rgba(223,176,189,.13);
+      animation: m3-reward-arrive .9s cubic-bezier(.16,1,.3,1) both, m3-reward-breathe 4.4s ease-in-out .9s infinite;
+      perspective: 500px;
+    }
+
+    .m3-reward-paper {
+      position: absolute;
+      z-index: 1;
+      inset: 8px 11px 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      border: 1px solid #ead8ca;
+      color: #8c4e64;
+      background: #fff7ed;
+      font-family: var(--serif);
+    }
+
+    .m3-reward-paper span { font-size: 10px; font-style: italic; letter-spacing: .08em; }
+    .m3-reward-paper b { font-size: 21px; font-weight: 400; }
+    .m3-reward-flap {
+      position: absolute;
+      z-index: 2;
+      inset: 0 0 auto;
+      height: 58%;
+      background: #e9b6c1;
+      clip-path: polygon(0 0,100% 0,50% 100%);
+      transform-origin: top center;
+      animation: m3-reward-flap .9s cubic-bezier(.2,.7,.2,1) .4s both;
+    }
+
+    .m3-reward-seal {
+      position: absolute;
+      z-index: 3;
+      top: 45%;
+      left: 50%;
+      display: grid;
+      width: 25px;
+      height: 25px;
+      place-items: center;
+      border: 1px solid rgba(255,250,245,.7);
+      border-radius: 50%;
+      color: #fffaf5;
+      background: #925268;
+      font-size: 12px;
+      transform: translate(-50%,-50%);
+      animation: m3-reward-seal .4s ease .55s both;
+    }
+
+    @keyframes m3-gate-in { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes m3-orbit-breathe { 0%,100% { transform: scale(.98); } 50% { transform: scale(1.025); } }
+    @keyframes m3-tile-arrive { from { opacity: .25; transform: translateY(-7px) scale(.82); } to { opacity: 1; transform: translateY(0) scale(1); } }
+    @keyframes m3-reward-float { 0%,100% { opacity: .65; transform: translateY(2px) rotate(-5deg); } 50% { opacity: 1; transform: translateY(-6px) rotate(5deg); } }
+    @keyframes m3-reward-arrive { from { opacity: 0; transform: translateY(15px) scale(.88); } to { opacity: 1; transform: translateY(0) scale(1); } }
+    @keyframes m3-reward-breathe { 0%,100% { box-shadow: 0 12px 38px rgba(0,0,0,.24),0 0 24px rgba(223,176,189,.09); } 50% { box-shadow: 0 12px 40px rgba(0,0,0,.24),0 0 36px rgba(223,176,189,.2); } }
+    @keyframes m3-reward-flap { from { transform: rotateX(0); } to { transform: rotateX(180deg); } }
+    @keyframes m3-reward-seal { from { opacity: 0; transform: translate(-50%,-50%) scale(.45); } to { opacity: 1; transform: translate(-50%,-50%) scale(1); } }
+
+    @media (max-width: 360px) {
+      .match3-gate { padding-right: 9px; padding-left: 9px; }
+      .match3-gate::before { inset: 6px; }
+      .match3-gate::after { inset: 11px; }
+      .match3-panel { padding: 14px 11px; }
+      .match3-brandline { margin-bottom: 14px; font-size: 7px; letter-spacing: .14em; }
+      .match3-intro-orbit { width: 76px; height: 76px; margin-bottom: 15px; }
+      .match3-copy { font-size: 10px; line-height: 1.75; }
+      .match3-board { gap: 2px; }
+      .match3-board-frame { padding: 4px; }
+      .m3-cell { border-radius: 4px; font-size: clamp(17px, 5.5vw, 21px); }
+      .m3-special { width: 11px; height: 11px; font-size: 7px; }
+      .m3-goal { padding: 6px; gap: 5px; }
+    }
+
+    @media (max-height: 620px) and (orientation: landscape) {
+      .match3-gate { place-items: start center; }
+      .match3-shell { margin-top: 0; margin-bottom: 0; }
+      .match3-panel { padding-top: 13px; padding-bottom: 13px; }
+      .match3-brandline { margin-bottom: 11px; }
+      .match3-intro-orbit { width: 63px; height: 63px; margin-bottom: 10px; }
+      .m3-orbit-heart { font-size: 27px; }
+      .match3-copy { margin-top: 9px; }
+      .match3-intro-details { margin: 12px 0; }
+      .match3-board-frame { width: min(100%, 350px); }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      .match3-gate,
+      .match3-intro-orbit,
+      .m3-cell,
+      .m3-cell .m3-glyph,
+      .m3-goal-meter > span,
+      .match3-reward-sky span,
+      .match3-reward-envelope,
+      .m3-reward-flap,
+      .m3-reward-seal {
+        animation: none !important;
+        transition: none !important;
+      }
+      .m3-cell.is-matched { opacity: .35; transform: none; }
+      .match3-gate.is-active { opacity: 1; }
+    }
+
+
 </style>
 </head>
 <body class="game-gate-active">
@@ -2907,6 +3401,84 @@
         <span class="quest-continue-label">Перейти к следующему испытанию</span><span class="game-continue-arrow" aria-hidden="true">↗</span>
       </button>
       <p class="game-footnote" id="game-footnote">3 испытания · без таймера · без проигрыша</p>
+    </div>
+  </div>
+
+
+  <div class="match3-gate" id="match3-gate" aria-hidden="true" inert>
+    <div class="match3-shell">
+      <section class="match3-panel" role="dialog" aria-modal="true" aria-labelledby="match3-title">
+        <div class="match3-brandline">
+          <span class="match3-brandmark" aria-hidden="true">♡</span>
+          <span>НЕБОЛЬШАЯ ГЛАВА ДЛЯ ДВОИХ</span>
+        </div>
+
+        <section class="match3-screen" id="match3-intro" data-match3-screen="intro">
+          <div class="match3-intro-orbit" aria-hidden="true">
+            <span class="m3-orbit-heart">♡</span>
+            <span class="m3-orbit-star">✦</span>
+            <span class="m3-orbit-flower">✿</span>
+          </div>
+          <p class="match3-kicker">ИСПЫТАНИЕ · 02</p>
+          <h2 class="match3-title" id="match3-title" tabindex="-1">Собери нашу историю</h2>
+          <p class="match3-copy">Три маленьких уровня, шесть романтических символов и один сюрприз в конце. Соединяй одинаковые знаки по три или больше, выполняй цели и не забывай смотреть на количество ходов.</p>
+          <div class="match3-intro-details">
+            <span><b>03</b><small>уровня</small></span>
+            <span><b>♡</b><small>символов</small></span>
+            <span><b>✧</b><small>сюрприз</small></span>
+          </div>
+          <button class="match3-primary" id="match3-start" type="button">Начать игру <span aria-hidden="true">↗</span></button>
+          <p class="match3-note">Прогресс сохраняется на этом устройстве.</p>
+        </section>
+
+        <section class="match3-screen" id="match3-play" data-match3-screen="play" hidden>
+          <div class="match3-level-heading">
+            <div>
+              <p class="match3-kicker" id="match3-level-kicker">УРОВЕНЬ 01 · 03</p>
+              <h2 class="match3-play-title" id="match3-play-title" tabindex="-1">Первые знаки</h2>
+            </div>
+            <div class="match3-moves" aria-label="Осталось ходов">
+              <span>ХОДЫ</span>
+              <strong id="match3-moves">20</strong>
+            </div>
+          </div>
+          <div class="match3-goals" id="match3-goals" aria-label="Цели уровня"></div>
+          <div class="match3-score-row">
+            <span>Счёт <b id="match3-score">0</b></span>
+            <span id="match3-score-goal">Собери нужные символы</span>
+          </div>
+          <div class="match3-board-frame">
+            <div class="match3-board" id="match3-board" role="grid" aria-label="Игровое поле, семь на семь" aria-describedby="match3-status"></div>
+          </div>
+          <p class="match3-status" id="match3-status" role="status" aria-live="polite" aria-atomic="true">Выбери символ, затем соседний, или сделай свайп.</p>
+          <p class="match3-hint">Свайпни к соседнему символу или коснись двух клеток подряд.</p>
+        </section>
+
+        <section class="match3-screen" id="match3-result" data-match3-screen="result" hidden>
+          <div class="match3-result-emblem" id="match3-result-emblem" aria-hidden="true">✧</div>
+          <p class="match3-kicker" id="match3-result-kicker">УРОВЕНЬ ЗАВЕРШЁН</p>
+          <h2 class="match3-result-title" id="match3-result-title" tabindex="-1">Получилось!</h2>
+          <p class="match3-copy" id="match3-result-copy">Все знаки на месте.</p>
+          <div class="match3-result-score" id="match3-result-score"></div>
+          <button class="match3-primary" id="match3-result-primary" type="button">Следующий уровень <span aria-hidden="true">↗</span></button>
+          <button class="match3-secondary" id="match3-result-retry" type="button" hidden>Повторить уровень</button>
+        </section>
+
+        <section class="match3-screen" id="match3-reward" data-match3-screen="reward" hidden>
+          <div class="match3-reward-sky" aria-hidden="true">
+            <span>♡</span><span>✦</span><span>✧</span><span>❀</span><span>♡</span><span>☾</span><span>✦</span><span>✿</span>
+          </div>
+          <div class="match3-reward-envelope" aria-hidden="true">
+            <div class="m3-reward-paper"><span>для тебя</span><b>♡</b></div>
+            <div class="m3-reward-flap"></div>
+            <span class="m3-reward-seal">♡</span>
+          </div>
+          <p class="match3-kicker">ВСЕ ТРИ УРОВНЯ ПРОЙДЕНЫ</p>
+          <h2 class="match3-result-title" id="match3-reward-title" tabindex="-1">История собрана.</h2>
+          <p class="match3-copy">Каждый знак нашёл своё место. А самое ценное в этой маленькой истории никогда не было счётом. Спасибо, что прошла её до конца. ♡</p>
+          <button class="match3-primary" id="match3-continue" type="button">Продолжить открытку <span aria-hidden="true">↗</span></button>
+        </section>
+      </section>
     </div>
   </div>
 
@@ -3404,12 +3976,7 @@
         gameGate.classList.add("is-leaving");
         window.setTimeout(function () {
           gameGate.remove();
-          siteShell.removeAttribute("inert");
-          siteShell.setAttribute("aria-hidden", "false");
-          document.body.classList.remove("game-gate-active");
-          window.scrollTo(0, 0);
-          const brandLink = siteShell.querySelector(".brand");
-          if (brandLink) brandLink.focus({ preventScroll: true });
+          match3BeginChapter();
         }, reducedMotion ? 0 : 660);
       }
 
@@ -3442,6 +4009,969 @@
           first.focus();
         }
       });
+
+
+      /* Match-3 engine: deterministic board invariants, cascades and special tiles. */
+      const MATCH3_STORAGE_KEY = "valeria-match3-progress-v1";
+      const match3Gate = document.getElementById("match3-gate");
+      const match3Screens = Array.from(document.querySelectorAll("[data-match3-screen]"));
+      const match3Grid = document.getElementById("match3-board");
+      const match3Status = document.getElementById("match3-status");
+      const match3MovesNode = document.getElementById("match3-moves");
+      const match3ScoreNode = document.getElementById("match3-score");
+      const match3ScoreGoal = document.getElementById("match3-score-goal");
+      const match3GoalsNode = document.getElementById("match3-goals");
+      const match3LevelKicker = document.getElementById("match3-level-kicker");
+      const match3PlayTitle = document.getElementById("match3-play-title");
+      const match3ResultKicker = document.getElementById("match3-result-kicker");
+      const match3ResultTitle = document.getElementById("match3-result-title");
+      const match3ResultCopy = document.getElementById("match3-result-copy");
+      const match3ResultScore = document.getElementById("match3-result-score");
+      const match3ResultEmblem = document.getElementById("match3-result-emblem");
+      const match3ResultPrimary = document.getElementById("match3-result-primary");
+      const match3ResultRetry = document.getElementById("match3-result-retry");
+      const match3Title = document.getElementById("match3-title");
+      const match3RewardTitle = document.getElementById("match3-reward-title");
+      const match3Start = document.getElementById("match3-start");
+      const match3Continue = document.getElementById("match3-continue");
+      const match3ReduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const match3Glyphs = ["♥", "✦", "❀", "☾", "✉", "✧"];
+      const match3TypeNames = ["сердце", "звезда", "цветок", "луна", "конверт", "искра"];
+      const match3TypeColors = ["#e6a4ba", "#e5ca8e", "#f0c5d2", "#b6cadf", "#f2d7bd", "#d9c6ed"];
+
+      const MATCH3_ENGINE_START = "MATCH3_ENGINE_START";
+      /* MATCH3_ENGINE_START */
+      const match3Engine = (function () {
+        const SIZE = 7;
+        const KINDS = 6;
+        const SPECIALS = ["rocket", "bomb", "rainbow"];
+
+        function tile(type) {
+          return { type: type, special: null, axis: null };
+        }
+
+        function randomTile() {
+          return tile(Math.floor(Math.random() * KINDS));
+        }
+
+        function swap(board, a, b) {
+          const hold = board[a];
+          board[a] = board[b];
+          board[b] = hold;
+        }
+
+        function adjacent(a, b) {
+          const rowA = Math.floor(a / SIZE);
+          const colA = a % SIZE;
+          const rowB = Math.floor(b / SIZE);
+          const colB = b % SIZE;
+          return Math.abs(rowA - rowB) + Math.abs(colA - colB) === 1;
+        }
+
+        function findMatches(board) {
+          const groups = [];
+          const indexes = new Set();
+
+          for (let row = 0; row < SIZE; row += 1) {
+            let col = 0;
+            while (col < SIZE) {
+              const index = row * SIZE + col;
+              const current = board[index];
+              if (!current) { col += 1; continue; }
+              let end = col + 1;
+              while (end < SIZE) {
+                const next = board[row * SIZE + end];
+                if (!next || next.type !== current.type) break;
+                end += 1;
+              }
+              if (end - col >= 3) {
+                const cells = [];
+                for (let x = col; x < end; x += 1) {
+                  const cell = row * SIZE + x;
+                  cells.push(cell);
+                  indexes.add(cell);
+                }
+                groups.push({ axis: "h", length: cells.length, indices: cells });
+              }
+              col = end;
+            }
+          }
+
+          for (let col = 0; col < SIZE; col += 1) {
+            let row = 0;
+            while (row < SIZE) {
+              const index = row * SIZE + col;
+              const current = board[index];
+              if (!current) { row += 1; continue; }
+              let end = row + 1;
+              while (end < SIZE) {
+                const next = board[end * SIZE + col];
+                if (!next || next.type !== current.type) break;
+                end += 1;
+              }
+              if (end - row >= 3) {
+                const cells = [];
+                for (let y = row; y < end; y += 1) {
+                  const cell = y * SIZE + col;
+                  cells.push(cell);
+                  indexes.add(cell);
+                }
+                groups.push({ axis: "v", length: cells.length, indices: cells });
+              }
+              row = end;
+            }
+          }
+          return { groups: groups, indices: Array.from(indexes).sort(function (a, b) { return a - b; }) };
+        }
+
+        function hasLegalMove(board) {
+          for (let i = 0; i < board.length; i += 1) {
+            const neighbors = [];
+            if (i % SIZE < SIZE - 1) neighbors.push(i + 1);
+            if (i + SIZE < board.length) neighbors.push(i + SIZE);
+            for (let n = 0; n < neighbors.length; n += 1) {
+              const j = neighbors[n];
+              const specialMove = Boolean((board[i] && board[i].special) || (board[j] && board[j].special));
+              swap(board, i, j);
+              const match = findMatches(board).indices.length > 0;
+              swap(board, i, j);
+              if (match || specialMove) return true;
+            }
+          }
+          return false;
+        }
+
+        function createBoard() {
+          for (let attempt = 0; attempt < 220; attempt += 1) {
+            const board = new Array(SIZE * SIZE);
+            for (let index = 0; index < board.length; index += 1) {
+              const row = Math.floor(index / SIZE);
+              const col = index % SIZE;
+              const choices = [];
+              for (let type = 0; type < KINDS; type += 1) {
+                if (col >= 2 && board[index - 1].type === type && board[index - 2].type === type) continue;
+                if (row >= 2 && board[index - SIZE].type === type && board[index - SIZE * 2].type === type) continue;
+                choices.push(type);
+              }
+              board[index] = tile(choices[Math.floor(Math.random() * choices.length)]);
+            }
+            if (findMatches(board).indices.length === 0 && hasLegalMove(board)) return board;
+          }
+
+          const formulas = [
+            function (row, col) { return (row * 2 + col) % KINDS; },
+            function (row, col) { return (row + col * 2) % KINDS; }
+          ];
+          for (let f = 0; f < formulas.length; f += 1) {
+            const candidate = [];
+            for (let row = 0; row < SIZE; row += 1) {
+              for (let col = 0; col < SIZE; col += 1) candidate.push(tile(formulas[f](row, col)));
+            }
+            if (findMatches(candidate).indices.length === 0 && hasLegalMove(candidate)) return candidate;
+          }
+
+          for (let attempt = 0; attempt < 1000; attempt += 1) {
+            const candidate = new Array(SIZE * SIZE);
+            for (let index = 0; index < candidate.length; index += 1) {
+              const row = Math.floor(index / SIZE);
+              const col = index % SIZE;
+              const choices = [];
+              for (let type = 0; type < KINDS; type += 1) {
+                if (col >= 2 && candidate[index - 1].type === type && candidate[index - 2].type === type) continue;
+                if (row >= 2 && candidate[index - SIZE].type === type && candidate[index - SIZE * 2].type === type) continue;
+                choices.push(type);
+              }
+              candidate[index] = tile(choices[Math.floor(Math.random() * choices.length)]);
+            }
+            if (hasLegalMove(candidate)) return candidate;
+          }
+          return formulas.length ? Array.from({ length: SIZE * SIZE }, function (_, i) { return tile(formulas[0](Math.floor(i / SIZE), i % SIZE)); }) : [];
+        }
+
+        function chooseSpecial(board, groups, preferredIndex) {
+          if (!groups.length) return null;
+
+          const horizontal = groups.filter(function (group) { return group.axis === "h"; });
+          const vertical = groups.filter(function (group) { return group.axis === "v"; });
+          let intersection = -1;
+          for (let h = 0; h < horizontal.length && intersection < 0; h += 1) {
+            for (let v = 0; v < vertical.length && intersection < 0; v += 1) {
+              intersection = horizontal[h].indices.find(function (index) {
+                return vertical[v].indices.includes(index);
+              });
+              if (intersection === undefined) intersection = -1;
+            }
+          }
+
+          let kind = null;
+          let axis = null;
+          let candidates = [];
+          if (intersection >= 0) {
+            kind = "bomb";
+            candidates = [intersection].concat(groups.reduce(function (all, group) { return all.concat(group.indices); }, []));
+          } else {
+            const longest = groups.slice().sort(function (a, b) { return b.length - a.length; })[0];
+            if (longest.length >= 5) {
+              kind = "rainbow";
+              candidates = longest.indices.slice();
+            } else if (longest.length >= 4) {
+              kind = "rocket";
+              axis = longest.axis;
+              candidates = longest.indices.slice();
+            }
+          }
+          if (!kind) return null;
+          candidates = Array.from(new Set(candidates));
+          let selected = -1;
+          if (candidates.includes(preferredIndex) && board[preferredIndex] && !board[preferredIndex].special) selected = preferredIndex;
+          if (selected < 0) selected = candidates.find(function (index) { return board[index] && !board[index].special; });
+          if (selected < 0) return null;
+          return { index: selected, kind: kind, axis: axis };
+        }
+
+        function resolveCascade(board, blockers, matchInfo, preferredIndex, forcedIndexes) {
+          const creation = chooseSpecial(board, matchInfo.groups, preferredIndex);
+          const matched = new Set(matchInfo.indices);
+          (forcedIndexes || []).forEach(function (index) { matched.add(index); });
+          const clearSet = new Set();
+          matched.forEach(function (index) { if (!creation || index !== creation.index) clearSet.add(index); });
+
+          const queue = Array.from(clearSet);
+          const triggered = new Set();
+          let cursor = 0;
+          while (cursor < queue.length && triggered.size < SIZE * SIZE) {
+            const index = queue[cursor];
+            cursor += 1;
+            if (creation && index === creation.index) continue;
+            const current = board[index];
+            if (!current || !current.special || triggered.has(index)) continue;
+            triggered.add(index);
+            const row = Math.floor(index / SIZE);
+            const col = index % SIZE;
+            const affected = [];
+
+            if (current.special === "rocket") {
+              if (current.axis === "v") {
+                for (let r = 0; r < SIZE; r += 1) affected.push(r * SIZE + col);
+              } else {
+                for (let c = 0; c < SIZE; c += 1) affected.push(row * SIZE + c);
+              }
+            } else if (current.special === "bomb") {
+              for (let r = Math.max(0, row - 1); r <= Math.min(SIZE - 1, row + 1); r += 1) {
+                for (let c = Math.max(0, col - 1); c <= Math.min(SIZE - 1, col + 1); c += 1) affected.push(r * SIZE + c);
+              }
+            } else if (current.special === "rainbow") {
+              for (let i = 0; i < board.length; i += 1) {
+                if (board[i] && board[i].type === current.type) affected.push(i);
+              }
+            }
+
+            affected.forEach(function (cell) {
+              if (creation && cell === creation.index) return;
+              if (!clearSet.has(cell)) {
+                clearSet.add(cell);
+                queue.push(cell);
+              }
+            });
+          }
+
+          const clearedIndices = Array.from(clearSet).sort(function (a, b) { return a - b; });
+          const clearedTiles = clearedIndices.map(function (index) {
+            const value = board[index];
+            return value ? { type: value.type, special: value.special } : null;
+          }).filter(Boolean);
+
+          const hitIndexes = new Set();
+          clearedIndices.forEach(function (index) {
+            const row = Math.floor(index / SIZE);
+            const col = index % SIZE;
+            hitIndexes.add(index);
+            if (row > 0) hitIndexes.add(index - SIZE);
+            if (row < SIZE - 1) hitIndexes.add(index + SIZE);
+            if (col > 0) hitIndexes.add(index - 1);
+            if (col < SIZE - 1) hitIndexes.add(index + 1);
+          });
+
+          let clearedBlockers = 0;
+          hitIndexes.forEach(function (index) {
+            if (blockers[index]) {
+              blockers[index] = false;
+              clearedBlockers += 1;
+            }
+          });
+
+          clearedIndices.forEach(function (index) {
+            if (!creation || index !== creation.index) board[index] = null;
+          });
+          if (creation && board[creation.index]) {
+            board[creation.index].special = creation.kind;
+            board[creation.index].axis = creation.axis;
+          }
+
+          const newIndices = [];
+          for (let col = 0; col < SIZE; col += 1) {
+            let writeRow = SIZE - 1;
+            for (let row = SIZE - 1; row >= 0; row -= 1) {
+              const index = row * SIZE + col;
+              if (board[index]) {
+                board[writeRow * SIZE + col] = board[index];
+                writeRow -= 1;
+              }
+            }
+            while (writeRow >= 0) {
+              const index = writeRow * SIZE + col;
+              board[index] = randomTile();
+              newIndices.push(index);
+              writeRow -= 1;
+            }
+          }
+
+          return {
+            clearedIndices: clearedIndices,
+            clearedTiles: clearedTiles,
+            clearedBlockers: clearedBlockers,
+            newIndices: newIndices,
+            createdSpecial: creation
+          };
+        }
+
+        return {
+          size: SIZE,
+          kindCount: KINDS,
+          tile: tile,
+          swap: swap,
+          adjacent: adjacent,
+          findMatches: findMatches,
+          hasLegalMove: hasLegalMove,
+          createBoard: createBoard,
+          resolveCascade: resolveCascade
+        };
+      }());
+      /* MATCH3_ENGINE_END */
+
+      const MATCH3_LEVELS = [
+        {
+          kicker: "УРОВЕНЬ 01 · 03",
+          title: "Первые знаки",
+          intro: "Собери 12 сердец за ограниченное количество ходов.",
+          moves: 20,
+          goals: [{ kind: "collect", type: 0, need: 12, label: "Собери сердца" }],
+          scoreGoal: 0,
+          sealCells: []
+        },
+        {
+          kicker: "УРОВЕНЬ 02 · 03",
+          title: "Тёплые совпадения",
+          intro: "Собери звёзды и цветы, чтобы открыть следующий этап.",
+          moves: 24,
+          goals: [
+            { kind: "collect", type: 1, need: 10, label: "Собери звёзды" },
+            { kind: "collect", type: 2, need: 10, label: "Собери цветы" }
+          ],
+          scoreGoal: 0,
+          sealCells: []
+        },
+        {
+          kicker: "УРОВЕНЬ 03 · 03",
+          title: "Путь к сюрпризу",
+          intro: "Сними розовые печати и набери 2 400 очков.",
+          moves: 25,
+          goals: [{ kind: "seals", need: 6, label: "Убери розовые печати" }],
+          scoreGoal: 2400,
+          sealCells: [3, 10, 17, 24, 31, 38, 45, 12]
+        }
+      ];
+
+      let match3LevelIndex = 0;
+      let match3BoardState = [];
+      let match3Blockers = [];
+      let match3MovesLeft = 0;
+      let match3Score = 0;
+      let match3GoalProgress = [];
+      let match3Mode = "intro";
+      let match3InputLocked = false;
+      let match3SelectedIndex = -1;
+      let match3FocusedIndex = 24;
+      let match3PointerStart = null;
+      let match3IgnoreClick = false;
+      let match3Cells = [];
+
+      function match3Delay(ms) {
+        return new Promise(function (resolve) { window.setTimeout(resolve, ms); });
+      }
+
+      function match3Save() {
+        try {
+          const data = {
+            version: 1,
+            mode: match3Mode,
+            level: match3LevelIndex,
+            board: match3BoardState,
+            blockers: match3Blockers,
+            moves: match3MovesLeft,
+            score: match3Score,
+            progress: match3GoalProgress
+          };
+          window.localStorage.setItem(MATCH3_STORAGE_KEY, JSON.stringify(data));
+        } catch (_) {
+          /* Private browsing/storage-disabled browsers can still play; progress is then session-only. */
+        }
+      }
+
+      function match3ReadSave() {
+        try {
+          const raw = window.localStorage.getItem(MATCH3_STORAGE_KEY);
+          if (!raw) return null;
+          const data = JSON.parse(raw);
+          const validModes = ["intro", "play", "loss", "stage-win", "reward"];
+          if (!data || data.version !== 1 || validModes.indexOf(data.mode) < 0) throw new Error("bad save");
+          if (!Number.isInteger(data.level) || data.level < 0 || data.level >= MATCH3_LEVELS.length) throw new Error("bad level");
+          if (data.mode === "intro") return data;
+          if (!Array.isArray(data.board) || data.board.length !== 49) throw new Error("bad board");
+          if (!data.board.every(function (tile) {
+            return tile === null || (
+              tile && Number.isInteger(tile.type) && tile.type >= 0 && tile.type < 6 &&
+              [null, "rocket", "bomb", "rainbow"].includes(tile.special) &&
+              [null, "h", "v"].includes(tile.axis)
+            );
+          })) throw new Error("bad tiles");
+          if (!Array.isArray(data.blockers) || data.blockers.length !== 49 || !data.blockers.every(function (value) { return typeof value === "boolean"; })) throw new Error("bad blockers");
+          if (!Number.isInteger(data.moves) || data.moves < 0 || data.moves > 40) throw new Error("bad moves");
+          if (!Number.isInteger(data.score) || data.score < 0 || data.score > 10000000) throw new Error("bad score");
+          const expectedGoals = MATCH3_LEVELS[data.level].goals.length;
+          if (!Array.isArray(data.progress) || data.progress.length !== expectedGoals || !data.progress.every(function (value) { return Number.isInteger(value) && value >= 0 && value <= 1000; })) throw new Error("bad progress");
+          return data;
+        } catch (_) {
+          try { window.localStorage.removeItem(MATCH3_STORAGE_KEY); } catch (_) {}
+          return null;
+        }
+      }
+
+      function match3ActivateGate() {
+        match3Gate.classList.remove("is-leaving");
+        match3Gate.classList.add("is-active");
+        match3Gate.removeAttribute("inert");
+        match3Gate.setAttribute("aria-hidden", "false");
+        document.body.classList.add("game-gate-active");
+      }
+
+      function match3HideScreens(activeId) {
+        match3Screens.forEach(function (screen) {
+          screen.hidden = screen.id !== activeId;
+        });
+      }
+
+      function match3FocusHeading(node) {
+        if (node) node.focus({ preventScroll: true });
+      }
+
+      function match3ShowIntro(shouldSave) {
+        match3Mode = "intro";
+        match3InputLocked = false;
+        match3HideScreens("match3-intro");
+        match3FocusHeading(match3Title);
+        if (shouldSave !== false) match3Save();
+      }
+
+      function match3BuildCells() {
+        if (match3Cells.length) return;
+        const fragment = document.createDocumentFragment();
+        for (let index = 0; index < 49; index += 1) {
+          const cell = document.createElement("button");
+          cell.type = "button";
+          cell.className = "m3-cell";
+          cell.dataset.m3Index = String(index);
+          cell.setAttribute("role", "gridcell");
+          cell.setAttribute("aria-pressed", "false");
+          cell.tabIndex = index === match3FocusedIndex ? 0 : -1;
+          fragment.appendChild(cell);
+          match3Cells.push(cell);
+        }
+        match3Grid.appendChild(fragment);
+      }
+
+      function match3RenderBoard(matched, newIndexes) {
+        match3BuildCells();
+        const matchedSet = matched || new Set();
+        const newSet = newIndexes || new Set();
+        match3Cells.forEach(function (cell, index) {
+          const tile = match3BoardState[index];
+          const sealed = Boolean(match3Blockers[index]);
+          const chosen = index === match3SelectedIndex;
+          const names = tile ? match3TypeNames[tile.type] : "пустая клетка";
+          let label = "Строка " + (Math.floor(index / 7) + 1) + ", столбец " + (index % 7 + 1) + ": " + names;
+          if (tile && tile.special === "rocket") label += ", световая стрела";
+          if (tile && tile.special === "bomb") label += ", вспышка сердечек";
+          if (tile && tile.special === "rainbow") label += ", радужное сердце";
+          if (sealed) label += ", розовая печать";
+          cell.className = "m3-cell";
+          if (tile) cell.classList.add("m3-type-" + tile.type);
+          if (chosen) cell.classList.add("is-selected");
+          if (matchedSet.has(index)) cell.classList.add("is-matched");
+          if (newSet.has(index)) cell.classList.add("is-new");
+          if (sealed) cell.classList.add("has-seal");
+          if (tile && tile.special) cell.classList.add("is-special");
+          cell.disabled = match3Mode !== "play";
+          cell.tabIndex = index === match3FocusedIndex ? 0 : -1;
+          cell.setAttribute("aria-pressed", chosen ? "true" : "false");
+          cell.setAttribute("aria-label", label);
+          if (!tile) {
+            cell.textContent = "";
+            return;
+          }
+          let specialMark = "";
+          if (tile.special === "rocket") specialMark = '<span class="m3-special" aria-hidden="true">➤</span>';
+          else if (tile.special === "bomb") specialMark = '<span class="m3-special m3-special-bomb" aria-hidden="true">✹</span>';
+          else if (tile.special === "rainbow") specialMark = '<span class="m3-special m3-special-rainbow" aria-hidden="true">♡</span>';
+          cell.innerHTML = '<span class="m3-glyph">' + match3Glyphs[tile.type] + '</span>' + specialMark;
+        });
+        match3Grid.setAttribute("aria-busy", match3InputLocked ? "true" : "false");
+      }
+
+      function match3RenderGoals() {
+        const level = MATCH3_LEVELS[match3LevelIndex];
+        match3GoalsNode.textContent = "";
+        level.goals.forEach(function (goal, goalIndex) {
+          const progress = Math.min(goal.need, match3GoalProgress[goalIndex] || 0);
+          const item = document.createElement("div");
+          item.className = "m3-goal";
+          const glyph = document.createElement("span");
+          glyph.className = "m3-goal-glyph";
+          glyph.setAttribute("aria-hidden", "true");
+          glyph.textContent = goal.kind === "collect" ? match3Glyphs[goal.type] : "✿";
+          glyph.style.color = goal.kind === "collect" ? match3TypeColors[goal.type] : "#e7b2c2";
+          const copy = document.createElement("div");
+          copy.className = "m3-goal-copy";
+          const label = document.createElement("span");
+          label.className = "m3-goal-label";
+          label.textContent = goal.label;
+          const count = document.createElement("span");
+          count.className = "m3-goal-count";
+          count.textContent = progress + " / " + goal.need;
+          const meter = document.createElement("div");
+          meter.className = "m3-goal-meter";
+          meter.setAttribute("aria-hidden", "true");
+          const fill = document.createElement("span");
+          fill.style.width = (progress / goal.need * 100) + "%";
+          meter.appendChild(fill);
+          copy.appendChild(label);
+          copy.appendChild(count);
+          copy.appendChild(meter);
+          item.appendChild(glyph);
+          item.appendChild(copy);
+          match3GoalsNode.appendChild(item);
+        });
+      }
+
+      function match3RenderStats() {
+        const level = MATCH3_LEVELS[match3LevelIndex];
+        match3MovesNode.textContent = String(match3MovesLeft);
+        match3ScoreNode.textContent = match3Score.toLocaleString("ru-RU");
+        match3LevelKicker.textContent = level.kicker;
+        match3PlayTitle.textContent = level.title;
+        match3ScoreGoal.textContent = level.scoreGoal ? "Набери " + level.scoreGoal.toLocaleString("ru-RU") + " очков" : "Собери цели уровня";
+        match3RenderGoals();
+      }
+
+      function match3SaveCurrentLevel() {
+        match3Mode = "play";
+        match3Save();
+      }
+
+      function match3StartLevel(levelIndex) {
+        match3LevelIndex = levelIndex;
+        const level = MATCH3_LEVELS[levelIndex];
+        match3BoardState = match3Engine.createBoard();
+        match3Blockers = new Array(49).fill(false);
+        level.sealCells.forEach(function (index) { match3Blockers[index] = true; });
+        match3MovesLeft = level.moves;
+        match3Score = 0;
+        match3GoalProgress = level.goals.map(function () { return 0; });
+        match3SelectedIndex = -1;
+        match3FocusedIndex = 24;
+        match3InputLocked = false;
+        match3Mode = "play";
+        match3HideScreens("match3-play");
+        match3RenderStats();
+        match3RenderBoard();
+        match3Status.textContent = level.intro;
+        match3SaveCurrentLevel();
+        match3FocusHeading(match3PlayTitle);
+      }
+
+      function match3LevelComplete() {
+        const level = MATCH3_LEVELS[match3LevelIndex];
+        const goalsDone = level.goals.every(function (goal, i) {
+          return (match3GoalProgress[i] || 0) >= goal.need;
+        });
+        return goalsDone && (!level.scoreGoal || match3Score >= level.scoreGoal);
+      }
+
+      function match3ShowResult(kind) {
+        match3Mode = kind;
+        match3InputLocked = false;
+        match3SelectedIndex = -1;
+        match3RenderBoard();
+        match3HideScreens("match3-result");
+        if (kind === "loss") {
+          match3ResultKicker.textContent = "ХОДЫ ЗАКОНЧИЛИСЬ";
+          match3ResultTitle.textContent = "Ещё одна попытка?";
+          match3ResultCopy.textContent = "Не все цели успели собраться. Ничего страшного: этот уровень можно пройти заново.";
+          match3ResultEmblem.textContent = "↺";
+          match3ResultPrimary.innerHTML = 'Повторить уровень <span aria-hidden="true">↻</span>';
+          match3ResultRetry.hidden = true;
+          match3ResultScore.textContent = "Счёт: " + match3Score.toLocaleString("ru-RU");
+        } else {
+          match3ResultKicker.textContent = "УРОВЕНЬ ПРОЙДЕН";
+          match3ResultTitle.textContent = ["Первый шаг готов.", "Всё совпало.", "Путь открыт."][match3LevelIndex];
+          match3ResultCopy.textContent = match3LevelIndex === 2
+            ? "Последняя печать снята. Кажется, теперь самое время для сюрприза."
+            : "Все цели выполнены. Впереди следующий маленький этап.";
+          match3ResultEmblem.textContent = "✧";
+          match3ResultPrimary.innerHTML = match3LevelIndex === 2
+            ? 'Получить сюрприз <span aria-hidden="true">♡</span>'
+            : 'Следующий уровень <span aria-hidden="true">↗</span>';
+          match3ResultRetry.hidden = match3LevelIndex === 2;
+          match3ResultScore.textContent = "Счёт уровня: " + match3Score.toLocaleString("ru-RU");
+        }
+        match3FocusHeading(match3ResultTitle);
+        match3Save();
+      }
+
+      function match3ShowReward(shouldSave) {
+        match3Mode = "reward";
+        match3InputLocked = false;
+        match3HideScreens("match3-reward");
+        match3FocusHeading(match3RewardTitle);
+        if (shouldSave !== false) match3Save();
+      }
+
+      function match3UpdateGoalProgress(clearedTiles, clearedBlockers) {
+        const level = MATCH3_LEVELS[match3LevelIndex];
+        level.goals.forEach(function (goal, i) {
+          if (goal.kind === "seals") {
+            match3GoalProgress[i] = Math.min(goal.need, (match3GoalProgress[i] || 0) + clearedBlockers);
+            return;
+          }
+          const count = clearedTiles.reduce(function (sum, tile) {
+            return sum + (tile.type === goal.type ? 1 : 0);
+          }, 0);
+          match3GoalProgress[i] = Math.min(goal.need, (match3GoalProgress[i] || 0) + count);
+        });
+      }
+
+      async function match3AttemptMove(from, to) {
+        if (match3InputLocked || match3Mode !== "play" || from === to || !match3Engine.adjacent(from, to)) return;
+        if (!match3BoardState[from] || !match3BoardState[to]) return;
+        match3InputLocked = true;
+        match3Grid.setAttribute("aria-busy", "true");
+        match3SelectedIndex = -1;
+        match3FocusedIndex = to;
+        match3Engine.swap(match3BoardState, from, to);
+        match3RenderBoard();
+
+        if (!match3ReduceMotion) await match3Delay(105);
+        let matches = match3Engine.findMatches(match3BoardState);
+        const specialMove = Boolean(match3BoardState[from].special || match3BoardState[to].special);
+        let forced = specialMove ? [from, to] : [];
+
+        if (!matches.indices.length && !forced.length) {
+          match3Engine.swap(match3BoardState, from, to);
+          match3SelectedIndex = -1;
+          match3RenderBoard();
+          if (!match3ReduceMotion) await match3Delay(80);
+          match3InputLocked = false;
+          match3Grid.setAttribute("aria-busy", "false");
+          match3Status.textContent = "Совпадения нет, ход не потрачен. Попробуй соседний символ.";
+          match3RenderBoard();
+          return;
+        }
+
+        match3MovesLeft = Math.max(0, match3MovesLeft - 1);
+        match3RenderStats();
+        let cascade = 0;
+
+        while ((matches.indices.length > 0 || forced.length > 0) && cascade < 20) {
+          const preview = new Set(matches.indices.concat(forced));
+          match3RenderBoard(preview);
+          if (!match3ReduceMotion) await match3Delay(135);
+
+          const resolved = match3Engine.resolveCascade(
+            match3BoardState,
+            match3Blockers,
+            matches,
+            to,
+            forced
+          );
+
+          if (!resolved.clearedTiles.length) break;
+          match3Score += resolved.clearedTiles.length * (60 + cascade * 20);
+          match3UpdateGoalProgress(resolved.clearedTiles, resolved.clearedBlockers);
+          match3RenderStats();
+          match3RenderBoard(new Set(), new Set(resolved.newIndices));
+          if (!match3ReduceMotion) await match3Delay(125);
+
+          matches = match3Engine.findMatches(match3BoardState);
+          forced = [];
+          cascade += 1;
+        }
+
+        if (cascade >= 20 && match3Engine.findMatches(match3BoardState).indices.length > 0) {
+          match3BoardState = match3Engine.createBoard();
+          match3Status.textContent = "Поле мягко перестроилось, ход сохранён.";
+        }
+
+        match3InputLocked = false;
+        match3Grid.setAttribute("aria-busy", "false");
+        match3SelectedIndex = -1;
+        match3RenderStats();
+
+        if (match3LevelComplete()) {
+          match3ShowResult("stage-win");
+          return;
+        }
+        if (match3MovesLeft <= 0) {
+          match3ShowResult("loss");
+          return;
+        }
+        if (!match3Engine.hasLegalMove(match3BoardState)) {
+          match3BoardState = match3Engine.createBoard();
+          match3Status.textContent = "Возможные ходы закончились: поле перемешано без потери хода.";
+        } else {
+          match3Status.textContent = cascade > 1 ? "Каскад ×" + cascade + "! Хорошая комбинация." : "Красиво! Выбирай следующий ход.";
+        }
+        match3RenderBoard();
+        match3SaveCurrentLevel();
+      }
+
+      function match3HandleCellClick(event) {
+        if (match3IgnoreClick) { match3IgnoreClick = false; return; }
+        const cell = event.target.closest("[data-m3-index]");
+        if (!cell || match3Mode !== "play" || match3InputLocked) return;
+        const index = Number(cell.dataset.m3Index);
+        match3FocusedIndex = index;
+        if (match3SelectedIndex < 0) {
+          match3SelectedIndex = index;
+          match3Status.textContent = "Теперь выбери соседний символ.";
+          match3RenderBoard();
+          cell.focus({ preventScroll: true });
+          return;
+        }
+        if (match3SelectedIndex === index) {
+          match3SelectedIndex = -1;
+          match3RenderBoard();
+          return;
+        }
+        if (match3Engine.adjacent(match3SelectedIndex, index)) {
+          const from = match3SelectedIndex;
+          match3SelectedIndex = -1;
+          match3AttemptMove(from, index);
+          return;
+        }
+        match3SelectedIndex = index;
+        match3Status.textContent = "Выбери соседнюю клетку по горизонтали или вертикали.";
+        match3RenderBoard();
+        cell.focus({ preventScroll: true });
+      }
+
+      match3BuildCells();
+      match3Grid.addEventListener("click", match3HandleCellClick);
+      match3Grid.addEventListener("keydown", function (event) {
+        const cell = event.target.closest("[data-m3-index]");
+        if (!cell || match3Mode !== "play" || match3InputLocked) return;
+        const index = Number(cell.dataset.m3Index);
+        const keySteps = { ArrowLeft: [0, -1], ArrowRight: [0, 1], ArrowUp: [-1, 0], ArrowDown: [1, 0] };
+        if (!keySteps[event.key]) return;
+        event.preventDefault();
+        const row = Math.floor(index / 7);
+        const col = index % 7;
+        const nextRow = row + keySteps[event.key][0];
+        const nextCol = col + keySteps[event.key][1];
+        if (nextRow < 0 || nextRow >= 7 || nextCol < 0 || nextCol >= 7) return;
+        const nextIndex = nextRow * 7 + nextCol;
+        match3FocusedIndex = nextIndex;
+        match3RenderBoard();
+        match3Cells[nextIndex].focus({ preventScroll: true });
+      });
+
+      match3Grid.addEventListener("pointerdown", function (event) {
+        const cell = event.target.closest("[data-m3-index]");
+        if (!cell || event.button !== 0 || match3Mode !== "play" || match3InputLocked) return;
+        match3PointerStart = {
+          index: Number(cell.dataset.m3Index),
+          x: event.clientX,
+          y: event.clientY,
+          pointerId: event.pointerId
+        };
+        try { match3Grid.setPointerCapture(event.pointerId); } catch (_) {}
+      });
+
+      match3Grid.addEventListener("pointerup", function (event) {
+        if (!match3PointerStart) return;
+        const start = match3PointerStart;
+        match3PointerStart = null;
+        const distance = Math.hypot(event.clientX - start.x, event.clientY - start.y);
+        if (distance < 18 || match3Mode !== "play" || match3InputLocked) return;
+        const target = document.elementFromPoint(event.clientX, event.clientY);
+        const targetCell = target && target.closest ? target.closest("[data-m3-index]") : null;
+        match3IgnoreClick = true;
+        window.setTimeout(function () { match3IgnoreClick = false; }, 250);
+        if (targetCell) {
+          const to = Number(targetCell.dataset.m3Index);
+          if (match3Engine.adjacent(start.index, to)) {
+            match3SelectedIndex = -1;
+            match3FocusedIndex = to;
+            match3AttemptMove(start.index, to);
+            return;
+          }
+        }
+        match3Status.textContent = "Свайпни к соседней клетке по горизонтали или вертикали.";
+      });
+
+      match3Grid.addEventListener("pointercancel", function () { match3PointerStart = null; });
+
+      function match3BeginChapter() {
+        match3ActivateGate();
+        match3MatchIntroNow();
+      }
+
+      function match3MatchIntroNow() {
+        match3LevelIndex = 0;
+        match3BoardState = [];
+        match3Blockers = [];
+        match3MovesLeft = 0;
+        match3Score = 0;
+        match3GoalProgress = [];
+        match3SelectedIndex = -1;
+        match3Mode = "intro";
+        match3ShowIntro(true);
+      }
+
+      function match3ContinueAfterWin() {
+        if (match3Mode !== "stage-win" || match3InputLocked) return;
+        if (match3LevelIndex < MATCH3_LEVELS.length - 1) {
+          match3StartLevel(match3LevelIndex + 1);
+        } else {
+          match3ShowReward(true);
+        }
+      }
+
+      function match3ContinueToStory() {
+        if (match3Mode !== "reward" || match3InputLocked) return;
+        match3Mode = "done";
+        match3Continue.disabled = true;
+        try { window.localStorage.removeItem(MATCH3_STORAGE_KEY); } catch (_) {}
+        match3Gate.classList.add("is-leaving");
+        window.setTimeout(function () {
+          match3Gate.classList.remove("is-active", "is-leaving");
+          match3Gate.setAttribute("aria-hidden", "true");
+          match3Gate.setAttribute("inert", "");
+          match3Gate.remove();
+          siteShell.removeAttribute("inert");
+          siteShell.setAttribute("aria-hidden", "false");
+          document.body.classList.remove("game-gate-active");
+          window.scrollTo(0, 0);
+          const brandLink = siteShell.querySelector(".brand");
+          if (brandLink) brandLink.focus({ preventScroll: true });
+        }, match3ReduceMotion ? 0 : 500);
+      }
+
+      function match3ResumeSave(data) {
+        match3LevelIndex = data.level;
+        match3Mode = data.mode;
+        match3BoardState = data.board || [];
+        match3Blockers = data.blockers || [];
+        match3MovesLeft = data.moves || 0;
+        match3Score = data.score || 0;
+        match3GoalProgress = data.progress || [];
+        match3SelectedIndex = -1;
+        match3FocusedIndex = 24;
+        match3InputLocked = false;
+        match3ActivateGate();
+
+        if (match3Mode === "intro") {
+          match3ShowIntro(false);
+        } else {
+          match3RenderStats();
+          match3RenderBoard();
+          if (match3Mode === "play") {
+            match3HideScreens("match3-play");
+            match3Status.textContent = "Продолжаем с сохранённого поля.";
+            match3FocusHeading(match3PlayTitle);
+          } else if (match3Mode === "loss" || match3Mode === "stage-win") {
+            match3ShowResult(match3Mode);
+          } else if (match3Mode === "reward") {
+            match3ShowReward(false);
+          }
+        }
+      }
+
+      function match3RestoreIfSaved() {
+        const saved = match3ReadSave();
+        if (!saved) return;
+        pageTransitionStarted = true;
+        gameGate.remove();
+        match3ResumeSave(saved);
+      }
+
+      match3Start.addEventListener("click", function () {
+        if (match3Mode !== "intro") return;
+        match3Start.disabled = true;
+        match3StartLevel(0);
+        match3Start.disabled = false;
+      });
+
+      match3ResultPrimary.addEventListener("click", function () {
+        if (match3Mode === "loss") {
+          match3StartLevel(match3LevelIndex);
+        } else if (match3Mode === "stage-win") {
+          match3ContinueAfterWin();
+        }
+      });
+
+      match3ResultRetry.addEventListener("click", function () {
+        if (match3Mode === "stage-win") match3StartLevel(match3LevelIndex);
+      });
+
+      match3Continue.addEventListener("click", match3ContinueToStory);
+
+      match3Gate.addEventListener("keydown", function (event) {
+        if (event.key !== "Tab" || match3Mode === "done" || match3Gate.classList.contains("is-leaving")) return;
+        const focusable = Array.from(match3Gate.querySelectorAll("button:not(:disabled), [href], input, select, textarea, [tabindex]:not([tabindex=\"-1\"])")).filter(function (node) {
+          return !node.closest("[hidden]") && node.getClientRects().length > 0;
+        });
+        if (!focusable.length) {
+          event.preventDefault();
+          return;
+        }
+        const first = focusable[0];
+        const last = focusable[focusable.length - 1];
+        if (event.shiftKey && (document.activeElement === first || !match3Gate.contains(document.activeElement))) {
+          event.preventDefault();
+          last.focus();
+        } else if (!event.shiftKey && (document.activeElement === last || !match3Gate.contains(document.activeElement))) {
+          event.preventDefault();
+          first.focus();
+        }
+      });
+
+      function match3ValidateEngine() {
+        for (let attempt = 0; attempt < 24; attempt += 1) {
+          const board = match3Engine.createBoard();
+          if (board.length !== 49) return false;
+          if (match3Engine.findMatches(board).indices.length !== 0) return false;
+          if (!match3Engine.hasLegalMove(board)) return false;
+          if (board.some(function (tile) { return !tile || tile.type < 0 || tile.type >= 6; })) return false;
+        }
+        return true;
+      }
+
+      if (!match3ValidateEngine()) {
+        match3Start.disabled = true;
+        match3Status.textContent = "Игра не смогла подготовить поле. Обнови страницу, чтобы попробовать снова.";
+      } else {
+        match3RestoreIfSaved();
+      }
 
       gameContinue.addEventListener("click", openMainPage);
 
