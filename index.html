@@ -5477,6 +5477,13 @@
       }
 
       function match3RestoreIfSaved() {
+        const replayRequested = new URLSearchParams(window.location.search).get("replay") === "1";
+        if (replayRequested) {
+          try { window.localStorage.removeItem(MATCH3_STORAGE_KEY); } catch (_) {}
+          const cleanUrl = new URL(window.location.href);
+          cleanUrl.searchParams.delete("replay");
+          window.history.replaceState(null, "", cleanUrl.pathname + cleanUrl.search + cleanUrl.hash);
+        }
         const saved = match3ReadSave();
         if (!saved) return;
         pageTransitionStarted = true;
