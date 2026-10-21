@@ -1,0 +1,620 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#351525">
+  <meta name="description" content="Маленькое письмо Валерии в честь наших двух лет.">
+  <title>Для Леры ♡</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='86'%3E%E2%99%A5%3C/text%3E%3C/svg%3E">
+  <style>
+    :root {
+      color-scheme: light;
+      --night: #351525;
+      --wine: #67253f;
+      --berry: #9e4561;
+      --rose: #d995a7;
+      --pink: #f0c9d1;
+      --paper: #fff8f0;
+      --paper-deep: #f8e9df;
+      --ink: #4b2836;
+      --muted: #9d7d85;
+      --gold: #d7b777;
+      --serif: Georgia, "Times New Roman", serif;
+      --sans: "Trebuchet MS", "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      color: var(--paper);
+      background: var(--night);
+      font-family: var(--sans);
+      overflow-x: hidden;
+    }
+    button { font: inherit; }
+    button:focus-visible, a:focus-visible { outline: 2px solid var(--gold); outline-offset: 5px; }
+    ::selection { background: var(--rose); color: var(--night); }
+
+    .site-shell {
+      position: relative;
+      isolation: isolate;
+      min-height: 100vh;
+      overflow: hidden;
+      background:
+        radial-gradient(ellipse at 83% 16%, rgba(158, 69, 97, .22), transparent 31rem),
+        radial-gradient(ellipse at 6% 70%, rgba(126, 47, 76, .19), transparent 32rem),
+        var(--night);
+    }
+    .site-shell::before {
+      position: absolute;
+      z-index: -1;
+      inset: 0;
+      content: "";
+      pointer-events: none;
+      opacity: .13;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 180 180' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.35'/%3E%3C/svg%3E");
+    }
+    .topbar {
+      width: min(1160px, calc(100% - 48px));
+      margin: 0 auto;
+      padding: 25px 0;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      color: rgba(255, 248, 240, .7);
+      font-size: 11px;
+      letter-spacing: .19em;
+      text-transform: uppercase;
+    }
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: var(--paper);
+      text-decoration: none;
+      letter-spacing: .12em;
+    }
+    .brand-mark {
+      display: grid;
+      place-items: center;
+      width: 34px;
+      height: 34px;
+      border: 1px solid rgba(215, 183, 119, .55);
+      border-radius: 50%;
+      color: var(--gold);
+      font-size: 16px;
+      letter-spacing: 0;
+    }
+    .topbar-note { display: flex; align-items: center; gap: 9px; }
+    .topbar-note::before { content: ""; width: 24px; height: 1px; background: var(--gold); opacity: .7; }
+
+    .hero {
+      width: min(1160px, calc(100% - 48px));
+      min-height: min(750px, calc(100svh - 83px));
+      margin: 0 auto;
+      padding: 36px 0 95px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      align-items: center;
+      gap: clamp(20px, 6vw, 86px);
+    }
+    .hero-copy { position: relative; z-index: 2; padding: 20px 0; }
+    .eyebrow {
+      display: inline-flex;
+      align-items: center;
+      gap: 11px;
+      margin: 0 0 26px;
+      color: var(--gold);
+      font-size: 11px;
+      letter-spacing: .2em;
+      line-height: 1.7;
+      text-transform: uppercase;
+    }
+    .eyebrow::before { content: "✳"; font-size: 14px; }
+    h1, h2, h3, p { margin-top: 0; }
+    h1 {
+      max-width: 610px;
+      margin-bottom: 22px;
+      font-family: var(--serif);
+      font-size: clamp(49px, 6.5vw, 83px);
+      font-weight: 400;
+      letter-spacing: -.055em;
+      line-height: .99;
+    }
+    h1 span { color: var(--rose); font-style: italic; }
+    .hero-description {
+      max-width: 390px;
+      margin-bottom: 31px;
+      color: rgba(255, 248, 240, .69);
+      font-size: 15px;
+      line-height: 1.9;
+    }
+    .open-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 13px;
+      min-height: 54px;
+      padding: 0 23px;
+      border: 1px solid rgba(215, 183, 119, .65);
+      border-radius: 3px;
+      color: var(--paper);
+      background: rgba(255, 248, 240, .045);
+      cursor: pointer;
+      transition: background .25s, border-color .25s, transform .25s;
+    }
+    .open-button:hover { background: rgba(217, 149, 167, .13); border-color: var(--rose); transform: translateY(-2px); }
+    .button-heart { color: var(--rose); font-size: 17px; }
+    .quiet-note { margin: 15px 0 0; color: rgba(255, 248, 240, .42); font-size: 11px; letter-spacing: .06em; }
+
+    .envelope-stage {
+      position: relative;
+      min-width: 0;
+      display: grid;
+      place-items: center;
+      min-height: 430px;
+      perspective: 1000px;
+    }
+    .orbit {
+      position: absolute;
+      width: min(100%, 430px);
+      aspect-ratio: 1;
+      border: 1px solid rgba(215, 183, 119, .15);
+      border-radius: 50%;
+      transform: rotate(-18deg) scaleY(.83);
+    }
+    .orbit::before, .orbit::after {
+      position: absolute;
+      content: "";
+      border: 1px solid rgba(215, 183, 119, .12);
+      border-radius: 50%;
+      inset: 20px;
+    }
+    .orbit::after { inset: 43px; }
+    .orbit-dot { position: absolute; right: 15%; top: 12%; color: var(--gold); font-size: 13px; }
+    .orbit-dot.two { right: auto; left: 8%; top: auto; bottom: 17%; font-size: 9px; }
+    .envelope-wrap { position: relative; width: min(100%, 390px); filter: drop-shadow(0 28px 40px rgba(0, 0, 0, .25)); }
+    .envelope {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 1.42;
+      transform: rotate(-3deg);
+      transition: transform .7s cubic-bezier(.2,.8,.2,1);
+    }
+    .envelope.is-open { transform: rotate(0deg) translateY(9px); }
+    .envelope-back {
+      position: absolute;
+      inset: 0;
+      border-radius: 5px;
+      background: #edc7c9;
+      box-shadow: inset 0 0 0 1px rgba(103, 37, 63, .1);
+    }
+    .envelope-paper {
+      position: absolute;
+      z-index: 2;
+      left: 7%;
+      right: 7%;
+      bottom: 5%;
+      height: 83%;
+      padding: 27px 15px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+      border: 1px solid #ead8ca;
+      color: var(--wine);
+      background: var(--paper);
+      text-align: center;
+      transition: transform .85s cubic-bezier(.16,1,.3,1) .12s;
+    }
+    .envelope-paper small { color: var(--muted); font-size: 9px; letter-spacing: .2em; text-transform: uppercase; }
+    .envelope-paper strong { font-family: var(--serif); font-size: clamp(21px, 3vw, 31px); font-weight: 400; font-style: italic; }
+    .envelope-paper .paper-heart { color: var(--berry); font-size: 23px; }
+    .envelope-front {
+      position: absolute;
+      z-index: 4;
+      inset: 0;
+      border-radius: 4px;
+      background: #d995a7;
+      clip-path: polygon(0 0, 50% 53%, 100% 0, 100% 100%, 0 100%);
+    }
+    .envelope-flap {
+      position: absolute;
+      z-index: 5;
+      inset: 0 0 auto;
+      height: 58%;
+      background: #f4d7d6;
+      clip-path: polygon(0 0, 100% 0, 50% 100%);
+      transform-origin: top center;
+      backface-visibility: visible;
+      transition: transform .58s cubic-bezier(.2,.7,.2,1), z-index 0s .29s;
+    }
+    .envelope-seal {
+      position: absolute;
+      z-index: 6;
+      top: 40%;
+      left: 50%;
+      display: grid;
+      place-items: center;
+      width: 43px;
+      height: 43px;
+      border: 1px solid rgba(255, 248, 240, .6);
+      border-radius: 50%;
+      color: #fff3e9;
+      background: var(--berry);
+      font-size: 20px;
+      transform: translate(-50%, -50%);
+      transition: opacity .2s, transform .3s;
+    }
+    .envelope.is-open .envelope-flap { transform: rotateX(180deg); z-index: 1; }
+    .envelope.is-open .envelope-paper { transform: translateY(-78%); }
+    .envelope.is-open .envelope-seal { opacity: 0; transform: translate(-50%, -50%) scale(.65); }
+    .envelope-caption { margin-top: 27px; color: rgba(255, 248, 240, .52); font-size: 11px; letter-spacing: .14em; text-align: center; text-transform: uppercase; }
+    .floating-heart { position: absolute; color: var(--rose); opacity: .7; animation: float 5s ease-in-out infinite; }
+    .heart-a { top: 9%; left: 6%; font-size: 20px; }
+    .heart-b { right: 1%; bottom: 21%; font-size: 15px; animation-delay: -2.5s; }
+    .heart-c { top: 19%; right: 6%; color: var(--gold); font-size: 10px; animation-delay: -1s; }
+    @keyframes float { 0%, 100% { transform: translateY(0) rotate(-8deg); } 50% { transform: translateY(-13px) rotate(8deg); } }
+
+    .scroll-cue {
+      position: absolute;
+      bottom: 29px;
+      left: 50%;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      color: rgba(255, 248, 240, .38);
+      font-size: 10px;
+      letter-spacing: .18em;
+      text-transform: uppercase;
+      transform: translateX(-50%);
+      white-space: nowrap;
+    }
+    .scroll-cue span { color: var(--gold); font-size: 16px; }
+
+    .letter-section {
+      display: none;
+      padding: 100px 24px 110px;
+      color: var(--ink);
+      background:
+        radial-gradient(ellipse at 2% 0%, rgba(217, 149, 167, .18), transparent 35rem),
+        var(--paper);
+    }
+    .letter-section.is-visible { display: block; animation: rise-in .9s cubic-bezier(.2,.75,.2,1) both; }
+    @keyframes rise-in { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
+    .letter-inner { width: min(890px, 100%); margin: 0 auto; }
+    .section-label {
+      margin-bottom: 17px;
+      color: var(--berry);
+      font-size: 10px;
+      letter-spacing: .23em;
+      line-height: 1.8;
+      text-align: center;
+      text-transform: uppercase;
+    }
+    .letter-title {
+      max-width: 700px;
+      margin: 0 auto 48px;
+      font-family: var(--serif);
+      font-size: clamp(39px, 6vw, 66px);
+      font-weight: 400;
+      letter-spacing: -.04em;
+      line-height: 1.05;
+      text-align: center;
+    }
+    .letter-title em { color: var(--berry); font-weight: 400; }
+    .paper-card {
+      position: relative;
+      max-width: 730px;
+      margin: 0 auto;
+      padding: clamp(28px, 6vw, 65px);
+      border: 1px solid #ead8ca;
+      background: rgba(255, 255, 255, .53);
+      box-shadow: 0 22px 70px rgba(91, 36, 57, .07);
+    }
+    .paper-card::before, .paper-card::after {
+      position: absolute;
+      width: 43px;
+      height: 43px;
+      content: "✳";
+      display: grid;
+      place-items: center;
+      color: #d8ad8a;
+      font-size: 19px;
+      opacity: .65;
+    }
+    .paper-card::before { top: 13px; left: 14px; }
+    .paper-card::after { right: 14px; bottom: 13px; }
+    .letter-copy { max-width: 550px; margin: 0 auto; }
+    .letter-copy p { margin-bottom: 19px; color: #6c4b56; font-family: var(--serif); font-size: clamp(17px, 2.1vw, 20px); line-height: 1.9; }
+    .letter-copy p:first-child::first-letter { color: var(--berry); font-size: 1.7em; }
+    .signature { margin-top: 30px; color: var(--berry); font-family: var(--serif); font-size: 27px; font-style: italic; text-align: right; }
+    .signature span { display: block; margin-top: 8px; font-family: var(--sans); font-size: 10px; font-style: normal; letter-spacing: .17em; text-transform: uppercase; }
+
+    .little-things { padding: 100px 24px 110px; color: var(--paper); background: #4a1e32; }
+    .little-inner { width: min(1040px, 100%); margin: 0 auto; }
+    .little-things .section-label { color: var(--gold); }
+    .little-things .letter-title { margin-bottom: 18px; }
+    .little-subtitle { max-width: 450px; margin: 0 auto 52px; color: rgba(255, 248, 240, .58); font-size: 13px; line-height: 1.8; text-align: center; }
+    .reasons {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 15px;
+    }
+    .reason {
+      min-height: 190px;
+      padding: 27px 23px;
+      border: 1px solid rgba(240, 201, 209, .17);
+      background: rgba(255, 255, 255, .025);
+      text-align: center;
+      transition: background .25s, transform .25s, border-color .25s;
+    }
+    .reason:hover { transform: translateY(-4px); border-color: rgba(215, 183, 119, .45); background: rgba(255, 255, 255, .045); }
+    .reason-icon { display: block; margin-bottom: 19px; color: var(--rose); font-size: 23px; }
+    .reason h3 { margin-bottom: 10px; color: var(--paper); font-family: var(--serif); font-size: 23px; font-weight: 400; }
+    .reason p { margin-bottom: 0; color: rgba(255, 248, 240, .54); font-size: 12px; line-height: 1.75; }
+
+    .secret-section { padding: 100px 24px 105px; color: var(--ink); background: #f5e5df; text-align: center; }
+    .secret-inner { max-width: 600px; margin: 0 auto; }
+    .secret-heart { margin-bottom: 12px; color: var(--berry); font-size: 31px; }
+    .secret-title { margin-bottom: 17px; font-family: var(--serif); font-size: clamp(34px, 5vw, 51px); font-weight: 400; letter-spacing: -.035em; }
+    .secret-description { max-width: 390px; margin: 0 auto 25px; color: #8a6a74; font-size: 13px; line-height: 1.8; }
+    .secret-button {
+      min-height: 49px;
+      padding: 0 22px;
+      border: 1px solid #b97689;
+      border-radius: 2px;
+      color: var(--wine);
+      background: transparent;
+      cursor: pointer;
+      transition: background .2s, color .2s;
+    }
+    .secret-button:hover { color: white; background: var(--wine); }
+    .secret-message {
+      max-width: 490px;
+      margin: 28px auto 0;
+      padding: 21px;
+      border-top: 1px solid #dfbec4;
+      color: var(--wine);
+      font-family: var(--serif);
+      font-size: 22px;
+      line-height: 1.65;
+      animation: rise-in .5s ease both;
+    }
+    .secret-message[hidden] { display: none; }
+
+    .footer {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 9px;
+      padding: 30px 24px 35px;
+      color: rgba(255, 248, 240, .46);
+      background: var(--night);
+      font-size: 10px;
+      letter-spacing: .14em;
+      text-align: center;
+      text-transform: uppercase;
+    }
+    .footer-heart { color: var(--rose); font-size: 18px; }
+
+    .confetti-heart {
+      position: fixed;
+      z-index: 20;
+      top: -30px;
+      left: var(--left);
+      pointer-events: none;
+      color: var(--heart-color);
+      font-size: var(--size);
+      animation: fall var(--duration) ease-in forwards;
+    }
+    @keyframes fall {
+      0% { transform: translate3d(0, -10px, 0) rotate(0deg); opacity: 0; }
+      12% { opacity: .95; }
+      100% { transform: translate3d(var(--drift), 105vh, 0) rotate(var(--spin)); opacity: 0; }
+    }
+    @media (max-width: 800px) {
+      .topbar { width: min(100% - 36px, 600px); padding-top: 19px; }
+      .hero { width: min(100% - 36px, 600px); grid-template-columns: 1fr; gap: 8px; padding-top: 42px; padding-bottom: 86px; }
+      .hero-copy { text-align: center; }
+      .eyebrow { margin-bottom: 18px; }
+      h1 { margin-right: auto; margin-left: auto; font-size: clamp(47px, 11vw, 70px); }
+      .hero-description { margin-right: auto; margin-left: auto; }
+      .quiet-note { margin-top: 13px; }
+      .envelope-stage { min-height: 350px; margin-top: 7px; }
+      .envelope-wrap { width: min(82%, 350px); }
+      .orbit { width: min(100%, 360px); }
+      .scroll-cue { bottom: 25px; }
+      .letter-section, .little-things, .secret-section { padding-top: 78px; padding-bottom: 80px; }
+      .reasons { grid-template-columns: 1fr; max-width: 420px; margin: 0 auto; gap: 11px; }
+      .reason { min-height: auto; padding: 24px 20px; }
+      .reason-icon { margin-bottom: 10px; }
+    }
+    @media (max-width: 430px) {
+      .topbar { font-size: 9px; letter-spacing: .12em; }
+      .brand { gap: 7px; letter-spacing: .08em; }
+      .brand-mark { width: 30px; height: 30px; }
+      .topbar-note { gap: 6px; }
+      .topbar-note::before { width: 13px; }
+      .hero { padding-top: 30px; }
+      .hero-description { font-size: 14px; }
+      .envelope-stage { min-height: 300px; }
+      .envelope-wrap { width: 86%; }
+      .envelope-caption { margin-top: 22px; font-size: 9px; }
+      .paper-card { padding: 39px 25px; }
+      .letter-copy p { font-size: 17px; }
+      .letter-title { margin-bottom: 35px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+  <div class="site-shell">
+    <header class="topbar">
+      <a class="brand" href="#" aria-label="В начало">
+        <span class="brand-mark">♡</span>
+        <span>для моей Леры</span>
+      </a>
+      <div class="topbar-note">2 года вместе</div>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow">маленький подарок для тебя</p>
+          <h1 id="hero-title">Есть кое-что, что я хочу <span>тебе сказать.</span></h1>
+          <p class="hero-description">Я собрал это место из нежности, нескольких слов и одного очень важного человека. Кажется, ты его знаешь.</p>
+          <button class="open-button" id="open-letter" type="button">
+            <span>Открыть моё письмо</span><span class="button-heart" aria-hidden="true">♡</span>
+          </button>
+          <p class="quiet-note">лучше читать не спеша</p>
+        </div>
+
+        <div class="envelope-stage" aria-label="Конверт с письмом">
+          <div class="orbit" aria-hidden="true"><span class="orbit-dot">✦</span><span class="orbit-dot two">✧</span></div>
+          <span class="floating-heart heart-a" aria-hidden="true">♡</span>
+          <span class="floating-heart heart-b" aria-hidden="true">♥</span>
+          <span class="floating-heart heart-c" aria-hidden="true">✦</span>
+          <div class="envelope-wrap">
+            <div class="envelope" id="envelope">
+              <div class="envelope-back"></div>
+              <div class="envelope-paper">
+                <small>самой любимой</small>
+                <strong>Валерии</strong>
+                <span class="paper-heart" aria-hidden="true">♡</span>
+              </div>
+              <div class="envelope-front"></div>
+              <div class="envelope-flap"></div>
+              <div class="envelope-seal" aria-hidden="true">♡</div>
+            </div>
+            <p class="envelope-caption">запечатано с любовью</p>
+          </div>
+        </div>
+        <div class="scroll-cue" aria-hidden="true"><span>↓</span> здесь начинается что-то тёплое</div>
+      </section>
+
+      <section class="letter-section" id="letter" aria-labelledby="letter-title" aria-hidden="true">
+        <div class="letter-inner">
+          <p class="section-label">письмо, которое хочется оставить здесь</p>
+          <h2 class="letter-title" id="letter-title">С нашей второй годовщиной, <em>моя Лера.</em></h2>
+          <div class="paper-card">
+            <div class="letter-copy">
+              <p>Два года назад в моей жизни появилось наше «мы». И знаешь, я до сих пор иногда думаю о том, как сильно мне повезло встретить тебя.</p>
+              <p>Спасибо тебе за твою улыбку, за тепло рядом, за разговоры обо всём и ни о чём. За моменты, к которым хочется возвращаться, и за самые обычные дни, которые становятся особенными просто потому, что в них есть ты.</p>
+              <p>Я не обещаю, что каждый день будет идеальным. Но я хочу учиться лучше понимать тебя, слышать тебя, поддерживать, беречь то, что между нами, и не забывать говорить о важном.</p>
+              <p>Мне хочется, чтобы впереди у нас было ещё много маленьких традиций, спонтанных приключений, долгих разговоров, объятий без причины и воспоминаний, над которыми мы когда-нибудь будем улыбаться вместе.</p>
+              <p>И если бы мне снова пришлось выбирать, с кем разделить всё это, я бы очень хотел, чтобы это снова была ты.</p>
+              <div class="signature">Люблю тебя, Лерочка.<span>сегодня и во все наши завтра ♡</span></div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="little-things" aria-labelledby="little-title">
+        <div class="little-inner">
+          <p class="section-label">вещи, которые иногда хочется повторять чаще</p>
+          <h2 class="letter-title" id="little-title">Ты для меня — это…</h2>
+          <p class="little-subtitle">Не огромные слова. Просто несколько маленьких истин, которые я хочу, чтобы ты знала.</p>
+          <div class="reasons">
+            <article class="reason">
+              <span class="reason-icon" aria-hidden="true">✿</span>
+              <h3>Уют</h3>
+              <p>Когда можно просто быть собой. Без лишних слов и без необходимости казаться кем-то другим.</p>
+            </article>
+            <article class="reason">
+              <span class="reason-icon" aria-hidden="true">♡</span>
+              <h3>Моё «люблю»</h3>
+              <p>В объятиях, в заботе, в сообщении посреди дня и в желании поделиться с тобой чем-то первым.</p>
+            </article>
+            <article class="reason">
+              <span class="reason-icon" aria-hidden="true">✧</span>
+              <h3>Наше дальше</h3>
+              <p>У нас впереди столько всего. И мысль, что мы можем проживать это вместе, очень мне дорога.</p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="secret-section" aria-labelledby="secret-title">
+        <div class="secret-inner">
+          <div class="secret-heart" aria-hidden="true">♡</div>
+          <p class="section-label">ps: это тоже для тебя</p>
+          <h2 class="secret-title" id="secret-title">И ещё кое-что.</h2>
+          <p class="secret-description">Тут спрятано одно маленькое напоминание. На случай, если сегодня тебе захочется улыбнуться ещё раз.</p>
+          <button class="secret-button" id="secret-button" type="button" aria-expanded="false" aria-controls="secret-message">Открыть секретное признание</button>
+          <p class="secret-message" id="secret-message" hidden>Среди всех случайностей, которые могли произойти в моей жизни, встреча с тобой одна из самых дорогих. Спасибо, что ты есть. Иди сюда, обниму. ♡</p>
+        </div>
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span class="footer-heart" aria-hidden="true">♡</span>
+      <span>сделано специально для Валерии</span>
+      <span>два года — и это только наша первая глава</span>
+    </footer>
+  </div>
+
+  <script>
+    (function () {
+      const openButton = document.getElementById("open-letter");
+      const envelope = document.getElementById("envelope");
+      const letter = document.getElementById("letter");
+      const secretButton = document.getElementById("secret-button");
+      const secretMessage = document.getElementById("secret-message");
+      const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+      let opened = false;
+
+      function heartRain() {
+        if (reducedMotion) return;
+        const symbols = ["♡", "♥", "✦", "✧"];
+        const colors = ["#e8a9b8", "#d7b777", "#f4d7d6", "#fff8f0"];
+        for (let i = 0; i < 25; i += 1) {
+          const heart = document.createElement("span");
+          heart.className = "confetti-heart";
+          heart.textContent = symbols[Math.floor(Math.random() * symbols.length)];
+          heart.style.setProperty("--left", (Math.random() * 100) + "vw");
+          heart.style.setProperty("--drift", ((Math.random() - 0.5) * 180) + "px");
+          heart.style.setProperty("--spin", ((Math.random() - 0.5) * 300) + "deg");
+          heart.style.setProperty("--duration", (3.2 + Math.random() * 2.4) + "s");
+          heart.style.setProperty("--size", (12 + Math.random() * 15) + "px");
+          heart.style.setProperty("--heart-color", colors[Math.floor(Math.random() * colors.length)]);
+          document.body.appendChild(heart);
+          window.setTimeout(function () { heart.remove(); }, 6000);
+        }
+      }
+
+      openButton.addEventListener("click", function () {
+        if (opened) {
+          letter.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth", block: "start" });
+          return;
+        }
+        opened = true;
+        envelope.classList.add("is-open");
+        openButton.querySelector("span:first-child").textContent = "Письмо открыто";
+        openButton.querySelector(".button-heart").textContent = "♥";
+        letter.classList.add("is-visible");
+        letter.setAttribute("aria-hidden", "false");
+        openButton.setAttribute("aria-controls", "letter");
+        heartRain();
+        window.setTimeout(function () {
+          letter.scrollIntoView({ behavior: reducedMotion ? "auto" : "smooth", block: "start" });
+        }, reducedMotion ? 0 : 500);
+      });
+
+      secretButton.addEventListener("click", function () {
+        const isOpen = !secretMessage.hidden;
+        secretMessage.hidden = isOpen;
+        secretButton.setAttribute("aria-expanded", String(!isOpen));
+        secretButton.textContent = isOpen ? "Открыть секретное признание" : "Спрятать секрет";
+        if (!isOpen) heartRain();
+      });
+    }());
+  </script>
+</body>
+</html>
